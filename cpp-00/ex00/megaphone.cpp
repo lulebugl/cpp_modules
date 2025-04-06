@@ -10,16 +10,21 @@
 /*                                                                           */
 /* ***************************************************************************/
 
+#include <cctype>
 #include <iostream>
+#include <string>
 
-int main() {
-    int x, y;
-
-    std::cin >> x >> y;
-    std::cout << x << y;
-    if (x < 0) {
-        return (1);
+int main(int argc, char **av) {
+    if (argc < 2)
+        std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
+    else {
+        for (int i = 1; i < argc; i++) {
+            std::string str(av[i]);
+            for (size_t j = 0; j < str.length(); j++)
+                str[j] = std::toupper(av[i][j]);
+            std::cout << str;
+        }
     }
-    std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *\n";
+    std::cout << "\n";
     return 0;
 }

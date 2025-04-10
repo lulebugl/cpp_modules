@@ -50,6 +50,14 @@ int selectIndex(void) {
     return (idx);
 }
 
+
+void displayContactInfo(int index,const Contact& contact) {
+    
+    if (index < 0 || index > 7) {
+        throw std::out_of_range("Contact index out of range");
+    }
+}
+
 bool executeCommand(PhoneBook& phoneBook, const std::string& commandInput,
                     int& nextContactSlot) {
     int     contactIndex = 0;
@@ -62,7 +70,7 @@ bool executeCommand(PhoneBook& phoneBook, const std::string& commandInput,
             break;
         }
         case CMD_SEARCH: {
-            phoneBook.displayContacts();
+            phoneBook.displayContactList();
             contactIndex = selectIndex();
             phoneBook.getContact(contactIndex);
             break;

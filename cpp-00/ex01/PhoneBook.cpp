@@ -24,7 +24,7 @@ Contact PhoneBook::getContact(int idx) const {
     return contact[idx];
 }
 
-void PhoneBook::displayContacts() const {
+void PhoneBook::displayContactList() const {
     std::cout << "┌──────────┬──────────┬──────────┬──────────┐\n";
     std::cout << "│   Index  │First Name│ Last Name│ Nickname │\n";
     std::cout << "├──────────┼──────────┼──────────┼──────────┤\n";

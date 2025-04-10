@@ -22,7 +22,7 @@ class PhoneBook {
     PhoneBook();
     void    addContact(Contact contact);
     Contact getContact(int idx) const;
-    void    displayContacts() const;
+    void    displayContactList() const;
 };
 
 #endif

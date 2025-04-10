@@ -16,12 +16,13 @@
 #include "Contact.hpp"
 
 class PhoneBook {
-	private:
+   private:
     Contact contact[8];
-	public:
-		PhoneBook();
-		void	addContact();
-		Contact getContact(int idx) const;
+
+   public:
+    PhoneBook();
+    void    addContact();
+    Contact getContact(int idx) const;
 };
 
 #endif

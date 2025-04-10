@@ -11,19 +11,7 @@
 /* ************************************************************************** */
 
 #include <iostream>
-
-class Contact {
-   public:
-    std::string first_name{};
-    std::string last_name{};
-    std::string nickname{};
-    int         phone_number{};
-	Contact		Add();
-};
-
-class PhoneBook {
-    Contact contact[7]{};
-};
+#include "Phonebook.hpp"
 
 enum Command { CMD_ADD, CMD_SEARCH, CMD_EXIT, CMD_UNKNOWN };
 
@@ -34,19 +22,19 @@ Command parseCommand(const std::string& input) {
     return CMD_UNKNOWN;
 }
 
-Contact Add() {
-    Contact contact;
-    std::cout << "First name: ";
-    std::cin >> contact.first_name;
-    std::cout << "Last name: ";
-	std::cin >> contact.last_name;
-    std::cout << "Nickname: ";
-	std::cin >> contact.nickname;
-    std::cout << "Phone number: ";
-	// protect phone number
-	std::cin >> contact.phone_number;
-	return contact;
-}
+// Contact Add() {
+//     Contact contact;
+//     std::cout << "First name: ";
+//     std::cin >> contact.first_name;
+//     std::cout << "Last name: ";
+//     std::cin >> contact.last_name;
+//     std::cout << "Nickname: ";
+//     std::cin >> contact.nickname;
+//     std::cout << "Phone number: ";
+//     // protect phone number
+//     std::cin >> contact.phone_number;
+//     return contact;
+// }
 
 int main(void) {
     PhoneBook phoneBook;
@@ -55,7 +43,7 @@ int main(void) {
         std::cout << "Enter command (ADD, SEARCH, EXIT): ";
         std::cin >> input;
         Command cmd = parseCommand(input);
-		int idx = 0;
+        int     idx = 0;
 
         switch (cmd) {
             case CMD_ADD:
@@ -70,7 +58,7 @@ int main(void) {
                 std::cout << "Unknown command" << std::endl;
                 break;
         }
-		if (++idx > 7) idx = 0;
+        if (++idx > 7) idx = 0;
     }
     return (0);
 }

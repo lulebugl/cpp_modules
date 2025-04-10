@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "Contact.hpp"
-
 #include <iostream>
 
 Contact::Contact() {
@@ -22,9 +21,9 @@ Contact::Contact() {
     _secret = "";
 }
 
-Contact::Contact(const std::string& firstname, const std::string& lastname,
-                 const std::string& nickname, const std::string& phone_number,
-                 const std::string& secret) {
+Contact::Contact(const std::string &firstname, const std::string &lastname,
+                 const std::string &nickname, const std::string &phone_number,
+                 const std::string &secret) {
     _firstname = firstname;
     _lastname = lastname;
     _nickname = nickname;
@@ -32,73 +31,74 @@ Contact::Contact(const std::string& firstname, const std::string& lastname,
     _secret = secret;
 }
 
-bool Contact::_isValidName(const std::string& name) const {
+bool Contact::_isValidName(const std::string &name) const {
     if (name.empty()) {
         std::cout << "Error: Field cannot be empty.\n";
-        return false;
+        return (false);
     }
     for (size_t i = 0; i < name.length(); i++) {
         if (!isalpha(name[i]) && name[i] != ' ' && name[i] != '-') {
             std::cout << "Error: Names can only contain letters, spaces and "
                          "hyphens.\n";
-            return false;
+            return (false);
         }
     }
+    return true;
 }
 
-bool Contact::_isValidPhoneNumber(const std::string& number) const {
+bool Contact::_isValidPhoneNumber(const std::string &number) const {
     if (number.empty()) {
         std::cout << "Error: Field cannot be empty.\n";
-        return false;
+        return (false);
     }
     for (size_t i = 0; i < number.length(); i++) {
-        if (!isnumber(number[i]) && number[i] != ' ') {
+        if (!isdigit(number[i]) && number[i] != ' ') {
             std::cout
                 << "Error: Phone number can only contain spaces or digits.\n";
-            return false;
+            return (false);
         }
     }
+    return true;
 }
 
 // Setters
-bool Contact::setFirstName(const std::string& firstname) {
-    if (!_isValidName(firstname)) return false;
+bool Contact::setFirstName(const std::string &firstname) {
+    if (!_isValidName(firstname)) return (false);
     _firstname = firstname;
-    return true;
+    return (true);
 }
 
-bool Contact::setLastName(const std::string& lastname) {
-    if (!_isValidName(lastname)) return false;
-
+bool Contact::setLastName(const std::string &lastname) {
+    if (!_isValidName(lastname)) return (false);
     _lastname = lastname;
-    return true;
+    return (true);
 }
 
-bool Contact::setNickname(const std::string& nickname) {
-    if (!_isValidName(nickname)) return false;
+bool Contact::setNickname(const std::string &nickname) {
+    if (!_isValidName(nickname)) return (false);
     _nickname = nickname;
-    return true;
+    return (true);
 }
 
-bool Contact::setPhoneNumber(const std::string& number) {
-    if (!_isValidPhoneNumber(number)) return false;
+bool Contact::setPhoneNumber(const std::string &number) {
+    if (!_isValidPhoneNumber(number)) return (false);
     _number = number;
-    return true;
+    return (true);
 }
 
-bool Contact::setSecret(const std::string& secret) {
+bool Contact::setSecret(const std::string &secret) {
     if (secret.empty()) {
         std::cout << "Error: Field cannot be empty.\n";
-        return false;
+        return (false);
     }
     _secret = secret;
-    return true;
+    return (true);
 }
 
 // Getters
-std::string Contact::getFirstName() const { return _firstname; }
+std::string Contact::getFirstName() const { return (_firstname); }
 
-std::string Contact::getLastName() const { return _lastname; }
+std::string Contact::getLastName() const { return (_lastname); }
 
 std::string Contact::getNickname() const { return _nickname; }
 

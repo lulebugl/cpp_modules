@@ -13,7 +13,10 @@
 NAME = phonebook
 
 FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
-SRCS = 	main.cpp\
+SRCS = 	main.cpp \
+		PhoneBook.cpp \
+		Contact.cpp \
+		
 
 OBJS = $(SRCS:.cpp=.o)
 

@@ -18,11 +18,11 @@
 class PhoneBook {
    private:
     Contact contact[8];
-
    public:
     PhoneBook();
-    void    addContact();
+    void    addContact(Contact contact);
     Contact getContact(int idx) const;
+    void    displayContacts() const;
 };
 
 #endif

@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <cstdlib>
 #include <iostream>
+
 #include "Phonebook.hpp"
 
 enum Command { CMD_ADD, CMD_SEARCH, CMD_EXIT, CMD_UNKNOWN };
@@ -22,43 +24,72 @@ Command parseCommand(const std::string& input) {
     return CMD_UNKNOWN;
 }
 
-// Contact Add() {
-//     Contact contact;
-//     std::cout << "First name: ";
-//     std::cin >> contact.first_name;
-//     std::cout << "Last name: ";
-//     std::cin >> contact.last_name;
-//     std::cout << "Nickname: ";
-//     std::cin >> contact.nickname;
-//     std::cout << "Phone number: ";
-//     // protect phone number
-//     std::cin >> contact.phone_number;
-//     return contact;
-// }
+int selectIndex(void) {
+    std::string input;
+    int         idx;
+    while (true) {
+        std::cin.clear();
+        std::cout << "Select an index: ";
+        if (!std::getline(std::cin, input)) {
+            if (std::cin.eof()) exit(0);
+            std::cin.clear();
+            continue;
+        }
+        if (input.empty()) continue;
+        if (input.length() != 1 || !isdigit(input[0])) {
+            std::cout << "Invalid index.\n";
+            continue;
+        }
+        idx = std::atoi(input.c_str());
+        if (idx < 0 || idx > 7) {
+            std::cout << "Index out of range.\n";
+            continue;
+        }
+        break;
+    }
+    return (idx);
+}
+
+bool executeCommand(PhoneBook& phoneBook, const std::string& commandInput,
+                    int& nextContactSlot) {
+    int     contactIndex = 0;
+    Command cmd = parseCommand(commandInput);
+
+    switch (cmd) {
+        case CMD_ADD: {
+            // Handle add
+            nextContactSlot = (nextContactSlot + 1) % 8;
+            break;
+        }
+        case CMD_SEARCH: {
+            phoneBook.displayContacts();
+            contactIndex = selectIndex();
+            phoneBook.getContact(contactIndex);
+            break;
+        }
+        case CMD_EXIT:
+            return false;
+        case CMD_UNKNOWN:
+            std::cout << "Unknown command\n";
+            break;
+    }
+    return true;
+}
 
 int main(void) {
+    int       nextContactSlot = 0;
     PhoneBook phoneBook;
-    while (true) {
-        std::string input;
-        std::cout << "Enter command (ADD, SEARCH, EXIT): ";
-        std::cin >> input;
-        Command cmd = parseCommand(input);
-        int     idx = 0;
 
-        switch (cmd) {
-            case CMD_ADD:
-                // Handle add
-                break;
-            case CMD_SEARCH:
-                // Handle search
-                break;
-            case CMD_EXIT:
-                return 0;
-            case CMD_UNKNOWN:
-                std::cout << "Unknown command" << std::endl;
-                break;
+    while (true) {
+        std::string commandInput;
+        std::cout << "Enter command (ADD, SEARCH, EXIT): ";
+        if (!std::getline(std::cin, commandInput)) {
+            if (std::cin.eof()) exit(0);
+            std::cin.clear();
+            continue;
         }
-        if (++idx > 7) idx = 0;
+        if (commandInput.empty()) continue;
+        if (!executeCommand(phoneBook, commandInput, nextContactSlot)) break;
     }
     return (0);
 }

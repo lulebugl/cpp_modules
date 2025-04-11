@@ -15,12 +15,16 @@
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
+#include <stdexcept>
 
 PhoneBook::PhoneBook() {}
 
 Contact PhoneBook::getContact(int index) const {
     if (index < 0 || index > 7) {
-        throw std::out_of_range("Contact index out of range");
+        throw std::out_of_range("Contact index out of range.");
+    }
+    if (_contact[index].getFirstName() == "") {
+        throw std::out_of_range("Contact doesn't exists.");
     }
     return _contact[index];
 }
@@ -78,11 +82,11 @@ void PhoneBook::displayContactList() const {
     for (int i = 0; i < 8; i++) {
         std::cout << "│" << std::setw(10) << i << "│";
         std::string firstname = _contact[i].getFirstName();
-        if (firstname.length() > 10) firstname = firstname.substr(0, 9) + '.';
+        if (firstname.size() > 10) firstname = firstname.substr(0, 9) + '.';
         std::string lastname = _contact[i].getLastName();
-        if (firstname.length() > 10) firstname = firstname.substr(0, 9) + '.';
+        if (lastname.size() > 10) lastname = lastname.substr(0, 9) + '.';
         std::string nickname = _contact[i].getNickname();
-        if (firstname.length() > 10) firstname = firstname.substr(0, 9) + '.';
+        if (nickname.size() > 10) nickname = nickname.substr(0, 9) + '.';
         std::cout << std::setw(10) << firstname << "│";
         std::cout << std::setw(10) << lastname << "│";
         std::cout << std::setw(10) << nickname << "│\n";

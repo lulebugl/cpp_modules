@@ -37,12 +37,12 @@ int selectIndex(void) {
         }
         if (input.empty()) continue;
         if (input.length() != 1 || !isdigit(input[0])) {
-            std::cout << "Invalid index.\n";
+            std::cout << RED << "Invalid index.\n" << RESET;
             continue;
         }
         idx = std::atoi(input.c_str());
         if (idx < 0 || idx > 7) {
-            std::cout << "Index out of range.\n";
+            std::cout << RED << "Index out of range.\n" << RESET;
             continue;
         }
         break;
@@ -62,9 +62,17 @@ bool executeCommand(PhoneBook& phoneBook, const std::string& commandInput,
         }
         case CMD_SEARCH: {
             phoneBook.displayContactList();
-            Contact contact = phoneBook.getContact(selectIndex());
-            phoneBook.displayContactInfo(contact);
-            break;
+            bool success = false;
+            while (!success) {
+                try {
+                    Contact contact = phoneBook.getContact(selectIndex());
+                    phoneBook.displayContactInfo(contact);
+                    success = true;
+                } catch (const std::out_of_range& e) {
+                    std::cout << RED << e.what() << RESET << std::endl;
+                };
+                if (success) break;
+            }
         }
         case CMD_EXIT:
             return false;

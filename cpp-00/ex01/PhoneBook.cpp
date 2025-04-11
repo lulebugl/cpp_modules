@@ -12,16 +12,63 @@
 
 #include "Phonebook.hpp"
 
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
 
 PhoneBook::PhoneBook() {}
 
-Contact PhoneBook::getContact(int idx) const {
-    if (idx < 0 || idx > 7) {
+Contact PhoneBook::getContact(int index) const {
+    if (index < 0 || index > 7) {
         throw std::out_of_range("Contact index out of range");
     }
-    return contact[idx];
+    return _contact[index];
+}
+
+std::string parseInputField(std::string fieldname) {
+    std::string fieldInput;
+    std::cin.clear();
+    std::cout << "Enter " << fieldname << ": ";
+    if (!std::getline(std::cin, fieldInput)) {
+        if (std::cin.eof()) exit(0);
+        std::cin.clear();
+        return "";
+    }
+    return fieldInput;
+}
+
+void PhoneBook::addContact(int index) {
+    Contact     contact;
+    std::string field;
+    while (true) {
+        field = parseInputField("firstname");
+        if (contact.setFirstName(field)) break;
+    }
+    while (true) {
+        field = parseInputField("lastname");
+        if (contact.setLastName(field)) break;
+    }
+    while (true) {
+        field = parseInputField("nickname");
+        if (contact.setNickname(field)) break;
+    }
+    while (true) {
+        field = parseInputField("phone number");
+        if (contact.setPhoneNumber(field)) break;
+    }
+    while (true) {
+        field = parseInputField("darkest secret");
+        if (contact.setSecret(field)) break;
+    }
+    _contact[index] = contact;
+}
+
+void PhoneBook::displayContactInfo(const Contact &contact) const {
+    std::cout << "First name     : " << contact.getFirstName() << "\n";
+    std::cout << "Last name      : " << contact.getLastName() << "\n";
+    std::cout << "nickname       : " << contact.getNickname() << "\n";
+    std::cout << "Phone number   : " << contact.getPhoneNumber() << "\n";
+    std::cout << "Darkest secret : " << contact.getSecret() << "\n";
 }
 
 void PhoneBook::displayContactList() const {
@@ -30,11 +77,11 @@ void PhoneBook::displayContactList() const {
     std::cout << "├──────────┼──────────┼──────────┼──────────┤\n";
     for (int i = 0; i < 8; i++) {
         std::cout << "│" << std::setw(10) << i << "│";
-        std::string firstname = contact[i].getFirstName();
+        std::string firstname = _contact[i].getFirstName();
         if (firstname.length() > 10) firstname = firstname.substr(0, 9) + '.';
-        std::string lastname = contact[i].getLastName();
+        std::string lastname = _contact[i].getLastName();
         if (firstname.length() > 10) firstname = firstname.substr(0, 9) + '.';
-        std::string nickname = contact[i].getNickname();
+        std::string nickname = _contact[i].getNickname();
         if (firstname.length() > 10) firstname = firstname.substr(0, 9) + '.';
         std::cout << std::setw(10) << firstname << "│";
         std::cout << std::setw(10) << lastname << "│";

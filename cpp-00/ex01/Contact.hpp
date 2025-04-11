@@ -15,6 +15,9 @@
 
 #include <string>
 
+#define RED "\033[0;31m"
+#define RESET "\033[0m"
+
 class Contact {
    private:
     std::string _firstname;

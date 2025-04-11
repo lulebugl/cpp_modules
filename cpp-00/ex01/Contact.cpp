@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "Contact.hpp"
+
 #include <iostream>
 
 Contact::Contact() {
@@ -33,13 +34,15 @@ Contact::Contact(const std::string &firstname, const std::string &lastname,
 
 bool Contact::_isValidName(const std::string &name) const {
     if (name.empty()) {
-        std::cout << "Error: Field cannot be empty.\n";
+        std::cout << RED << "Error: Field cannot be empty.\n" << RESET;
         return (false);
     }
     for (size_t i = 0; i < name.length(); i++) {
         if (!isalpha(name[i]) && name[i] != ' ' && name[i] != '-') {
-            std::cout << "Error: Names can only contain letters, spaces and "
-                         "hyphens.\n";
+            std::cout << RED
+                      << "Error: Names can only contain letters, spaces and "
+                         "hyphens.\n"
+                      << RESET;
             return (false);
         }
     }
@@ -48,13 +51,15 @@ bool Contact::_isValidName(const std::string &name) const {
 
 bool Contact::_isValidPhoneNumber(const std::string &number) const {
     if (number.empty()) {
-        std::cout << "Error: Field cannot be empty.\n";
+        std::cout << RED << "Error: Field cannot be empty.\n" << RESET;
         return (false);
     }
     for (size_t i = 0; i < number.length(); i++) {
         if (!isdigit(number[i]) && number[i] != ' ') {
             std::cout
-                << "Error: Phone number can only contain spaces or digits.\n";
+                << RED
+                << "Error: Phone number can only contain spaces or digits.\n"
+                << RESET;
             return (false);
         }
     }
@@ -88,7 +93,7 @@ bool Contact::setPhoneNumber(const std::string &number) {
 
 bool Contact::setSecret(const std::string &secret) {
     if (secret.empty()) {
-        std::cout << "Error: Field cannot be empty.\n";
+        std::cout << RED << "Error: Field cannot be empty.\n" << RESET;
         return (false);
     }
     _secret = secret;

@@ -50,29 +50,20 @@ int selectIndex(void) {
     return (idx);
 }
 
-
-void displayContactInfo(int index,const Contact& contact) {
-    
-    if (index < 0 || index > 7) {
-        throw std::out_of_range("Contact index out of range");
-    }
-}
-
 bool executeCommand(PhoneBook& phoneBook, const std::string& commandInput,
                     int& nextContactSlot) {
-    int     contactIndex = 0;
     Command cmd = parseCommand(commandInput);
 
     switch (cmd) {
         case CMD_ADD: {
-            // Handle add
+            phoneBook.addContact(nextContactSlot);
             nextContactSlot = (nextContactSlot + 1) % 8;
             break;
         }
         case CMD_SEARCH: {
             phoneBook.displayContactList();
-            contactIndex = selectIndex();
-            phoneBook.getContact(contactIndex);
+            Contact contact = phoneBook.getContact(selectIndex());
+            phoneBook.displayContactInfo(contact);
             break;
         }
         case CMD_EXIT:

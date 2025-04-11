@@ -17,12 +17,14 @@
 
 class PhoneBook {
    private:
-    Contact contact[8];
+    Contact _contact[8];
+
    public:
     PhoneBook();
-    void    addContact(Contact contact);
-    Contact getContact(int idx) const;
+    void    addContact(int index);
+    Contact getContact(int index) const;
     void    displayContactList() const;
+    void    displayContactInfo(const Contact &contact) const;
 };
 
 #endif

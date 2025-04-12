@@ -1,4 +1,6 @@
 **/.vscode
+test_accounts
+accounts
 
 # Prerequisites
 *.d

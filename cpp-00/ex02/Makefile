@@ -10,20 +10,22 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = account
+NAME = accounts
 
 FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
-SRCS = 	main.cpp Account.cpp
+SRCS =  Account.cpp tests.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
+TEST_NAME = test_accounts
 SRCS_TEST = 	tests.cpp Account.cpp
 OBJS_TEST = $(SRCS_TEST:.cpp=.o)
 
 test:$(OBJS_TEST)
-	c++ $(FLAGS) $(OBJS_TEST) -o test
+	c++ $(FLAGS) $(OBJS_TEST) -o $(TEST_NAME)
+	./$(TEST_NAME) > log
 	
 $(NAME):$(OBJS)
 	c++ $(FLAGS) $(OBJS) -o $(NAME)
@@ -36,6 +38,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f $(TEST_NAME)
 
 re: fclean all
 

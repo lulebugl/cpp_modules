@@ -22,25 +22,26 @@ Account::~Account(void) {}
 
 void Account::_displayTimestamp(void) {
     time_t     now = time(0);
-    struct tm* timeinfo = gmtime(&now);
+    struct tm* timeinfo = localtime(&now);
 
-    std::cout << timeinfo->tm_year;
-    std::cout << timeinfo->tm_mon;
-    // std::cout << timeinfo->tm_year;
-    // std::cout << timeinfo->tm_year;
-    // std::cout << timeinfo->tm_year;
-    // std::cout << timeinfo->tm_year;
-    // std::cout << timeinfo->tm_year;
-    // std::cout << timeinfo->tm_year;
+    std::cout << "[" << (timeinfo->tm_year + 1900) << std::setfill('0')
+              << std::setw(2) << (timeinfo->tm_mon + 1) << std::setfill('0')
+              << std::setw(2) << timeinfo->tm_mday << "_" << std::setfill('0')
+              << std::setw(2) << timeinfo->tm_hour << std::setfill('0')
+              << std::setw(2) << timeinfo->tm_min << std::setfill('0')
+              << std::setw(2) << timeinfo->tm_sec << "] ";
 }
 
 void Account::displayStatus(void) const {}
-void Account::displayAccountsInfos(void) {}
+void Account::displayAccountsInfos(void) { 
+    _displayTimestamp(); 
+    std::cout << "\n";
+}
 
 int Account::checkAmount(void) const { return _amount; }
 
-void Account::makeDeposit(int deposit) { deposit = 0; }
+void Account::makeDeposit(int deposit) { ((void)deposit); }
 bool Account::makeWithdrawal(int withdrawal) {
-    withdrawal = 0;
+    (void)withdrawal;
     return true;
 }

@@ -11,13 +11,23 @@
 /* ************************************************************************** */
 
 #include "Phonebook.hpp"
+#include "Contact.hpp"
 
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
 
-PhoneBook::PhoneBook() {}
+PhoneBook::PhoneBook() {
+    for (int i = 0; i < 8; i++) {
+        _contact[i] = Contact();
+    }
+}
+
+bool PhoneBook::empty(void) const {
+    if (_contact[0].getFirstName() != "") { return false;}
+    return true;
+}
 
 Contact PhoneBook::getContact(int index) const {
     if (index < 0 || index > 7) {

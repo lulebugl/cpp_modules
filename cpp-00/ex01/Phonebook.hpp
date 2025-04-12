@@ -21,6 +21,7 @@ class PhoneBook {
 
    public:
     PhoneBook();
+    bool    empty(void) const;
     void    addContact(int index);
     Contact getContact(int index) const;
     void    displayContactList() const;

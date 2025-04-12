@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <cstdio>
 #include <cstdlib>
 #include <iostream>
 
@@ -61,6 +62,10 @@ bool executeCommand(PhoneBook& phoneBook, const std::string& commandInput,
             break;
         }
         case CMD_SEARCH: {
+            if (phoneBook.empty()) {
+                std::cout << RED << "Phonebook is empty.\n" << RESET;
+                break ;
+            }
             phoneBook.displayContactList();
             bool success = false;
             while (!success) {

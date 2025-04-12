@@ -21,7 +21,7 @@ int main(int argc, char **av) {
         for (int i = 1; i < argc; i++) {
             std::string str(av[i]);
             for (size_t j = 0; j < str.length(); j++)
-                str[j] = std::toupper(av[i][j]);
+                str[j] = std::toupper(str[j]);
             std::cout << str;
         }
     }

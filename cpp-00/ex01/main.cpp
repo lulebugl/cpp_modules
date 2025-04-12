@@ -64,7 +64,7 @@ bool executeCommand(PhoneBook& phoneBook, const std::string& commandInput,
         case CMD_SEARCH: {
             if (phoneBook.empty()) {
                 std::cout << RED << "Phonebook is empty.\n" << RESET;
-                break ;
+                break;
             }
             phoneBook.displayContactList();
             bool success = false;
@@ -76,8 +76,8 @@ bool executeCommand(PhoneBook& phoneBook, const std::string& commandInput,
                 } catch (const std::out_of_range& e) {
                     std::cout << RED << e.what() << RESET << std::endl;
                 };
-                if (success) break;
             }
+            break;
         }
         case CMD_EXIT:
             return false;

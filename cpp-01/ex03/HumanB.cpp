@@ -12,12 +12,12 @@
 
 #include "HumanB.hpp"
 
+#include <string>
 #include <iostream>
-
 #include "Weapon.hpp"
 
-HumanB::HumanB() : _name("Human B"), _weapon(nullptr) {}
-HumanB::HumanB(const std::string& name) : _name(name), _weapon(nullptr) {}
+HumanB::HumanB() : _name("Human B"), _weapon(0) {}
+HumanB::HumanB(const std::string& name) : _name(name), _weapon(0) {}
 HumanB::HumanB(const std::string& name, Weapon* weapon)
     : _name(name), _weapon(weapon) {}
 

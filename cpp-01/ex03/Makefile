@@ -10,19 +10,19 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = brain
+NAME = violence
 
-FLAGS = -Wall -Wextra -Werror -MM -std=c++98 -pedantic
-SRCS =  main.cpp
+FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+DEPFLAGS = -MMD
+SRCS =  main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 
-# reformats the dependency file to make it work with Make's include directive
 all: $(NAME)
 
 %.o: %.cpp
-	c++ $(FLAGS) -MMD -c $< -o $@
+	c++ $(FLAGS) $(DEPFLAGS) -c $< -o $@
 
 $(NAME):$(OBJS)
 	c++ $(FLAGS) $(OBJS) -o $(NAME)
@@ -30,7 +30,7 @@ $(NAME):$(OBJS)
 -include $(DEPS)
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(DEPS)
 
 fclean: clean
 	rm -f $(NAME)

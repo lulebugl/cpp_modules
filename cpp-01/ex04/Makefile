@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = sed
+NAME = baby-sed
 
 FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 DEPFLAGS = -MMD

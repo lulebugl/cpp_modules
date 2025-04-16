@@ -62,5 +62,5 @@ void Harl::complain(std::string level) {
     }
   }
   std::cout << PURPLE << "[UNKNOWN LEVEL] " << RESET;
-  std::cout << "What are you saying ! There's no \"" << level << "\" level!\n";
+  std::cout << "What are you saying! There's no \"" << level << "\" level!\n";
 }

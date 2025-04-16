@@ -17,12 +17,18 @@
 
 class Harl {
  private:
-  void debug(void);
-  void info(void);
-  void warning(void);
-  void error(void);
+  void _debug(void);
+  void _info(void);
+  void _warning(void);
+  void _error(void);
+
+  static const char* _levels[4];
+
+  typedef void (Harl::*MemberFunctionPtr)(void);
+  MemberFunctionPtr _complainFunctions[4];
 
  public:
+  Harl();
   void complain(std::string level);
 };
 

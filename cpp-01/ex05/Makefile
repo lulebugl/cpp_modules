@@ -31,7 +31,6 @@ $(NAME):$(OBJS)
 
 clean:
 	rm -f $(OBJS) $(DEPS)
-	rm -f *.replace
 
 fclean: clean
 	rm -f $(NAME)

@@ -12,7 +12,6 @@
 
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <string>
 
 bool handleIO(char** av, std::ifstream& inFile, std::ofstream& outFile) {
@@ -74,7 +73,6 @@ void replaceAll(std::ifstream& inFile, std::ofstream& outFile,
     }
     processChunk(chunk, pattern, replace);
     outFile << chunk;
-    ;
   }
 }
 

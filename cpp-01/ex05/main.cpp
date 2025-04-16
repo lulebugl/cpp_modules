@@ -39,8 +39,8 @@ int main(int ac, char **av) {
     };
     return 0;
   } else {
-    std::cout << "Usage: ./Harl" << std::endl;
-    std::cout << "       ./Harl -i (for interactive mode)" << std::endl;
+    std::cout << "Usage: ./harl" << std::endl;
+    std::cout << "       ./harl -i (for interactive mode)" << std::endl;
   }
   return 0;
 }

@@ -35,14 +35,13 @@ class Contact {
   Contact(const std::string& firstname, const std::string& lastname,
           const std::string& nickname, const std::string& number,
           const std::string& secret);
-  // Setter methods
+
   bool setFirstName(const std::string& firstname);
   bool setLastName(const std::string& fullname);
   bool setNickname(const std::string& nickname);
   bool setPhoneNumber(const std::string& number);
   bool setSecret(const std::string& secret);
 
-  // Getter methods
   std::string getFirstName() const;
   std::string getLastName() const;
   std::string getNickname() const;

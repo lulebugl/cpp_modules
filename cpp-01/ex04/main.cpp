@@ -62,7 +62,6 @@ void replaceAll(std::ifstream& inFile, std::ofstream& outFile,
     std::string chunk = carryOver;
     chunk.append(buffer, bytesRead);
 
-    // Determine how much we can safely process now
     size_t safeLength = chunk.length();
     if (!inFile.eof() && safeLength > pattern.length()) {
       safeLength -= pattern.length() - 1;

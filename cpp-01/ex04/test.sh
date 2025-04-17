@@ -6,7 +6,7 @@ mkdir -p $TEST_DIR
 
 echo "Creating large test file..."
 
-dd if=/dev/urandom bs=1M count=10 2>/dev/null | base64 > "$TEST_DIR/large_file.txt"
+dd if=/dev/urandom bs=1M count=10 2>/dev/null | base64 > "$TEST_DIR/large_file.txt" #bs=1 = 10mb
 
 echo "File created. Size: $(du -h "$TEST_DIR/large_file.txt" | cut -f1)"
 

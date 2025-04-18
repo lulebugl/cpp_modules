@@ -64,7 +64,7 @@ bool Contact::_isValidPhoneNumber(const std::string &number) const {
   return true;
 }
 
-std::string Contact::trim_spaces(std::string str) {
+std::string trim_spaces(std::string str) {
   while (!str.empty() && isspace(str[0])) {
     str.erase(0, 1);
   }
@@ -82,7 +82,6 @@ std::string Contact::trim_spaces(std::string str) {
   return str;
 }
 
-// Setters
 bool Contact::setFirstName(const std::string &firstname) {
   std::string trimmed = trim_spaces(firstname);
   if (!_isValidName(trimmed)) return (false);
@@ -121,7 +120,6 @@ bool Contact::setSecret(const std::string &secret) {
   return (true);
 }
 
-// Getters
 std::string Contact::getFirstName() const { return (_firstname); }
 
 std::string Contact::getLastName() const { return (_lastname); }

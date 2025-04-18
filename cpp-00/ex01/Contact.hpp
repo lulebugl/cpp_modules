@@ -26,9 +26,8 @@ class Contact {
   std::string _number;
   std::string _secret;
 
-  bool        _isValidName(const std::string& name) const;
-  bool        _isValidPhoneNumber(const std::string& name) const;
-  std::string trim_spaces(std::string str);
+  bool _isValidName(const std::string& name) const;
+  bool _isValidPhoneNumber(const std::string& name) const;
 
  public:
   Contact();
@@ -48,5 +47,7 @@ class Contact {
   std::string getPhoneNumber() const;
   std::string getSecret() const;
 };
+
+std::string trim_spaces(std::string str);
 
 #endif

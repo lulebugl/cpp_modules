@@ -30,5 +30,5 @@ int main(void) {
         club.setType("lemon club");
         jim.attack();
     }
-    return (0);
+    return 0;
 }

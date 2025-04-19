@@ -21,6 +21,9 @@ DEPS = $(SRCS:.cpp=.d)
 
 all: $(NAME)
 
+run: all
+	./$(NAME)
+	
 %.o: %.cpp
 	c++ $(FLAGS) $(DEPFLAGS) -c $< -o $@
 

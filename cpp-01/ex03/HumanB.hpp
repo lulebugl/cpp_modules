@@ -28,7 +28,6 @@ class HumanB {
     HumanB(const std::string& name, Weapon* weapon);
     ~HumanB();
 
-    // void        setName(const std::string& name);
     std::string getName() const;
     std::string getWeapon() const;
     void        setWeapon(Weapon& weapon);

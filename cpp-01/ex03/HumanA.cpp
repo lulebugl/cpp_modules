@@ -16,7 +16,6 @@
 
 #include "Weapon.hpp"
 
-// HumanA::HumanA() : _name("Human A"), _weapon(Weapon()){}
 HumanA::HumanA(const std::string& name, Weapon& weapon)
     : _name(name), _weapon(weapon) {}
 

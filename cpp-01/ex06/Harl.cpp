@@ -66,12 +66,15 @@ void Harl::complain(std::string level) {
   switch (levels) {
     case DEBUG: {
       (this->*_complainFunctions[DEBUG])();
+      __attribute__ ((fallthrough));
     }
     case INFO: {
       (this->*_complainFunctions[INFO])();
+      __attribute__ ((fallthrough));
     }
     case WARNING: {
       (this->*_complainFunctions[WARNING])();
+      __attribute__ ((fallthrough));
     }
     case ERROR: {
       (this->*_complainFunctions[ERROR])();

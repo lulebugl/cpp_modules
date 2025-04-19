@@ -13,9 +13,9 @@
 #include "Zombie.hpp"
 
 Zombie* zombieHorde(int N, std::string name) {
-    if (N <= 0) return nullptr;
+    if (N <= 0) return 0;
     Zombie* horde = new (std::nothrow) Zombie[N];
-    if (!horde) return nullptr;
+    if (!horde) return 0;
     for (int i = 0; i < N; i++) {
         horde[i].setName(name);
     }

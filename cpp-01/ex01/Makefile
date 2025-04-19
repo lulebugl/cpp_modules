@@ -25,6 +25,9 @@ $(NAME):$(OBJS)
 %.o: %.cpp
 	c++ $(FLAGS) -c $< -o $@
 
+run: re
+	./$(NAME)
+
 clean:
 	rm -f $(OBJS)
 

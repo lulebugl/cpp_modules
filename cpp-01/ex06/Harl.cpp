@@ -80,7 +80,7 @@ void Harl::complain(std::string level) {
       (this->*_complainFunctions[ERROR])();
       return;
     }
-    case UNKNOW: {
+    default: {
       std::cout << PURPLE
                 << "[ Probably complaining about insignificant problems! ] "
                 << RESET << std::endl;

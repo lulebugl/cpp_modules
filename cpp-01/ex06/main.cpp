@@ -36,8 +36,8 @@ int main(int ac, char **av) {
     std::string level = av[1];
     harl.complain(level);
   } else {
-    std::cout << "Usage: ./Harl" << std::endl;
-    std::cout << "       ./Harl -i (for interactive mode)" << std::endl;
+    std::cout << "Usage: ./HarlFilter LEVEL (DEBUG,INFO,WARNING,ERROR)" << std::endl;
+    std::cout << "       ./HarlFilter -i (for interactive mode)" << std::endl;
   }
   return 0;
 }

@@ -82,7 +82,7 @@ void Harl::complain(std::string level) {
     }
     default: {
       std::cout << PURPLE
-                << "[ Probably complaining about insignificant problems! ] "
+                << "[ Probably complaining about insignificant problems ] "
                 << RESET << std::endl;
       break;
     }

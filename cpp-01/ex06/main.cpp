@@ -34,6 +34,7 @@ int main(int ac, char **av) {
     return 0;
   } else if (ac == 2) {
     std::string level = av[1];
+    if (level.empty()) return 0;
     harl.complain(level);
   } else {
     std::cout << "Usage: ./HarlFilter LEVEL (DEBUG,INFO,WARNING,ERROR)" << std::endl;

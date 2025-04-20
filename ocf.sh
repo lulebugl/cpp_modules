@@ -8,18 +8,21 @@ mkdir -p $hppPath $cppPath
 create_header() {
     local filename=$1
     local extension=$2
-    local pad_filename=$(printf "%-*s" 44 "${filename}.${extension}")
+    local username="${USER:-$(whoami)}"
+    local email="${MAIL:-${username}@student.42.fr}"
+    local date_created=$(date +%Y/%m/%d\ %H:%M:%S)
     
+    # Ensure proper alignment for the header
     cat << EOL
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ${pad_filename}:+:      :+:    :+:   */
+/*   ${filename}.${extension}$(printf '%*s' $((50-${#filename}-${#extension})) ""):+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: $(whoami) <$(whoami)@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ${username} <${email}>$(printf '%*s' $((40-${#username}-${#email})) "")+#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: $(date +%Y/%m/%d) $(date +%H:%M:%S) by $(whoami)    #+#    #+#             */
-/*   Updated: $(date +%Y/%m/%d) $(date +%H:%M:%S) by $(whoami)   ###   ########.fr       */
+/*   Created: ${date_created} by ${username}$(printf '%*s' $((18-${#username})) "")#+#    #+#             */
+/*   Updated: ${date_created} by ${username}$(printf '%*s' $((17-${#username})) "")###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +80,10 @@ $capClass::$capClass(const $capClass &other)
 $capClass &$capClass::operator=(const $capClass &other)
 {
     std::cout << "Assignment operator called" << std::endl;
-    (void) other;
+    if (this != &other)
+    {
+        // Copy member variables here
+    }
     return (*this);
 }
 

@@ -56,7 +56,7 @@ class $capClass
 EOL
 ) > $hpp
 
-    # CPP
+    # CPPz
     rm -f $cpp && touch $cpp
     (create_header "$capClass" "cpp"; cat << EOL
 #include "$capClass.hpp"

@@ -10,10 +10,10 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = test
+NAME = fixed-point
 
 FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
-SRCS = Fixed.cpp 
+SRCS = Fixed.cpp main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -25,7 +25,7 @@ $(NAME):$(OBJS)
 %.o: %.cpp
 	c++ $(FLAGS) -c $< -o $@
 
-run: re
+run: all
 	./$(NAME)
 
 clean:

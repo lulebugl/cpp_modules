@@ -50,7 +50,7 @@ all: \$(NAME)
 %.o: %.cpp
 	c++ \$(FLAGS) -c \$< -o \$@
 
-run: re
+run: all
 	./\$(NAME)
 
 clean:

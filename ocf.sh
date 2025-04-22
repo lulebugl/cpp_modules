@@ -45,6 +45,9 @@ do
 
 class $capClass
 {
+    private:
+        static bool      _debugMode;
+ 
     public:
         $capClass(void);
         $capClass(const $capClass& other);
@@ -61,25 +64,30 @@ EOL
     (create_header "$capClass" "cpp"; cat << EOL
 #include "$capClass.hpp"
 
-// Default constructor
+bool      Fixed::_debugMode = true;
+
 $capClass::$capClass(void)
 {
-    std::cout << "Default constructor called" << std::endl;
+    if (_debugMode) {
+        std::cout << "Default constructor called" << std::endl;
+    }
     return ;
 }
 
-// Copy constructor
 $capClass::$capClass(const $capClass &other)
 {
-    std::cout << "Copy constructor called" << std::endl;
+    if (_debugMode) {
+        std::cout << "Copy constructor called" << std::endl;
+    }
     (void) other;
     return ;
 }
 
-// Assignment operator overload
 $capClass &$capClass::operator=(const $capClass &other)
 {
-    std::cout << "Assignment operator called" << std::endl;
+    if (_debugMode) {
+        std::cout << "Assignment operator called" << std::endl;
+    }
     if (this != &other)
     {
         // Copy member variables here
@@ -90,7 +98,9 @@ $capClass &$capClass::operator=(const $capClass &other)
 // Destructor
 $capClass::~$capClass(void)
 {
-    std::cout << "Destructor called" << std::endl;
+    if (_debugMode) {
+        std::cout << "Destructor called" << std::endl;
+    }
     return ;
 }
 EOL

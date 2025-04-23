@@ -22,12 +22,14 @@ Fixed::Fixed(void) : _number(0) {
     if (_debugMode) {
         std::cout << "Default constructor called" << std::endl;
     }
+    return;
 }
 
 Fixed::~Fixed(void) {
     if (_debugMode) {
         std::cout << "Destructor called" << std::endl;
     }
+    return;
 }
 
 Fixed::Fixed(const int number) {
@@ -35,6 +37,7 @@ Fixed::Fixed(const int number) {
         std::cout << "Int constructor called" << std::endl;
     }
     _number = number << _fixedPoint;
+    return;
 }
 
 Fixed::Fixed(const float number) {
@@ -42,9 +45,10 @@ Fixed::Fixed(const float number) {
         std::cout << "Float constructor called" << std::endl;
     }
     _number = roundf(number * (1 << _fixedPoint));
+    return;
 }
 
-Fixed::Fixed(const Fixed &other) : _number(other._number) {}
+Fixed::Fixed(const Fixed &other) { this->_number = other._number; }
 
 Fixed &Fixed::operator=(const Fixed &other) {
     if (_debugMode) {

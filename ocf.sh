@@ -64,14 +64,13 @@ EOL
     (create_header "$capClass" "cpp"; cat << EOL
 #include "$capClass.hpp"
 
-bool      Fixed::_debugMode = true;
+bool      $capClass::_debugMode = true;
 
 $capClass::$capClass(void)
 {
     if (_debugMode) {
         std::cout << "Default constructor called" << std::endl;
     }
-    return ;
 }
 
 $capClass::$capClass(const $capClass &other)
@@ -80,7 +79,6 @@ $capClass::$capClass(const $capClass &other)
         std::cout << "Copy constructor called" << std::endl;
     }
     (void) other;
-    return ;
 }
 
 $capClass &$capClass::operator=(const $capClass &other)
@@ -95,13 +93,11 @@ $capClass &$capClass::operator=(const $capClass &other)
     return (*this);
 }
 
-// Destructor
 $capClass::~$capClass(void)
 {
     if (_debugMode) {
         std::cout << "Destructor called" << std::endl;
     }
-    return ;
 }
 EOL
 ) > $cpp

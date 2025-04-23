@@ -15,7 +15,7 @@
 #include "Fixed.hpp"
 
 int main(void) {
-    Fixed::disableDebug();
+    // Fixed::disableDebug();
 
     Fixed a;
     Fixed b(10);

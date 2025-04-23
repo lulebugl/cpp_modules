@@ -53,7 +53,7 @@ class Fixed {
 
     int   toInt() const;
     float toFloat() const;
-
+    
     static void enableDebug();
     static void disableDebug();
 };

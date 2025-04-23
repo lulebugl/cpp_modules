@@ -19,24 +19,19 @@ const int Fixed::_fixedPoint = 8;
 
 Fixed::Fixed(void) : _number(0) {
     std::cout << "Default constructor called" << std::endl;
-    return;
 }
 
-Fixed::Fixed(const int number) {
+Fixed::Fixed(const int number) : _number(number << _fixedPoint) {
     std::cout << "Int constructor called" << std::endl;
-    _number = number << _fixedPoint;
-    return;
 }
 
 Fixed::Fixed(const float number) {
     std::cout << "Float constructor called" << std::endl;
     _number = roundf(number * (1 << _fixedPoint));
-    return;
 }
 
-Fixed::Fixed(const Fixed &other) {
+Fixed::Fixed(const Fixed &other) : _number(other._number) {
     std::cout << "Copy constructor called" << std::endl;
-    this->_number = other._number;
 }
 
 Fixed &Fixed::operator=(const Fixed &other) {
@@ -52,10 +47,7 @@ std::ostream &operator<<(std::ostream &out, const Fixed &fixed) {
     return out;
 }
 
-Fixed::~Fixed(void) {
-    std::cout << "Destructor called" << std::endl;
-    return;
-}
+Fixed::~Fixed(void) { std::cout << "Destructor called" << std::endl; }
 
 int Fixed::toInt() const { return this->_number >> _fixedPoint; }
 

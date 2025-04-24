@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
+/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llebugle <llebugle@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 04:35:30 by llebugle          #+#    #+#             */
-/*   Updated: 2025/04/24 04:35:30 by llebugle         ###   ########.fr       */
+/*   Created: 2025/04/24 09:52:16 by llebugle          #+#    #+#             */
+/*   Updated: 2025/04/24 09:52:16 by llebugle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLAPTRAP_HPP
-#define CLAPTRAP_HPP
+#ifndef SCAVTRAP_HPP
+#define SCAVTRAP_HPP
 
 #include <iostream>
 
-class ClapTrap {
+#include "ClapTrap.hpp"
+
+class ScavTrap : public ClapTrap {
    public:
-    ClapTrap(std::string name);
-    ClapTrap(const ClapTrap& other);
-    ClapTrap& operator=(const ClapTrap& other);
-    ~ClapTrap();
+    explicit ScavTrap(std::string name);
+    ScavTrap(const ScavTrap& other);
+    ScavTrap& operator=(const ScavTrap& other);
+    ~ScavTrap();
 
+    void guardGate();
     void attack(const std::string& target);
-    void takeDamage(unsigned int amount);
-    void beRepaired(unsigned int amount);
-
-   private:
-    std::string  _name;
-    unsigned int _hitPoint;
-    unsigned int _EnergyPoint;
-    unsigned int _AttackDamage;
-    static bool  _debugMode;
+   
 };
 
 #endif

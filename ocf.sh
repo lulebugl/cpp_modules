@@ -45,14 +45,14 @@ do
 
 class $capClass
 {
-    private:
-        static bool      _debugMode;
- 
     public:
-        $capClass(void);
+        $capClass();
         $capClass(const $capClass& other);
         $capClass &operator=(const $capClass &other);
         ~$capClass();
+        
+    private:
+        static bool      _debugMode;
 };
 
 #endif
@@ -66,7 +66,7 @@ EOL
 
 bool      $capClass::_debugMode = true;
 
-$capClass::$capClass(void)
+$capClass::$capClass()
 {
     if (_debugMode) {
         std::cout << "Default constructor called" << std::endl;
@@ -93,7 +93,7 @@ $capClass &$capClass::operator=(const $capClass &other)
     return (*this);
 }
 
-$capClass::~$capClass(void)
+$capClass::~$capClass()
 {
     if (_debugMode) {
         std::cout << "Destructor called" << std::endl;

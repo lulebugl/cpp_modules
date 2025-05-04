@@ -17,7 +17,7 @@
 #include "ClapTrap.hpp"
 
 void ScavTrap::guardGate() {
-    if (_hitPoint == 0) {
+    if (_hitPoints == 0) {
         std::cout << "Scavtrap " << _name << " is dead.\n";
         return;
     }
@@ -25,11 +25,11 @@ void ScavTrap::guardGate() {
 }
 
 void ScavTrap::attack(const std::string& target) {
-    if (_EnergyPoint > 0 && _hitPoint > 0) {
+    if (_energyPoints > 0 && _hitPoints > 0) {
         std::cout << "Scavtrap " << _name << " attacks " << target
-                  << ", causing " << _AttackDamage << " points of damage!\n";
-        _EnergyPoint--;
-    } else if (_hitPoint > 0) {
+                  << ", causing " << _attackDamage << " points of damage!\n";
+        _energyPoints--;
+    } else if (_hitPoints > 0) {
         std::cout << "Scavtrap " << _name << " has no energy left.\n";
     } else {
         std::cout << "Scavtrap " << _name << " is dead.\n";
@@ -40,9 +40,9 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
     if (_debugMode) {
         std::cout << "Default Scavtrap constructor called" << std::endl;
     }
-    _hitPoint = 100;
-    _EnergyPoint = 50;
-    _AttackDamage = 20;
+    _hitPoints = 100;
+    _energyPoints = 50;
+    _attackDamage = 20;
 }
 
 ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other) {
@@ -57,9 +57,9 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
     }
     if (this != &other) {
         this->_name = other._name;
-        this->_hitPoint = other._hitPoint;
-        this->_EnergyPoint = other._EnergyPoint;
-        this->_AttackDamage = other._AttackDamage;
+        this->_hitPoints = other._hitPoints;
+        this->_energyPoints = other._energyPoints;
+        this->_attackDamage = other._attackDamage;
     }
     return (*this);
 }

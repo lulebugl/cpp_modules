@@ -15,7 +15,7 @@
 #include <iostream>
 
 void FragTrap::highFivesGuys() {
-    if (_hitPoint > 0) {
+    if (_hitPoints > 0) {
         std::cout << _name << " got a positive high five request." << std::endl;
     } else {
         std::cout << _name << " is dead." << std::endl;
@@ -24,9 +24,9 @@ void FragTrap::highFivesGuys() {
 
 FragTrap::FragTrap(const std::string& name) : ClapTrap(name) {
     std::cout << "Default FragTrap constructor called" << std::endl;
-    _hitPoint = 100;
-    _EnergyPoint = 100;
-    _AttackDamage = 30;
+    _hitPoints = 100;
+    _energyPoints = 100;
+    _attackDamage = 30;
 }
 
 FragTrap::FragTrap(const FragTrap& other) : ClapTrap(other) {
@@ -37,9 +37,9 @@ FragTrap& FragTrap::operator=(const FragTrap& other) {
     std::cout << "Assignment FragTrap operator called" << std::endl;
     if (this != &other) {
         this->_name = other._name;
-        this->_hitPoint = other._hitPoint;
-        this->_EnergyPoint = other._EnergyPoint;
-        this->_AttackDamage = other._AttackDamage;
+        this->_hitPoints = other._hitPoints;
+        this->_energyPoints = other._energyPoints;
+        this->_attackDamage = other._attackDamage;
     }
     return (*this);
 }

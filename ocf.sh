@@ -63,6 +63,8 @@ EOL
     (create_header "$capClass" "cpp"; cat << EOL
 #include "$capClass.hpp"
 
+#include <iostream>
+
 $capClass::$capClass()
 {
     std::cout << "Default constructor called" << std::endl;

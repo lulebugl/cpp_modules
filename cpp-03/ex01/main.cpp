@@ -17,6 +17,7 @@ int main() {
     ClapTrap biz = ClapTrap("biz");
     ScavTrap karen = ScavTrap("karen");
 
+    std::cout << "\n";
     biz.attack("karen");
     biz.takeDamage(5);
     biz.beRepaired(10);
@@ -24,6 +25,7 @@ int main() {
     biz.beRepaired(5);
     karen.attack("biz");
     karen.guardGate();
+    std::cout << "\n";
 
     return 0;
 }

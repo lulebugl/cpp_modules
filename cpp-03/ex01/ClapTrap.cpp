@@ -96,3 +96,14 @@ ClapTrap::~ClapTrap() {
         std::cout << "Claptrap Destructor called" << std::endl;
     }
 }
+
+void ClapTrap::displayStatus() const {
+    if (_hitPoints <= 0) {
+        std::cout << _name << " is dead.";
+        return;
+    }
+    std::cout << "Claptrap name: " << _name << std::endl;
+    std::cout << "Hit points: " << _hitPoints << std::endl;
+    std::cout << "Energy points: " << _energyPoints << std::endl;
+    std::cout << "Attack damage: " << _attackDamage << std::endl;
+}

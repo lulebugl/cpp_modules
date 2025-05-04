@@ -67,7 +67,7 @@ void ClapTrap::beRepaired(unsigned int amount) {
 ClapTrap::ClapTrap(std::string name)
     : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
     if (_debugMode) {
-        std::cout << "Default Claptrap constructor called" << std::endl;
+        std::cout << "Claptrap constructor called" << std::endl;
     }
 }
 
@@ -95,4 +95,15 @@ ClapTrap::~ClapTrap() {
     if (_debugMode) {
         std::cout << "Claptrap Destructor called" << std::endl;
     }
+}
+
+void ClapTrap::displayStatus() const {
+    if (_hitPoints <= 0) {
+        std::cout << _name << " is dead.";
+        return;
+    }
+    std::cout << "Claptrap name: " << _name << std::endl;
+    std::cout << "Hit points: " << _hitPoints << std::endl;
+    std::cout << "Energy points: " << _energyPoints << std::endl;
+    std::cout << "Attack damage: " << _attackDamage << std::endl;
 }

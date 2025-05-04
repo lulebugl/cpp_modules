@@ -38,7 +38,7 @@ void ScavTrap::attack(const std::string& target) {
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
     if (_debugMode) {
-        std::cout << "Default Scavtrap constructor called" << std::endl;
+        std::cout << "Scavtrap constructor called" << std::endl;
     }
     _hitPoints = 100;
     _energyPoints = 50;

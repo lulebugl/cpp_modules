@@ -23,7 +23,7 @@ void FragTrap::highFivesGuys() {
 }
 
 FragTrap::FragTrap(const std::string& name) : ClapTrap(name) {
-    std::cout << "Default FragTrap constructor called" << std::endl;
+    std::cout << "FragTrap constructor called" << std::endl;
     _hitPoints = 100;
     _energyPoints = 100;
     _attackDamage = 30;

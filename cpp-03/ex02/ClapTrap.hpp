@@ -26,12 +26,14 @@ class ClapTrap {
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
 
-    protected:
-     std::string  _name;
-     unsigned int _hitPoints;
-     unsigned int _energyPoints;
-     unsigned int _attackDamage;
-     static bool  _debugMode;
+    void displayStatus() const;
+
+   protected:
+    std::string  _name;
+    unsigned int _hitPoints;
+    unsigned int _energyPoints;
+    unsigned int _attackDamage;
+    static bool  _debugMode;
 };
 
 #endif

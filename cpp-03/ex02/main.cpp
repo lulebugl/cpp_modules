@@ -19,6 +19,11 @@ int main() {
     ScavTrap scav = ScavTrap("scav");
     FragTrap frag = FragTrap("frag");
 
+    std::cout << "\n";
+    scav.displayStatus();
+    std::cout << "\n";
+    frag.displayStatus();
+    std::cout << "\n";
     bob.attack("scav");
     bob.takeDamage(5);
     bob.beRepaired(10);
@@ -26,10 +31,10 @@ int main() {
     bob.beRepaired(5);
     scav.attack("bob");
     scav.guardGate();
-    frag.attack("scav");
     frag.highFivesGuys();
     frag.takeDamage(101);
     frag.highFivesGuys();
+    std::cout << "\n";
 
     return 0;
 }

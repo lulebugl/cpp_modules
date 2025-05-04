@@ -16,22 +16,17 @@ int main() {
     ClapTrap biz = ClapTrap("biz");
     ClapTrap lazar = ClapTrap("lazar");
 
+    std::cout << "\n";
     biz.attack("lazar");
     biz.takeDamage(5);
     biz.beRepaired(10);
     biz.takeDamage(-15);
     biz.beRepaired(5);
     lazar.attack("biz");
-    lazar.beRepaired(2);
-    lazar.beRepaired(3);
-    lazar.beRepaired(4);
-    lazar.beRepaired(5);
-    lazar.beRepaired(6);
-    lazar.beRepaired(7);
-    lazar.beRepaired(8);
-    lazar.beRepaired(9);
-    lazar.beRepaired(10);
-    lazar.beRepaired(11);
+    for (int i = 0; i <= 10; i++) {
+        lazar.beRepaired(i);
+    }
+    std::cout << "\n";
 
     return 0;
 }

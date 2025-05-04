@@ -22,14 +22,14 @@ void FragTrap::highFivesGuys() {
     }
 }
 
-FragTrap::FragTrap(const std::string& name) : ScavTrap(name) {
+FragTrap::FragTrap(const std::string& name) : ClapTrap(name) {
     std::cout << "Default FragTrap constructor called" << std::endl;
     _hitPoint = 100;
     _EnergyPoint = 100;
     _AttackDamage = 30;
 }
 
-FragTrap::FragTrap(const FragTrap& other) : ScavTrap(other) {
+FragTrap::FragTrap(const FragTrap& other) : ClapTrap(other) {
     std::cout << "Copy FragTrap constructor called" << std::endl;
 }
 

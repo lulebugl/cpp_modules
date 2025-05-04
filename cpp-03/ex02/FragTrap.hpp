@@ -15,9 +15,9 @@
 
 #include <string>
 
-#include "ScavTrap.hpp"
+#include "ClapTrap.hpp"
 
-class FragTrap : public ScavTrap {
+class FragTrap : public ClapTrap {
    public:
     explicit FragTrap(const std::string& name);
     FragTrap(const FragTrap& other);

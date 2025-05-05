@@ -13,13 +13,14 @@
 #ifndef SCAVTRAP_HPP
 #define SCAVTRAP_HPP
 
-#include <iostream>
+#include <string>
 
 #include "ClapTrap.hpp"
 
 class ScavTrap : public virtual ClapTrap {
    public:
-    explicit ScavTrap(std::string name);
+    ScavTrap();
+    ScavTrap(std::string name);
     ScavTrap(const ScavTrap& other);
     ScavTrap& operator=(const ScavTrap& other);
     ~ScavTrap();

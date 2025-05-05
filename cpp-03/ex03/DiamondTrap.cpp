@@ -14,6 +14,10 @@
 
 #include <iostream>
 
+DiamondTrap::DiamondTrap() : ClapTrap() {
+    std::cout << "Default Diamond constructor called" << std::endl;
+}
+
 DiamondTrap::DiamondTrap(const std::string& name)
     : ClapTrap(name + "_clap_name"), FragTrap(name), ScavTrap(name) {
     std::cout << "DiamondTrap constructor called" << std::endl;

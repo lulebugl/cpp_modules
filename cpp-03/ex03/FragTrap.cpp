@@ -14,6 +14,13 @@
 
 #include <iostream>
 
+FragTrap::FragTrap() : ClapTrap() {
+    std::cout << "Default FragTrap constructor called" << std::endl;
+    _hitPoints = 100;
+    _energyPoints = 100;
+    _attackDamage = 30;
+}
+
 void FragTrap::highFivesGuys() {
     if (_hitPoints > 0) {
         std::cout << _name << " got a positive high five request." << std::endl;

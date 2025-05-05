@@ -17,6 +17,7 @@
 
 class ClapTrap {
    public:
+    ClapTrap();
     ClapTrap(std::string name);
     ClapTrap(const ClapTrap& other);
     ClapTrap& operator=(const ClapTrap& other);
@@ -27,13 +28,13 @@ class ClapTrap {
     void beRepaired(unsigned int amount);
 
     void displayStatus() const;
-    
-    protected:
-     std::string  _name;
-     unsigned int _hitPoints;
-     unsigned int _energyPoints;
-     unsigned int _attackDamage;
-     static bool  _debugMode;
+
+   protected:
+    std::string  _name;
+    unsigned int _hitPoints;
+    unsigned int _energyPoints;
+    unsigned int _attackDamage;
+    static bool  _debugMode;
 };
 
 #endif

@@ -16,6 +16,13 @@
 
 #include "ClapTrap.hpp"
 
+ScavTrap::ScavTrap() : ClapTrap() {
+    std::cout << "Default ScavTrap constructor called" << std::endl;
+    _hitPoints = 100;
+    _energyPoints = 50;
+    _attackDamage = 20;
+}
+
 void ScavTrap::guardGate() {
     if (_hitPoints == 0) {
         std::cout << "Scavtrap " << _name << " is dead.\n";

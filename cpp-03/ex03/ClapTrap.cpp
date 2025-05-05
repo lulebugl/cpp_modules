@@ -13,6 +13,7 @@
 #include "ClapTrap.hpp"
 
 #include <iostream>
+#include <limits>
 
 bool ClapTrap::_debugMode = true;
 

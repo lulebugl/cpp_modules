@@ -14,8 +14,12 @@
 
 #include <iostream>
 
-DiamondTrap::DiamondTrap() : ClapTrap() {
+DiamondTrap::DiamondTrap() : ClapTrap("default_clap_name") {
     std::cout << "Default Diamond constructor called" << std::endl;
+    this->_name = "default";
+    this->_hitPoints = 100;
+    this->_energyPoints = 50;
+    this->_attackDamage = 30;
 }
 
 DiamondTrap::DiamondTrap(const std::string& name)

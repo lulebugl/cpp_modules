@@ -11,11 +11,14 @@
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
+#include <iostream>
 
 int main() {
     ClapTrap biz = ClapTrap("biz");
     ClapTrap lazar = ClapTrap("lazar");
 
+    std::cout << "\n";
+    biz.displayStatus();
     std::cout << "\n";
     biz.attack("lazar");
     biz.takeDamage(5);

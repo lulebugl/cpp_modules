@@ -51,7 +51,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& other) {
 
 ClapTrap::~ClapTrap() {
     if (_debugMode) {
-        std::cout << "Destructor called" << std::endl;
+        std::cout << "ClapTrap Destructor called" << std::endl;
     }
 }
 
@@ -101,4 +101,15 @@ void ClapTrap::beRepaired(unsigned int amount) {
     } else {
         std::cout << "ClapTrap " << _name << " has no energy left.\n";
     }
+}
+
+void ClapTrap::displayStatus() const {
+    if (_hitPoints <= 0) {
+        std::cout << _name << " is dead." << std::endl;
+        return;
+    }
+    std::cout << "ClapTrap name: " << _name << std::endl;
+    std::cout << "Hit points: " << _hitPoints << std::endl;
+    std::cout << "Energy points: " << _energyPoints << std::endl;
+    std::cout << "Attack damage: " << _attackDamage << std::endl;
 }

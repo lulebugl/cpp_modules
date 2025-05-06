@@ -27,6 +27,8 @@ class ClapTrap {
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
 
+    void displayStatus() const;
+
    private:
     std::string  _name;
     unsigned int _hitPoints;

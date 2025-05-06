@@ -17,7 +17,8 @@
 
 bool ClapTrap::_debugMode = true;
 
-ClapTrap::ClapTrap() : _name("default"), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
+ClapTrap::ClapTrap()
+    : _name("default"), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
     std::cout << "Default ClapTrap constructor called" << std::endl;
 }
 
@@ -28,11 +29,14 @@ ClapTrap::ClapTrap(std::string name)
     }
 }
 
-ClapTrap::ClapTrap(const ClapTrap& other) {
+ClapTrap::ClapTrap(const ClapTrap& other)
+    : _name(other._name),
+      _hitPoints(other._hitPoints),
+      _energyPoints(other._energyPoints),
+      _attackDamage(other._attackDamage) {
     if (_debugMode) {
         std::cout << "Copy constructor called" << std::endl;
     }
-    *this = other;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& other) {

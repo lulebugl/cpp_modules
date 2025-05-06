@@ -23,10 +23,10 @@ class ScavTrap : public virtual ClapTrap {
     ScavTrap(std::string name);
     ScavTrap(const ScavTrap& other);
     ScavTrap& operator=(const ScavTrap& other);
-    ~ScavTrap();
+    virtual ~ScavTrap();
 
     void guardGate();
-    void attack(const std::string& target);
+    virtual void attack(const std::string& target);
 };
 
 #endif

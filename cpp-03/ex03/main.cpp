@@ -10,21 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "DiamondTrap.hpp"
-
 #include <iostream>
 
+#include "DiamondTrap.hpp"
+
 int main() {
-    DiamondTrap diamond = DiamondTrap("diamond");
+    DiamondTrap echo = DiamondTrap("Echo");
 
     std::cout << "\n";
-    diamond.displayStatus();
-    
+    echo.displayStatus();
+
     std::cout << "\n";
-    diamond.whoAmI();
+    echo.whoAmI();
     std::cout << "\n";
-    
-    diamond.attack("john");
+
+    echo.attack("john");
     std::cout << "\n";
 
     return 0;

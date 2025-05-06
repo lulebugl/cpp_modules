@@ -14,17 +14,16 @@
 #include "ScavTrap.hpp"
 
 int main() {
-    ClapTrap biz = ClapTrap("biz");
-    ScavTrap karen = ScavTrap("karen");
+    ClapTrap Chirpy = ClapTrap("Chirpy");
+    ScavTrap Scrappy = ScavTrap("Scrappy");
 
     std::cout << "\n";
-    biz.attack("karen");
-    biz.takeDamage(5);
-    biz.beRepaired(10);
-    biz.takeDamage(-15);
-    biz.beRepaired(5);
-    karen.attack("biz");
-    karen.guardGate();
+    Chirpy.attack("some robots");
+    Chirpy.takeDamage(5);
+    Chirpy.beRepaired(10);
+    Chirpy.beRepaired(5);
+    Scrappy.attack("some other robots");
+    Scrappy.guardGate();
     std::cout << "\n";
 
     return 0;

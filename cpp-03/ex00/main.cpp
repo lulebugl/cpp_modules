@@ -14,20 +14,19 @@
 #include <iostream>
 
 int main() {
-    ClapTrap biz = ClapTrap("biz");
-    ClapTrap lazar = ClapTrap("lazar");
+    ClapTrap Chirpy = ClapTrap("Chirpy");
+    ClapTrap Zippy = ClapTrap("Zippy");
 
     std::cout << "\n";
-    biz.displayStatus();
+    Chirpy.displayStatus();
     std::cout << "\n";
-    biz.attack("lazar");
-    biz.takeDamage(5);
-    biz.beRepaired(10);
-    biz.takeDamage(-15);
-    biz.beRepaired(5);
-    lazar.attack("biz");
+    Chirpy.attack("WX-777");
+    Chirpy.takeDamage(5);
+    Chirpy.beRepaired(10);
+    Chirpy.beRepaired(5);
+    Zippy.attack("WX-777");
     for (int i = 0; i <= 10; i++) {
-        lazar.beRepaired(i);
+        Zippy.beRepaired(i);
     }
     std::cout << "\n";
 

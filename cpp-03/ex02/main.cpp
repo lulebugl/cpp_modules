@@ -14,26 +14,27 @@
 #include "FragTrap.hpp"
 #include "ScavTrap.hpp"
 
+#include <iostream>
+
 int main() {
-    ClapTrap bob = ClapTrap("bob");
-    ScavTrap scav = ScavTrap("scav");
-    FragTrap frag = FragTrap("frag");
+    ClapTrap Zippy = ClapTrap("Zippy");
+    ScavTrap Rusty = ScavTrap("Rusty");
+    FragTrap Kaboom = FragTrap("Kaboom");
 
     std::cout << "\n";
-    scav.displayStatus();
+    Rusty.displayStatus();
     std::cout << "\n";
-    frag.displayStatus();
+    Kaboom.displayStatus();
     std::cout << "\n";
-    bob.attack("scav");
-    bob.takeDamage(5);
-    bob.beRepaired(10);
-    bob.takeDamage(-15);
-    bob.beRepaired(5);
-    scav.attack("bob");
-    scav.guardGate();
-    frag.highFivesGuys();
-    frag.takeDamage(101);
-    frag.highFivesGuys();
+    Zippy.attack("Rusty");
+    Zippy.takeDamage(5);
+    Zippy.beRepaired(10);
+    Zippy.beRepaired(5);
+    Rusty.attack("Zippy");
+    Rusty.guardGate();
+    Kaboom.highFivesGuys();
+    Kaboom.takeDamage(101);
+    Kaboom.highFivesGuys();
     std::cout << "\n";
 
     return 0;

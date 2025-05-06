@@ -105,7 +105,7 @@ ClapTrap::~ClapTrap() {
 
 void ClapTrap::displayStatus() const {
     if (_hitPoints <= 0) {
-        std::cout << _name << " is dead.";
+        std::cout << _name << " is dead." << std::endl;
         return;
     }
     std::cout << "ClapTrap name: " << _name << std::endl;

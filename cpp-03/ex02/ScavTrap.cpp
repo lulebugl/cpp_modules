@@ -25,7 +25,7 @@ ScavTrap::ScavTrap() : ClapTrap() {
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
     if (_debugMode) {
-        std::cout << "Scavtrap constructor called" << std::endl;
+        std::cout << "ScavTrap constructor called" << std::endl;
     }
     _hitPoints = 100;
     _energyPoints = 50;
@@ -34,7 +34,7 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
 
 ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other) {
     if (_debugMode) {
-        std::cout << "Copy Scavtrap constructor called" << std::endl;
+        std::cout << "Copy ScavTrap constructor called" << std::endl;
     }
 }
 
@@ -53,26 +53,26 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
 
 ScavTrap::~ScavTrap() {
     if (_debugMode) {
-        std::cout << "Scavtrap Destructor called" << std::endl;
+        std::cout << "ScavTrap Destructor called" << std::endl;
     }
 }
 
 void ScavTrap::guardGate() {
     if (_hitPoints == 0) {
-        std::cout << "Scavtrap " << _name << " is dead.\n";
+        std::cout << "ScavTrap " << _name << " is dead.\n";
         return;
     }
-    std::cout << "Scavtrap " << _name << " is now in gate keeper mode.\n";
+    std::cout << "ScavTrap " << _name << " is now in gate keeper mode.\n";
 }
 
 void ScavTrap::attack(const std::string& target) {
     if (_energyPoints > 0 && _hitPoints > 0) {
-        std::cout << "Scavtrap " << _name << " attacks " << target
+        std::cout << "ScavTrap " << _name << " attacks " << target
                   << ", causing " << _attackDamage << " points of damage!\n";
         _energyPoints--;
     } else if (_hitPoints > 0) {
-        std::cout << "Scavtrap " << _name << " has no energy left.\n";
+        std::cout << "ScavTrap " << _name << " has no energy left.\n";
     } else {
-        std::cout << "Scavtrap " << _name << " is dead.\n";
+        std::cout << "ScavTrap " << _name << " is dead.\n";
     }
 }

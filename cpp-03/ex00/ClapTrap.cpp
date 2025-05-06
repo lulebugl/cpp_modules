@@ -18,13 +18,13 @@ bool ClapTrap::_debugMode = true;
 
 ClapTrap::ClapTrap()
     : _name("default"), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
-    std::cout << "Default Claptrap constructor called" << std::endl;
+    std::cout << "Default ClapTrap constructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name)
     : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
     if (_debugMode) {
-        std::cout << "Default constructor called" << std::endl;
+        std::cout << "ClapTrap constructor called" << std::endl;
     }
 }
 
@@ -72,11 +72,11 @@ void ClapTrap::takeDamage(unsigned int amount) {
         return;
     }
     if (_hitPoints <= amount) {
-        std::cout << "Claptrap " << _name << " took " << amount << " damage.\n";
+        std::cout << "ClapTrap " << _name << " took " << amount << " damage.\n";
         _hitPoints = 0;
         std::cout << "ClapTrap " << _name << " is dead.\n";
     } else {
-        std::cout << "Claptrap " << _name << " took " << amount << " damage.\n";
+        std::cout << "ClapTrap " << _name << " took " << amount << " damage.\n";
         _hitPoints -= amount;
     }
 }

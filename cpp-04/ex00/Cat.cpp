@@ -14,29 +14,24 @@
 
 #include <iostream>
 
-Cat::Cat() : Animal()
-{
+Cat::Cat() : Animal() {
     std::cout << "Default Cat constructor called" << std::endl;
     _type = "Cat";
 }
 
-Cat::Cat(const Cat &other)
-{
+void Cat::makeSound() const { std::cout << "Meooow" << std::endl; }
+
+Cat::Cat(const Cat& other) : Animal() {
     std::cout << "Cat Copy constructor called" << std::endl;
-    (void) other;
+    *this = other;
 }
 
-Cat &Cat::operator=(const Cat &other)
-{
+Cat& Cat::operator=(const Cat& other) {
     std::cout << "Cat Assignment operator called" << std::endl;
-    if (this != &other)
-    {
-        // Copy member variables here
+    if (this != &other) {
+        this->_type = other._type;
     }
     return (*this);
 }
 
-Cat::~Cat()
-{
-    std::cout << "Cat Destructor called" << std::endl;
-}
+Cat::~Cat() { std::cout << "Cat Destructor called" << std::endl; }

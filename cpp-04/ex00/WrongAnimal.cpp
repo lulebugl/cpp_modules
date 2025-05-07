@@ -14,28 +14,27 @@
 
 #include <iostream>
 
-WrongAnimal::WrongAnimal()
-{
+WrongAnimal::WrongAnimal() {
     std::cout << "Default WrongAnimal constructor called" << std::endl;
 }
 
-WrongAnimal::WrongAnimal(const WrongAnimal &other)
-{
+WrongAnimal::WrongAnimal(const WrongAnimal& other) {
     std::cout << "WrongAnimal Copy constructor called" << std::endl;
-    (void) other;
+    (void)other;
 }
 
-WrongAnimal &WrongAnimal::operator=(const WrongAnimal &other)
-{
+WrongAnimal& WrongAnimal::operator=(const WrongAnimal& other) {
     std::cout << "WrongAnimal Assignment operator called" << std::endl;
-    if (this != &other)
-    {
+    if (this != &other) {
         // Copy member variables here
     }
     return (*this);
 }
 
-WrongAnimal::~WrongAnimal()
-{
+WrongAnimal::~WrongAnimal() {
     std::cout << "WrongAnimal Destructor called" << std::endl;
+}
+
+void WrongAnimal::makeSound() const {
+    std::cout << "Unknown animal makes a weird sound!" << std::endl;
 }

@@ -22,7 +22,11 @@ class WrongAnimal
         WrongAnimal &operator=(const WrongAnimal &other);
         ~WrongAnimal();
         
-    private:
+        std::string  getType() const;
+        void makeSound() const;
+    
+       protected:
+        std::string _type;
 };
 
 #endif

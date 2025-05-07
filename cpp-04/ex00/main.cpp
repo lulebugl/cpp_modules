@@ -24,7 +24,7 @@ int main() {
     const Animal* cat = new Cat();
 
     std::cout << "\n";
-    
+
     std::cout << dog->getType() << " " << std::endl;
     std::cout << cat->getType() << " " << std::endl;
     cat->makeSound();
@@ -35,7 +35,7 @@ int main() {
     const WrongAnimal* unicorn = new WrongCat();
     unicorn->makeSound();
     std::cout << "\n";
-    
+
     delete meta;
     delete dog;
     delete cat;

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   WrongAnimal.cpp                                    :+:      :+:    :+:   */
+/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llebugle <llebugle@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,31 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "WrongAnimal.hpp"
+#ifndef WRONGANIMAL_HPP
+#define WRONGANIMAL_HPP
+#include <string>
 
-#include <iostream>
+class WrongAnimal {
+   public:
+    WrongAnimal();
+    WrongAnimal(const WrongAnimal& other);
+    WrongAnimal& operator=(const WrongAnimal& other);
+    ~WrongAnimal();
 
-WrongAnimal::WrongAnimal() {
-    std::cout << "Default WrongAnimal constructor called" << std::endl;
-}
+    std::string getType() const;
+    void        makeSound() const;
 
-WrongAnimal::WrongAnimal(const WrongAnimal& other) {
-    std::cout << "WrongAnimal Copy constructor called" << std::endl;
-    *this = other;
-}
+   protected:
+    std::string _type;
+};
 
-WrongAnimal& WrongAnimal::operator=(const WrongAnimal& other) {
-    std::cout << "WrongAnimal Assignment operator called" << std::endl;
-    if (this != &other) {
-        this->_type = other._type;
-    }
-    return (*this);
-}
-
-WrongAnimal::~WrongAnimal() {
-    std::cout << "WrongAnimal Destructor called" << std::endl;
-}
-
-void WrongAnimal::makeSound() const {
-    std::cout << "Unknown animal makes a weird sound!" << std::endl;
-}
+#endif

@@ -63,22 +63,22 @@ EOL
     (create_header "$capClass" "cpp"; cat << EOL
 #include "$capClass.hpp"
 
-#include <iostream>
+#include "Logger.hpp"
 
 $capClass::$capClass()
 {
-    std::cout << "Default $capClass constructor called" << std::endl;
+    LOG_DEBUG("Default $capClass constructor called");
 }
 
 $capClass::$capClass(const $capClass &other)
 {
-    std::cout << "$capClass Copy constructor called" << std::endl;
+    LOG_DEBUG("$capClass Copy constructor called");
     (void) other;
 }
 
 $capClass &$capClass::operator=(const $capClass &other)
 {
-    std::cout << "$capClass Assignment operator called" << std::endl;
+    LOG_DEBUG("$capClass Assignment operator called");
     if (this != &other)
     {
         // Copy member variables here
@@ -88,7 +88,7 @@ $capClass &$capClass::operator=(const $capClass &other)
 
 $capClass::~$capClass()
 {
-    std::cout << "$capClass Destructor called" << std::endl;
+    LOG_DEBUG("$capClass Destructor called");
 }
 EOL
 ) > $cpp

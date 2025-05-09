@@ -24,9 +24,8 @@ class Animal {
 
     std::string         getType() const;
     virtual void        makeSound() const;
-    virtual void        setIdea(const std::string& idea, int idx);
-    virtual std::string getIdea(int idx) const;
-    virtual void        showBrain() const;
+    virtual void        setIdea(const std::string& idea, int idx) = 0;
+    virtual std::string getIdea(int idx) const = 0;
 
    protected:
     std::string _type;

@@ -55,4 +55,5 @@ void Dog::showBrain() const {
             std::cout << "- " << currentIdea << "\n";
         }
     }
+    std::cout << "\n";
 }

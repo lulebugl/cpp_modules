@@ -19,8 +19,6 @@ Cat::Cat() : Animal(), _brain(new Brain) {
     _type = "Cat";
 }
 
-void Cat::makeSound() const { std::cout << "Meooow" << std::endl; }
-
 Cat::Cat(const Cat& other) : Animal(other) {
     std::cout << "Cat Copy constructor called" << std::endl;
     _brain = new Brain(*other._brain);
@@ -41,6 +39,8 @@ Cat::~Cat() {
     std::cout << "Cat Destructor called" << std::endl;
     delete _brain;
 }
+
+void Cat::makeSound() const { std::cout << "Meooow" << std::endl; }
 
 void Cat::setIdea(const std::string& idea, int idx) {
     _brain->setIdea(idea, idx);

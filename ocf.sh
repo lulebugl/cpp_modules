@@ -83,7 +83,7 @@ $capClass &$capClass::operator=(const $capClass &other)
     {
         // Copy member variables here
     }
-    return (*this);
+    return *this;
 }
 
 $capClass::~$capClass()

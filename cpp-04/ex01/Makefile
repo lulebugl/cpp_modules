@@ -13,7 +13,8 @@
 NAME = animals
 
 FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
-SRCS = Animal.cpp Brain.cpp Cat.cpp Dog.cpp main.cpp WrongAnimal.cpp WrongCat.cpp 
+SRCS = Animal.cpp Brain.cpp Cat.cpp Dog.cpp main.cpp WrongAnimal.cpp WrongCat.cpp \
+		Logger.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

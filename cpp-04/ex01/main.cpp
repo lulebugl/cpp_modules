@@ -12,11 +12,13 @@
 
 #include <iostream>
 #include <sstream>
+
 #include "Animal.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
 #include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
+#include "Logger.hpp"
 
 void testAnimalArray() {
     std::cout << "\n===== Animal Array Test =====\n" << std::endl;
@@ -101,17 +103,24 @@ void testDeepCopy() {
 }
 
 int main() {
-    try {
-        testAnimalArray();
-    } catch (const std::exception& e) {
-        std::cerr << "Exception occurred in testAnimalA: " << e.what()
-                  << std::endl;
-    }
-    try {
-        testDeepCopy();
-    } catch (const std::exception& e) {
-        std::cerr << "Exception occurred in testDeepCopy: " << e.what()
-                  << std::endl;
-    }
+    Logger::setLevel(LOG_LEVEL_DEBUG);
+    Logger::setLevel(LOG_LEVEL_INFO);
+    Logger::setLevel(LOG_LEVEL_DEBUG);
+    
+    const WrongAnimal* test = new WrongCat();
+
+    delete test;
+    // try {
+    //     testAnimalArray();
+    // } catch (const std::exception& e) {
+    //     std::cerr << "Exception occurred in testAnimalA: " << e.what()
+    //               << std::endl;
+    // }
+    // try {
+    //     testDeepCopy();
+    // } catch (const std::exception& e) {
+    //     std::cerr << "Exception occurred in testDeepCopy: " << e.what()
+    //               << std::endl;
+    // }
     return 0;
 }

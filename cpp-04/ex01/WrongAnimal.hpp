@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llebugle <llebugle@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 20:12:14 by llebugle          #+#    #+#             */
-/*   Updated: 2025/05/06 20:12:14 by llebugle         ###   ########.fr       */
+/*   Created: 2025/05/09 19:54:40 by llebugle          #+#    #+#             */
+/*   Updated: 2025/05/09 19:54:40 by llebugle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ class WrongAnimal {
     WrongAnimal();
     WrongAnimal(const WrongAnimal& other);
     WrongAnimal& operator=(const WrongAnimal& other);
-    ~WrongAnimal();
+    virtual ~WrongAnimal();
 
-    std::string getType() const;
-    void        makeSound() const;
+    std::string         getType() const;
+    virtual void        makeSound() const;
+    virtual void        setIdea(const std::string& idea, int idx) = 0;
+    virtual std::string getIdea(int idx) const = 0;
 
    protected:
     std::string _type;

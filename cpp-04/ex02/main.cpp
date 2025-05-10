@@ -17,6 +17,7 @@
 #include "Cat.hpp"
 #include "Dog.hpp"
 #include "Logger.hpp"
+#include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
 
 void testAnimalArray() {
@@ -129,6 +130,10 @@ void testShallowCopy() {
 
 int main() {
     Logger::setLevel(LOG_LEVEL_INFO);
+
+    const WrongAnimal* test = new WrongCat();
+    new Animal* test1 = new Animal(); 
+    delete test;
 
     testAnimalArray();
     testDeepCopy();

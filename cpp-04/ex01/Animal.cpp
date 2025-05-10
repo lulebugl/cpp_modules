@@ -14,24 +14,26 @@
 
 #include <iostream>
 
+#include "Logger.hpp"
+
 Animal::Animal() : _type("Unknown") {
-    std::cout << "Default Animal constructor called" << std::endl;
+    LOG_DEBUG("Default Animal constructor called");
 }
 
 Animal::Animal(const Animal& other) {
-    std::cout << "Animal Copy constructor called" << std::endl;
+    LOG_DEBUG("Animal Copy constructor called");
     *this = other;
 }
 
 Animal& Animal::operator=(const Animal& other) {
-    std::cout << "Animal Assignment operator called" << std::endl;
+    LOG_DEBUG("Animal Assignment operator called");
     if (this != &other) {
         this->_type = other._type;
     }
     return (*this);
 }
 
-Animal::~Animal() { std::cout << "Animal Destructor called" << std::endl; }
+Animal::~Animal() { LOG_DEBUG("Animal Destructor called"); }
 
 std::string Animal::getType() const { return _type; }
 

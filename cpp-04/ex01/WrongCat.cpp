@@ -25,20 +25,21 @@ WrongCat::WrongCat() : WrongAnimal(), _brain(new Brain) {
 
 WrongCat::WrongCat(const WrongCat& other) : WrongAnimal(other) {
     LOG_DEBUG("WrongCat Copy constructor called");
-    (void)other;
+    _brain = other._brain;
 }
 
 WrongCat& WrongCat::operator=(const WrongCat& other) {
     LOG_DEBUG("WrongCat Assignment operator called");
     if (this != &other) {
-        // Copy member variables here
+        WrongAnimal::operator=(other);
+        this->_brain = other._brain;
     }
-    return (*this);
+    return *this;
 }
 
 WrongCat::~WrongCat() {
     LOG_DEBUG("WrongCat Destructor called");
-    delete _brain;
+    // delete _brain; double free if shared brain
 }
 
 void WrongCat::makeSound() const { std::cout << "Meooow" << std::endl; }

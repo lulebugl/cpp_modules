@@ -13,21 +13,24 @@
 #include "Brain.hpp"
 
 #include <iostream>
+#include <sstream>
+
+#include "Logger.hpp"
 
 Brain::Brain() {
-    std::cout << "Default Brain constructor called" << std::endl;
+    LOG_DEBUG("Default Brain constructor called");
     for (int i = 0; i < IDEAS_COUNT; i++) {
         _ideas[i] = "";
     }
 }
 
 Brain::Brain(const Brain& other) {
-    std::cout << "Brain Copy constructor called" << std::endl;
+    LOG_DEBUG("Brain Copy constructor called");
     *this = other;
 }
 
 Brain& Brain::operator=(const Brain& other) {
-    std::cout << "Brain Assignment operator called" << std::endl;
+    LOG_DEBUG("Brain Assignment operator called");
     if (this != &other) {
         for (int i = 0; i < IDEAS_COUNT; i++) {
             this->_ideas[i] = other._ideas[i];
@@ -36,19 +39,25 @@ Brain& Brain::operator=(const Brain& other) {
     return (*this);
 }
 
-Brain::~Brain() { std::cout << "Brain Destructor called" << std::endl; }
+Brain::~Brain() { LOG_DEBUG("Brain Destructor called"); }
 
 void Brain::setIdea(const std::string& idea, int idx) {
     if (idea.empty()) return;
     if (idx < 0 || idx >= IDEAS_COUNT) {
-        throw std::out_of_range("Index out of range");
+        std::stringstream ss;
+        ss << "Idea index out of range: " << idx;
+        LOG_ERROR(ss.str());
+        return ;
     }
     _ideas[idx] = idea;
 }
 
 std::string Brain::getIdea(int idx) const {
     if (idx < 0 || idx >= IDEAS_COUNT) {
-        throw std::out_of_range("Index out of range");
+        std::stringstream ss;
+        ss << "Idea index out of range: " << idx;
+        LOG_ERROR(ss.str());
+        return "";
     }
     return _ideas[idx];
 }

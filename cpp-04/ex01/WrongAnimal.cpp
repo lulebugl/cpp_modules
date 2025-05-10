@@ -30,7 +30,7 @@ WrongAnimal& WrongAnimal::operator=(const WrongAnimal& other) {
     if (this != &other) {
         this->_type = other._type;
     }
-    return (*this);
+    return *this;
 }
 
 WrongAnimal::~WrongAnimal() { LOG_DEBUG("WrongAnimal Destructor called"); }

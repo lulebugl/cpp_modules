@@ -13,6 +13,7 @@
 #ifndef LOGGER_HPP
 #define LOGGER_HPP
 
+#include <sstream>
 #include <string>
 
 enum LogLevel {
@@ -25,6 +26,13 @@ enum LogLevel {
 
 class Logger {
    public:
+    static const char* RESET;
+    static const char* GREEN;
+    static const char* BLUE;
+    static const char* YELLOW;
+    static const char* RED;
+    static const char* PURPLE;
+
     Logger();
     Logger(const Logger& other);
     Logger& operator=(const Logger& other);
@@ -34,6 +42,7 @@ class Logger {
     static LogLevel getLevel();
 
     static void log(LogLevel level, const std::string& message);
+    static void log(LogLevel level, const std::stringstream& message);
 
     static void debug(const std::string& message);
     static void info(const std::string& message);
@@ -46,24 +55,32 @@ class Logger {
     static LogLevel _currentLevel;
 };
 
-#define LOG_DEBUG(msg)                           \
+#define LOG_DEBUG(msg_expr)                      \
     if (Logger::getLevel() <= LOG_LEVEL_DEBUG) { \
-        Logger::debug(msg);                      \
+        std::stringstream ss_debug;              \
+        ss_debug << msg_expr;                    \
+        Logger::debug(ss_debug.str());           \
     }
 
-#define LOG_INFO(msg)                           \
+#define LOG_INFO(msg_expr)                      \
     if (Logger::getLevel() <= LOG_LEVEL_INFO) { \
-        Logger::info(msg);                      \
+        std::stringstream ss_info;              \
+        ss_info << msg_expr;                    \
+        Logger::info(ss_info.str());            \
     }
 
-#define LOG_WARNING(msg)                           \
+#define LOG_WARNING(msg_expr)                      \
     if (Logger::getLevel() <= LOG_LEVEL_WARNING) { \
-        Logger::warning(msg);                      \
+        std::stringstream ss_warning;              \
+        ss_warning << msg_expr;                    \
+        Logger::warning(ss_warning.str());         \
     }
 
-#define LOG_ERROR(msg)                           \
+#define LOG_ERROR(msg_expr)                      \
     if (Logger::getLevel() <= LOG_LEVEL_ERROR) { \
-        Logger::error(msg);                      \
+        std::stringstream ss_error;              \
+        ss_error << msg_expr;                    \
+        Logger::error(ss_error.str());           \
     }
 
 #endif

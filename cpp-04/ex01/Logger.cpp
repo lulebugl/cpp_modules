@@ -16,63 +16,63 @@
 
 #include "Logger.hpp"
 
-LogLevel Logger::_currentLevel = LOG_LEVEL_INFO;
+const char* Logger::RESET = "\033[0m";
+const char* Logger::GREEN = "\033[32m";
+const char* Logger::BLUE = "\033[34m";
+const char* Logger::YELLOW = "\033[33m";
+const char* Logger::RED = "\033[31m";
+const char* Logger::PURPLE = "\033[36m";
 
-Logger::Logger() {
-    std::cout << "Default Logger constructor called" << std::endl;
-}
+LogLevel Logger::_currentLevel = LOG_LEVEL_DEBUG;
 
-Logger::Logger(const Logger& other) {
-    std::cout << "Logger Copy constructor called" << std::endl;
-    (void)other;
-}
-
+Logger::Logger() {}
+Logger::Logger(const Logger& other) { (void)other; }
 Logger& Logger::operator=(const Logger& other) {
-    LOG_DEBUG("Logger Assignment operator called");
-    if (this != &other) {
-    }
+    (void)other;
     return (*this);
 }
+Logger::~Logger() {}
 
-Logger::~Logger() { std::cout << "Logger Destructor called" << std::endl; }
-
-void Logger::setLevel(LogLevel level) { _currentLevel = level; }
-
+void     Logger::setLevel(LogLevel level) { _currentLevel = level; }
 LogLevel Logger::getLevel() { return _currentLevel; }
 
 std::string Logger::getLevelName(LogLevel level) {
     switch (level) {
-        case LOG_LEVEL_DEBUG:
-            return "DEBUG";
-        case LOG_LEVEL_INFO:
-            return "INFO";
-        case LOG_LEVEL_WARNING:
-            return "WARNING";
-        case LOG_LEVEL_ERROR:
-            return "ERROR";
-        case LOG_LEVEL_NONE:
-            return "NONE";
-        default:
-            return "UNKNOWN";
+        case LOG_LEVEL_DEBUG: return "DEBUG";
+        case LOG_LEVEL_INFO: return "INFO";
+        case LOG_LEVEL_WARNING: return "WARNING";
+        case LOG_LEVEL_ERROR: return "ERROR";
+        case LOG_LEVEL_NONE: return "NONE";
+        default: return "UNKNOWN";
     }
 }
 
 void Logger::log(LogLevel level, const std::string& message) {
-    if (level >= _currentLevel && level < LOG_LEVEL_NONE) {
-        std::cout << "[" << getLevelName(level) << "] " << message << std::endl;
+    if (level < _currentLevel || level >= LOG_LEVEL_NONE) {
+        return;
     }
+
+    switch (level) {
+        case LOG_LEVEL_DEBUG: break;
+        case LOG_LEVEL_INFO: break;
+        case LOG_LEVEL_WARNING: {
+            std::cout << YELLOW;
+            break;
+        }
+        case LOG_LEVEL_ERROR: {
+            std::cout << RED;
+            break;
+        }
+        default: break;
+    }
+    std::cout << "[" << getLevelName(level) << "] " << message << RESET
+              << std::endl;
 }
 
 void Logger::debug(const std::string& message) {
     log(LOG_LEVEL_DEBUG, message);
 }
 
-void Logger::info(const std::string& message) { log(LOG_LEVEL_INFO, message); }
-
-void Logger::warning(const std::string& message) {
-    log(LOG_LEVEL_WARNING, message);
-}
-
-void Logger::error(const std::string& message) {
-    log(LOG_LEVEL_ERROR, message);
-}
+void Logger::info(const std::string& msg) { log(LOG_LEVEL_INFO, msg); }
+void Logger::warning(const std::string& msg) { log(LOG_LEVEL_WARNING, msg); }
+void Logger::error(const std::string& msg) { log(LOG_LEVEL_ERROR, msg); }

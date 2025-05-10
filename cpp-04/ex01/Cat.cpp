@@ -14,18 +14,20 @@
 
 #include <iostream>
 
+#include "Logger.hpp"
+
 Cat::Cat() : Animal(), _brain(new Brain) {
-    std::cout << "Default Cat constructor called" << std::endl;
+    LOG_DEBUG("Default Cat constructor called");
     _type = "Cat";
 }
 
 Cat::Cat(const Cat& other) : Animal(other) {
-    std::cout << "Cat Copy constructor called" << std::endl;
+    LOG_DEBUG("Cat Copy constructor called");
     _brain = new Brain(*other._brain);
 }
 
 Cat& Cat::operator=(const Cat& other) {
-    std::cout << "Cat Assignment operator called" << std::endl;
+    LOG_DEBUG("Cat Assignment operator called");
     if (this != &other) {
         Brain*  newBrain = new Brain(*other._brain);
         Animal::operator=(other);
@@ -36,7 +38,7 @@ Cat& Cat::operator=(const Cat& other) {
 }
 
 Cat::~Cat() {
-    std::cout << "Cat Destructor called" << std::endl;
+    LOG_DEBUG("Cat Destructor called");
     delete _brain;
 }
 
@@ -55,5 +57,4 @@ void Cat::showBrain() const {
             std::cout << "- " << currentIdea << "\n";
         }
     }
-    std::cout << "\n";
 }

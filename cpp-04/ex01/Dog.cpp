@@ -14,18 +14,20 @@
 
 #include <iostream>
 
+#include "Logger.hpp"
+
 Dog::Dog() : Animal(), _brain(new Brain) {
-    std::cout << "Default Dog constructor called" << std::endl;
+    LOG_DEBUG("Default Dog constructor called");
     _type = "Dog";
 }
 
 Dog::Dog(const Dog& other) : Animal(other) {
-    std::cout << "Dog Copy constructor called" << std::endl;
+    LOG_DEBUG("Dog Copy constructor called");
     _brain = new Brain(*other._brain);
 }
 
 Dog& Dog::operator=(const Dog& other) {
-    std::cout << "Dog Assignment operator called" << std::endl;
+    LOG_DEBUG("Dog Assignment operator called");
     if (this != &other) {
         Brain*  newBrain = new Brain(*other._brain);
         Animal::operator=(other);
@@ -36,7 +38,7 @@ Dog& Dog::operator=(const Dog& other) {
 }
 
 Dog::~Dog() {
-    std::cout << "Dog Destructor called" << std::endl;
+    LOG_DEBUG("Dog Destructor called");
     delete _brain;
 }
 

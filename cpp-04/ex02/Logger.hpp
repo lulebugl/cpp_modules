@@ -38,8 +38,9 @@ class Logger {
     Logger& operator=(const Logger& other);
     ~Logger();
 
-    static void     setLevel(LogLevel level);
     static LogLevel getLevel();
+    static void     setLevel(LogLevel level);
+    static void     enableColors(bool enableColors);
 
     static void log(LogLevel level, const std::string& message);
     static void log(LogLevel level, const std::stringstream& message);
@@ -53,6 +54,7 @@ class Logger {
 
    private:
     static LogLevel _currentLevel;
+    static bool     _useColors;
 };
 
 #define LOG_DEBUG(msg_expr)                      \

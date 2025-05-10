@@ -24,6 +24,7 @@ const char* Logger::RED = "\033[31m";
 const char* Logger::PURPLE = "\033[36m";
 
 LogLevel Logger::_currentLevel = LOG_LEVEL_DEBUG;
+bool     Logger::_useColors = true;
 
 Logger::Logger() {}
 Logger::Logger(const Logger& other) { (void)other; }
@@ -33,8 +34,9 @@ Logger& Logger::operator=(const Logger& other) {
 }
 Logger::~Logger() {}
 
-void     Logger::setLevel(LogLevel level) { _currentLevel = level; }
 LogLevel Logger::getLevel() { return _currentLevel; }
+void     Logger::setLevel(LogLevel level) { _currentLevel = level; }
+void     Logger::enableColors(bool enableColors) { _useColors = enableColors; }
 
 std::string Logger::getLevelName(LogLevel level) {
     switch (level) {
@@ -48,25 +50,32 @@ std::string Logger::getLevelName(LogLevel level) {
 }
 
 void Logger::log(LogLevel level, const std::string& message) {
-    if (level < _currentLevel || level >= LOG_LEVEL_NONE) {
+    if (level < _currentLevel || level >= LOG_LEVEL_NONE || message.empty()) {
         return;
     }
 
-    switch (level) {
-        case LOG_LEVEL_DEBUG: break;
-        case LOG_LEVEL_INFO: break;
-        case LOG_LEVEL_WARNING: {
-            std::cout << YELLOW;
-            break;
+    if (_useColors) {
+        switch (level) {
+            case LOG_LEVEL_DEBUG: {
+                std::cout << BLUE;
+                break;
+            }
+            case LOG_LEVEL_INFO: break;
+            case LOG_LEVEL_WARNING: {
+                std::cout << YELLOW;
+                break;
+            }
+            case LOG_LEVEL_ERROR: {
+                std::cout << RED;
+                break;
+            }
+            default: break;
         }
-        case LOG_LEVEL_ERROR: {
-            std::cout << RED;
-            break;
-        }
-        default: break;
+        std::cout << "[" << getLevelName(level) << "] " << RESET << message;
+    } else {
+        std::cout << "[" << getLevelName(level) << "] " << message;
     }
-    std::cout << "[" << getLevelName(level) << "] " << message << RESET
-              << std::endl;
+    std::cout << "\n";
 }
 
 void Logger::debug(const std::string& message) {

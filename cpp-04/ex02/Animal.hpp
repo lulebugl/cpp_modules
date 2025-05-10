@@ -15,11 +15,8 @@
 
 #include <string>
 
-class Animal  {
+class Animal {
    public:
-    Animal();
-    Animal(const Animal& other);
-    Animal& operator=(const Animal& other);
     virtual ~Animal();
 
     std::string         getType() const;
@@ -28,6 +25,10 @@ class Animal  {
     virtual std::string getIdea(int idx) const = 0;
 
    protected:
+    Animal();
+    Animal(const Animal& other);
+    Animal& operator=(const Animal& other);
+
     std::string _type;
 };
 

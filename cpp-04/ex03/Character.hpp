@@ -18,15 +18,25 @@
 #include <string>
 
 #include "AMateria.hpp"
+#include "includes/ICharacter.hpp"
 
-class Character {
+class Character : public ICharacter {
    public:
+    static const int INVENTORY_SLOTS = 4;
     Character();
+    Character(const std::string& name);
     Character(const Character& other);
     Character& operator=(const Character& other);
     ~Character();
 
+    std::string const& getName() const;
+    void               equip(AMateria* m);
+    void               unequip(int idx);
+    void               use(int idx, ICharacter& target);
+
    private:
+    std::string _name;
+    AMateria*   _inventory[INVENTORY_SLOTS];
 };
 
 #endif

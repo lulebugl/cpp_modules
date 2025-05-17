@@ -13,6 +13,7 @@
 #include "Ice.hpp"
 
 #include "Logger.hpp"
+#include <iostream>
 
 Ice::Ice() : AMateria() {
     LOG_DEBUG("Default Ice constructor called");
@@ -35,3 +36,7 @@ Ice& Ice::operator=(const Ice& other) {
 Ice::~Ice() { LOG_DEBUG("Ice Destructor called"); }
 
 AMateria* Ice::clone() const { return new Ice(); }
+
+void Ice::use(ICharacter& target) {
+    std::cout << "* shoots an ice bolt at "<< target.getName() <<" *\n"; 
+}

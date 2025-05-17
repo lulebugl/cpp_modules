@@ -14,6 +14,7 @@
 
 #include "AMateria.hpp"
 #include "Logger.hpp"
+#include <iostream>
 
 Cure::Cure() : AMateria() {
     LOG_DEBUG("Default Cure constructor called");
@@ -36,3 +37,7 @@ Cure& Cure::operator=(const Cure& other) {
 Cure::~Cure() { LOG_DEBUG("Cure Destructor called"); }
 
 AMateria* Cure::clone() const { return new Cure(); }
+
+void Cure::use(ICharacter& target) {
+    std::cout << "* heals " << target.getName() << "’s wounds *\n"; 
+}

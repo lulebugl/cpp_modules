@@ -16,6 +16,7 @@
 #include <string>
 
 #include "AMateria.hpp"
+#include "includes/ICharacter.hpp"
 
 class Ice : public AMateria {
    public:
@@ -25,6 +26,7 @@ class Ice : public AMateria {
     ~Ice();
 
     AMateria* clone() const;
+    void      use(ICharacter& target);
 
    private:
 };

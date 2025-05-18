@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once 
 #ifndef IMATERIASOURCE_HPP
 #define IMATERIASOURCE_HPP
 

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
 #ifndef ICHARACTER_HPP
 #define ICHARACTER_HPP
 

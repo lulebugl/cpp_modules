@@ -13,8 +13,6 @@
 #ifndef CURE_HPP
 #define CURE_HPP
 
-#include <string>
-
 #include "AMateria.hpp"
 #include "includes/ICharacter.hpp"
 

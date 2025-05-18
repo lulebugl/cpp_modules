@@ -12,6 +12,8 @@
 
 #include "MateriaSource.hpp"
 
+#include <iostream>
+
 #include "Logger.hpp"
 
 MateriaSource::MateriaSource() {
@@ -47,5 +49,23 @@ MateriaSource::~MateriaSource() {
     }
 }
 
-void      MateriaSource::learnMateria(AMateria*) {}
-AMateria* MateriaSource::createMateria(std::string const& type) {}
+void MateriaSource::learnMateria(AMateria* m) {
+    if (!m) return;
+    for (int i = 0; i < 4; i++) {
+        if (_templates[i] == 0) {
+            _templates[i] = m->clone();
+            return;
+        }
+    }
+    std::cout << "The Materia slots are full\n";
+}
+
+AMateria* MateriaSource::createMateria(std::string const& type) {
+    for (int i = 0; i < 4; i++) {
+        if (_templates[i] && _templates[i]->getType() == type) {
+            return _templates[i]->clone();
+        }
+    }
+    std::cout << "Materia type " << type << " doesn't exist\n";
+    return 0;
+}

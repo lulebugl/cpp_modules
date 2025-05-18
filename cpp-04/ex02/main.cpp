@@ -11,21 +11,17 @@
 /* ************************************************************************** */
 
 #include <iostream>
-#include <sstream>
 
 #include "Animal.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
-#include "Logger.hpp"
-#include "WrongAnimal.hpp"
-#include "WrongCat.hpp"
 
 int main() {
     // Animal *Unicorn = new Animal();
     // can't instanciate an abstract class;
     Animal* Snoopy = new Dog();
     Animal* Nyanko = new Cat();
-    
+
     std::cout << "\n";
     Snoopy->makeSound();
     Nyanko->makeSound();

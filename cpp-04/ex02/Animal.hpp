@@ -20,7 +20,7 @@ class Animal {
     virtual ~Animal();
 
     std::string         getType() const;
-    virtual void        makeSound() const;
+    virtual void        makeSound() const = 0;
     virtual void        setIdea(const std::string& idea, int idx) = 0;
     virtual std::string getIdea(int idx) const = 0;
 

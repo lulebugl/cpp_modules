@@ -68,9 +68,11 @@ void testMateriaSource() {
 
     IMateriaSource* src = new MateriaSource();
 
+    AMateria* IceExample = new Ice();
+    AMateria* CureExample = new Cure();
     std::cout << "Learning Ice and Cure materias...\n";
-    src->learnMateria(new Ice());
-    src->learnMateria(new Cure());
+    src->learnMateria(IceExample);
+    src->learnMateria(CureExample);
 
     std::cout << "Creating materias from templates...\n";
     AMateria* ice = src->createMateria("ice");
@@ -81,11 +83,13 @@ void testMateriaSource() {
     std::cout << "Cure created: " << (cure ? "yes" : "no") << std::endl;
     std::cout << "Unknown created: " << (unknown ? "yes" : "no") << std::endl;
 
-    std::cout << "\nTrying to learn more than 4 materias...\n";
-    src->learnMateria(new Ice());
-    src->learnMateria(new Cure());
-    src->learnMateria(new Ice());
+    // std::cout << "\nTrying to learn more than 4 materias...\n";
+    // src->learnMateria(new Ice());
+    // src->learnMateria(new Cure());
+    // src->learnMateria(new Ice());
 
+    delete IceExample;
+    delete CureExample;
     delete ice;
     delete cure;
     delete src;
@@ -97,9 +101,12 @@ void testCharacterActions() {
     AMateria* floor[10] = {NULL};
     int       floorIndex = 0;
 
+    AMateria* IceExample = new Ice();
+    AMateria* CureExample = new Cure();
+
     IMateriaSource* src = new MateriaSource();
-    src->learnMateria(new Ice());
-    src->learnMateria(new Cure());
+    src->learnMateria(IceExample);
+    src->learnMateria(CureExample);
 
     Character* me = new Character("Jean Claude Van Damme");
     Character* target = new Character("Trump");
@@ -142,6 +149,8 @@ void testCharacterActions() {
     std::cout << "Copy using materia 0:\n";
     meCopy->use(0, *target);
 
+    delete IceExample;
+    delete CureExample;
     delete me;
     delete meCopy;
     delete target;

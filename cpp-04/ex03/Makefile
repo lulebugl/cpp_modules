@@ -12,7 +12,7 @@
 
 NAME = materia
 
-FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 SRCS = AMateria.cpp Character.cpp Cure.cpp Ice.cpp MateriaSource.cpp Logger.cpp main.cpp 
 
 OBJS = $(SRCS:.cpp=.o)

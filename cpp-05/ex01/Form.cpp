@@ -60,7 +60,7 @@ void Form::beSigned(const Bureaucrat& bureaucrat) {
     _signed = true;
 }
 
-std::ostream& operator<<(std::ostream& out, Form& form) {
+std::ostream& operator<<(std::ostream& out, const Form& form) {
     out << "form name: " << form.getName() << "\n"
         << "signed: " << (form.getSignedStatus() ? "true" : "false") << "\n"
         << "Grade to sign: " << form.getGradeToSign() << "\n"

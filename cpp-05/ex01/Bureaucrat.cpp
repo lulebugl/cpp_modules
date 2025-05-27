@@ -59,7 +59,7 @@ void Bureaucrat::decrementGrade() {
 }
 
 void Bureaucrat::signForm(Form& form) const {
-    if (form.getSignedStatus() == true) {
+    if (form.getSignedStatus()) {
         std::cout << form.getName() << " is already signed\n";
         return ;
     }
@@ -73,7 +73,7 @@ void Bureaucrat::signForm(Form& form) const {
     std::cout << _name << " signed " << form.getName() << "\n";
 }
 
-std::ostream& operator<<(std::ostream& out, Bureaucrat& bureaucrat) {
+std::ostream& operator<<(std::ostream& out, const Bureaucrat& bureaucrat) {
     out << bureaucrat.getName() << ", bureaucrat grade "
         << bureaucrat.getGrade() << ".";
     return out;

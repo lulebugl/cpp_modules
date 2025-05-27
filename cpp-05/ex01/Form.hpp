@@ -51,6 +51,6 @@ class Form {
     const int         _gradeToExec;
 };
 
-std::ostream& operator<<(std::ostream& out, Form& form);
+std::ostream& operator<<(std::ostream& out, const Form& form);
 
 #endif

@@ -60,7 +60,11 @@ int main() {
 
         std::cout << "\nPromoting manager to Super manager...\n";
         while (manager.getGrade() > 4) {
-            manager.incrementGrade();
+            try {
+                manager.incrementGrade();
+            } catch (...) {
+                break;
+            }
         }
         std::cout << manager << std::endl;
 

@@ -14,70 +14,64 @@
 #include <iostream>
 
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 #include "Logger.hpp"
 
-void testInvalidConstructor() {
-    std::cout << "\n--- testing invalid constructor parameters---\n";
+void testInvalidForm() {
+    std::cout << "\n--- Testing Form Construction ---\n";
     try {
-        Bureaucrat test = Bureaucrat(NULL, 150);
+        Form highForm("TooHighGrade", 0, 50);
     } catch (std::exception& e) {
-        std::cerr << "Error : " << e.what() << "\n";
+        std::cout << "Exception: " << e.what() << std::endl;
     }
     try {
-        Bureaucrat testMax = Bureaucrat("test", -1);
+        Form lowForm("TooLowGrade", 151, 50);
     } catch (std::exception& e) {
-        std::cerr << "Error : " << e.what() << "\n";
+        std::cout << "Exception: " << e.what() << std::endl;
     }
-    try {
-        Bureaucrat test = Bureaucrat("test", 151);
-    } catch (std::exception& e) {
-        std::cerr << "Error : " << e.what() << "\n";
-    }
+    std::cout << "\n";
 }
 
 int main() {
     Logger::setLevel(LOG_LEVEL_INFO);
 
-    Bureaucrat paul = Bureaucrat("Paul", 50);
-    Bureaucrat bill = Bureaucrat("Bill", 3);
+    try {
+        testInvalidForm();
 
-    std::cout << "The employees:\n";
-    std::cout << paul << "\n";
-    std::cout << bill << "\n";
+        Bureaucrat manager("Manager", 50);
+        std::cout << manager << std::endl;
 
-    paul = bill;
-    std::cout << "\n"
-              << "paul grade strongly increase up in contact with bill!\n";
-    std::cout << paul << "\n";
-    std::cout << bill << "\n";
+        Form easyAccess("E75", 75, 75);
+        Form restrictedAccess("E25", 25, 25);
 
-    std::cout << "\nTeaching Paul as increased bill grades to the max!\n";
-    while (true) {
-        try {
-            bill.incrementGrade();
-            std::cout << "increasing " << bill.getName() << "'s grade.\n";
-        } catch (std::exception& e) {
-            std::cerr << "Can't increase more! " << e.what() << "\n";
-            break;
+        std::cout << "\nForms:\n";
+        std::cout << easyAccess << std::endl;
+        std::cout << restrictedAccess << std::endl;
+
+        std::cout << "Manager tries to sign " << easyAccess.getName()
+                  << " form:\n";
+        manager.signForm(easyAccess);
+        std::cout << "Not sure he signed, tries again...\n";
+        manager.signForm(easyAccess);
+
+        std::cout << "\nManager tries to sign " << restrictedAccess.getName()
+                  << " form:\n";
+        manager.signForm(restrictedAccess);
+
+        std::cout << "\nPromoting manager to Super manager...\n";
+        while (manager.getGrade() > 4) {
+            manager.incrementGrade();
         }
-    }
-    std::cout << bill << "\n";
+        std::cout << manager << std::endl;
 
-    Bureaucrat Aqua = Bureaucrat("Aqua", 150);
-    std::cout << "\nAqua has joined the company.\n";
-    std::cout << Aqua << "\n";
-    std::cout
-        << "\nUnfortunately she's annoying Paul which is rapidly going mad\n";
-    while (true) {
-        try {
-            paul.decrementGrade();
-        } catch (std::exception& e) {
-            std::cerr << "Can't decrease more! " << e.what() << "\n";
-            break;
-        }
-    }
-    std::cout << paul << "\n";
+        std::cout
+            << "\nManager, now SUPER Manager, tries again to sign E25 form:\n";
+        manager.signForm(restrictedAccess);
+        std::cout << "nice !\n";
 
-    testInvalidConstructor();
+    } catch (std::exception& e) {
+        std::cout << "Unexpected exception: " << e.what() << std::endl;
+    }
+
     return 0;
 }

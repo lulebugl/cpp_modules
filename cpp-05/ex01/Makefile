@@ -5,15 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: llebugle <llebugle@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/05/26 15:22:41 by llebugle          #+#    #+#              #
-#    Updated: 2025/05/26 15:22:41 by llebugle         ###   ########.fr        #
+#    Created: 2025/05/27 16:54:37 by llebugle          #+#    #+#              #
+#    Updated: 2025/05/27 16:54:37 by llebugle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = bureaucrat
+NAME = forms
 
 FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
-SRCS = Bureaucrat.cpp Logger.cpp main.cpp 
+SRCS = Bureaucrat.cpp Form.cpp Logger.cpp main.cpp 
 
 OBJS = $(SRCS:.cpp=.o)
 

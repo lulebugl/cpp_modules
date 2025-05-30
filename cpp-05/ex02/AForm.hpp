@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llebugle <llebugle@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -18,19 +18,19 @@
 
 class Bureaucrat;
 
-class Form {
+class AForm {
    public:
-    explicit Form(const std::string& name, int gradeToSign, int gradeToExec);
-    Form(const Form& other);
-    Form& operator=(const Form& other);
-    ~Form();
+    AForm(const AForm& other);
+    AForm& operator=(const AForm& other);
+    virtual ~AForm();
 
-    const std::string& getName() const;
-    bool               getSignedStatus() const;
-    int                getGradeToSign() const;
-    int                getGradeToExec() const;
+    virtual const std::string& getName() const;
+    virtual const std::string& getTargetName() const;
+    virtual bool               getSignedStatus() const;
+    virtual int                getGradeToSign() const;
+    virtual int                getGradeToExec() const;
 
-    void beSigned(const Bureaucrat& bureaucrat);
+    virtual void beSigned(const Bureaucrat& bureaucrat) = 0;
 
     class GradeTooHighException : public std::exception {
        public:
@@ -42,13 +42,19 @@ class Form {
         virtual const char* what() const throw();
     };
 
+   protected:
+    explicit AForm(const std::string& name, int gradeToSign, int gradeToExec,
+                   const std::string& target);
+
    private:
     const std::string _name;
     bool              _signed;
     const int         _gradeToSign;
     const int         _gradeToExec;
+    const std::string _target;
 };
 
-std::ostream& operator<<(std::ostream& out, const Form& form);
+std::ostream& operator<<(std::ostream& out, const AForm& form);
+std::ostream& operator<<(std::ostream& out, const AForm* form);
 
 #endif

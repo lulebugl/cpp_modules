@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.cpp                                           :+:      :+:    :+:   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llebugle <llebugle@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,16 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Form.hpp"
-#include "Bureaucrat.hpp"
+#include "AForm.hpp"
 
+#include "Bureaucrat.hpp"
 #include "Logger.hpp"
 
-Form::Form(const std::string& name, int gradeToSign, int gradeToExec)
+AForm::AForm(const std::string& name, int gradeToSign, int gradeToExec,
+             const std::string& target)
     : _name(name),
       _signed(false),
       _gradeToSign(gradeToSign),
-      _gradeToExec(gradeToExec) {
+      _gradeToExec(gradeToExec),
+      _target(target) {
     LOG_DEBUG("Form constructor called");
     if (gradeToSign < 1 || gradeToExec < 1) {
         throw GradeTooHighException();
@@ -28,17 +30,16 @@ Form::Form(const std::string& name, int gradeToSign, int gradeToExec)
     }
 }
 
-Form::Form(const Form& other)
+AForm::AForm(const AForm& other)
     : _name(other._name),
       _signed(other._signed),
       _gradeToSign(other._gradeToSign),
-      _gradeToExec(other._gradeToExec) {
-    {
-        LOG_DEBUG("Form Copy constructor called");
-    }
+      _gradeToExec(other._gradeToExec),
+      _target(other._target) {
+    LOG_DEBUG("Form Copy constructor called");
 }
 
-Form& Form::operator=(const Form& other) {
+AForm& AForm::operator=(const AForm& other) {
     LOG_DEBUG("Form Assignment operator called");
     if (this != &other) {
         this->_signed = other._signed;
@@ -46,32 +47,34 @@ Form& Form::operator=(const Form& other) {
     return *this;
 }
 
-Form::~Form() { LOG_DEBUG("Form Destructor called"); }
+AForm::~AForm() { LOG_DEBUG("Form Destructor called"); }
 
-const std::string& Form::getName() const { return _name; }
-bool               Form::getSignedStatus() const { return _signed; }
-int                Form::getGradeToSign() const { return _gradeToSign; }
-int                Form::getGradeToExec() const { return _gradeToExec; }
+const std::string& AForm::getName() const { return _name; }
+const std::string& AForm::getTargetName() const { return _target; }
+bool               AForm::getSignedStatus() const { return _signed; }
+int                AForm::getGradeToSign() const { return _gradeToSign; }
+int                AForm::getGradeToExec() const { return _gradeToExec; }
 
-void Form::beSigned(const Bureaucrat& bureaucrat) {
+void AForm::beSigned(const Bureaucrat& bureaucrat) {
     if (bureaucrat.getGrade() > _gradeToSign) {
         throw GradeTooLowException();
     }
     _signed = true;
 }
 
-std::ostream& operator<<(std::ostream& out, const Form& form) {
+std::ostream& operator<<(std::ostream& out, const AForm& form) {
     out << "form name: " << form.getName() << "\n"
-        << "signed: " << (form.getSignedStatus() ? "Yes" : "No") << "\n"
+        << "Signed: " << (form.getSignedStatus() ? "Yes" : "No") << "\n"
         << "Grade to sign: " << form.getGradeToSign() << "\n"
-        << "Grade to execute: " << form.getGradeToExec() << "\n";
+        << "Grade to execute: " << form.getGradeToExec() << "\n"
+        << "Target: " << form.getTargetName() << "\n";
     return out;
 }
 
-const char * Form::GradeTooHighException::what() const throw() {
+const char* AForm::GradeTooHighException::what() const throw() {
     return "Grade is too high!";
 }
 
-const char * Form::GradeTooLowException::what() const throw() {
+const char* AForm::GradeTooLowException::what() const throw() {
     return "Grade is too low!";
 }

@@ -15,7 +15,7 @@
 #include "Logger.hpp"
 
 PresidentialPardonForm::PresidentialPardonForm(const std::string& target)
-    : AForm("PresidentialPardonForm", 145, 137, target) {
+    : AForm("PresidentialPardonForm", 25, 5, target) {
     LOG_DEBUG("PresidentialPardonForm constructor called");
 }
 
@@ -25,14 +25,14 @@ PresidentialPardonForm::PresidentialPardonForm(
     LOG_DEBUG("PresidentialPardonForm Copy constructor called");
 }
 
-// PresidentialPardonForm& PresidentialPardonForm::operator=(
-//     const PresidentialPardonForm& other) {
-//     LOG_DEBUG("PresidentialPardonForm Assignment operator called");
-//     if (this != &other) {
-//         AForm::operator=(other);
-//     }
-//     return *this;
-// }
+PresidentialPardonForm& PresidentialPardonForm::operator=(
+    const PresidentialPardonForm& other) {
+    LOG_DEBUG("PresidentialPardonForm Assignment operator called");
+    if (this != &other) {
+        AForm::operator=(other);
+    }
+    return *this;
+}
 
 PresidentialPardonForm::~PresidentialPardonForm() {
     LOG_DEBUG("PresidentialPardonForm Destructor called");

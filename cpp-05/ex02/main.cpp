@@ -41,8 +41,8 @@ void testPresidentialPardonForm() {
         PresidentialPardonForm form = PresidentialPardonForm("Admiral zelo");
         Bureaucrat             President = Bureaucrat("president", 1);
         Bureaucrat             randall = Bureaucrat("Randall", 146);
-        Bureaucrat             randall_two = Bureaucrat("Randall2", 140);
-
+        Bureaucrat             randall_brother = Bureaucrat("Randall's big brother", 22);
+        
         std::cout << "==== PresidePresidentialPardonForm ====\n";
         std::cout << "\n" << form;
 
@@ -51,10 +51,10 @@ void testPresidentialPardonForm() {
         std::cout << "ah yes..\n";
         randall.signForm(form);
         std::cout << "Damnit you do it...\n";
-        randall_two.signForm(form);
-        randall_two.executeForm(form);
+        randall_brother.signForm(form);
+        randall_brother.executeForm(form);
         std::cout << "We don't have the power...\n";
-        std::cout << "Mister President could you do use the favor please...\n";
+        std::cout << "Papa * randall get kicked *. Master could you do it please...\n";
         President.executeForm(form);
 
         std::cout << "\n";

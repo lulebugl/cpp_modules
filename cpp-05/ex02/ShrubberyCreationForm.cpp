@@ -43,7 +43,7 @@ ShrubberyCreationForm::~ShrubberyCreationForm() {
     LOG_DEBUG("ShrubberyCreationForm Destructor called");
 }
 
-void ShrubberyCreationForm::beSigned(const Bureaucrat& bureaucrat) {
+void ShrubberyCreationForm::beExecuted(const Bureaucrat& bureaucrat) const {
     (void)bureaucrat;
     return;
 }

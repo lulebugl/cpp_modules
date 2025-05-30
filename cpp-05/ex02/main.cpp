@@ -13,28 +13,60 @@
 #include <exception>
 #include <iostream>
 
-#include "Bureaucrat.hpp"
 #include "AForm.hpp"
-#include "ShrubberyCreationForm.hpp"
+#include "Bureaucrat.hpp"
 #include "Logger.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
-void testInvalidForm() {
-}
-    
-int main() {
-    Logger::setLevel(LOG_LEVEL_INFO);
+void testInvalidForm() {}
 
-    AForm *test = new ShrubberyCreationForm();
-    AForm *test1 = new ShrubberyCreationForm("28B", "poppy");
-        
+void testShrubberyCreationForm() {
+    AForm* test = new ShrubberyCreationForm();
+    AForm* test1 = new ShrubberyCreationForm("28B", "poppy");
+
     std::cout << (*test);
     std::cout << (*test1);
-    
+
     delete test;
     test = test1;
-    
+
     std::cout << "\n" << *test;
-    
+
     delete test1;
+}
+
+void testPresidentialPardonForm() {
+    try {
+        PresidentialPardonForm form = PresidentialPardonForm("Admiral zelo");
+        Bureaucrat             President = Bureaucrat("president", 1);
+        Bureaucrat             randall = Bureaucrat("Randall", 146);
+        Bureaucrat             randall_two = Bureaucrat("Randall2", 140);
+
+        std::cout << "==== PresidePresidentialPardonForm ====\n";
+        std::cout << "\n" << form;
+
+        std::cout << "\nRandall trying to exec...\n";
+        randall.executeForm(form);
+        std::cout << "ah yes..\n";
+        randall.signForm(form);
+        std::cout << "Damnit you do it...\n";
+        randall_two.signForm(form);
+        randall_two.executeForm(form);
+        std::cout << "We don't have the power...\n";
+        std::cout << "Mister President could you do use the favor please...\n";
+        President.executeForm(form);
+
+        std::cout << "\n";
+        std::cout << form;
+    } catch (std::exception& e) {
+        std::cerr << "runtime error: PresidentialPardonForm: " << e.what() << "\n";
+    }
+}
+
+int main() {
+    Logger::setLevel(LOG_LEVEL_INFO);
+    // testShrubberyCreationForm();
+    testPresidentialPardonForm();
     return 0;
 }

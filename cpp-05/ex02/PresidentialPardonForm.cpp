@@ -14,28 +14,34 @@
 
 #include "Logger.hpp"
 
-PresidentialPardonForm::PresidentialPardonForm()
-{
-    LOG_DEBUG("Default PresidentialPardonForm constructor called");
+PresidentialPardonForm::PresidentialPardonForm(const std::string& target)
+    : AForm("PresidentialPardonForm", 145, 137, target) {
+    LOG_DEBUG("PresidentialPardonForm constructor called");
 }
 
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other)
-{
+PresidentialPardonForm::PresidentialPardonForm(
+    const PresidentialPardonForm& other)
+    : AForm(other) {
     LOG_DEBUG("PresidentialPardonForm Copy constructor called");
-    (void) other;
 }
 
-PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPardonForm &other)
-{
-    LOG_DEBUG("PresidentialPardonForm Assignment operator called");
-    if (this != &other)
-    {
-        // Copy member variables here
-    }
-    return *this;
-}
+// PresidentialPardonForm& PresidentialPardonForm::operator=(
+//     const PresidentialPardonForm& other) {
+//     LOG_DEBUG("PresidentialPardonForm Assignment operator called");
+//     if (this != &other) {
+//         AForm::operator=(other);
+//     }
+//     return *this;
+// }
 
-PresidentialPardonForm::~PresidentialPardonForm()
-{
+PresidentialPardonForm::~PresidentialPardonForm() {
     LOG_DEBUG("PresidentialPardonForm Destructor called");
+}
+
+void PresidentialPardonForm::beExecuted(const Bureaucrat& bureaucrat) const {
+    if (bureaucrat.getGrade() > this->getGradeToExec()) {
+        throw GradeTooLowException();
+    }
+    std::cout << this->getTargetName()
+              << " has been pardoned by Zaphod Beeblebrox\n";
 }

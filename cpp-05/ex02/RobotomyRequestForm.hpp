@@ -11,18 +11,22 @@
 /* ************************************************************************** */
 
 #ifndef ROBOTOMYREQUESTFORM_HPP
-# define ROBOTOMYREQUESTFORM_HPP
-# include <string>
+#define ROBOTOMYREQUESTFORM_HPP
 
-class RobotomyRequestForm
-{
-    public:
-        RobotomyRequestForm();
-        RobotomyRequestForm(const RobotomyRequestForm& other);
-        RobotomyRequestForm &operator=(const RobotomyRequestForm &other);
-        ~RobotomyRequestForm();
-        
-    private:
+#include <string>
+
+#include "AForm.hpp"
+
+class Bureaucrat;
+
+class RobotomyRequestForm : public AForm {
+   public:
+    RobotomyRequestForm(const std::string& target);
+    RobotomyRequestForm(const RobotomyRequestForm& other);
+    RobotomyRequestForm& operator=(const RobotomyRequestForm& other);
+    ~RobotomyRequestForm();
+
+    void beExecuted(const Bureaucrat& bureaucrat) const;
 };
 
 #endif

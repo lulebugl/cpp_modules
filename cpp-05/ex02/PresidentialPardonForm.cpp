@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #include "PresidentialPardonForm.hpp"
-
+#include "Bureaucrat.hpp"
 #include "Logger.hpp"
 
 PresidentialPardonForm::PresidentialPardonForm(const std::string& target)
-    : AForm("PresidentialPardonForm", 25, 5, target) {
+    : AForm("PresidentialPardonForm", 25, 5, (target)) {
     LOG_DEBUG("PresidentialPardonForm constructor called");
 }
 
@@ -42,6 +42,6 @@ void PresidentialPardonForm::beExecuted(const Bureaucrat& bureaucrat) const {
     if (bureaucrat.getGrade() > this->getGradeToExec()) {
         throw GradeTooLowException();
     }
-    std::cout << this->getTargetName()
+    std::cout << this->getTarget()
               << " has been pardoned by Zaphod Beeblebrox\n";
 }

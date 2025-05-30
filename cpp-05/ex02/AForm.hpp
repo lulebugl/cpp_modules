@@ -25,7 +25,7 @@ class AForm {
     virtual ~AForm();
 
     virtual const std::string& getName() const;
-    virtual const std::string& getTargetName() const;
+    virtual const std::string& getTarget() const;
     virtual bool               getSignedStatus() const;
     virtual int                getGradeToSign() const;
     virtual int                getGradeToExec() const;

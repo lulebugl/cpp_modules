@@ -12,30 +12,47 @@
 
 #include "RobotomyRequestForm.hpp"
 
+#include <cstdlib>
+#include <ctime>
+
+#include "Bureaucrat.hpp"
 #include "Logger.hpp"
 
-RobotomyRequestForm::RobotomyRequestForm()
-{
-    LOG_DEBUG("Default RobotomyRequestForm constructor called");
+RobotomyRequestForm::RobotomyRequestForm(const std::string& target)
+    : AForm("RobotomyRequestForm", 72, 45, target) {
+    LOG_DEBUG("RobotomyRequestForm constructor called");
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &other)
-{
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other)
+    : AForm(other) {
     LOG_DEBUG("RobotomyRequestForm Copy constructor called");
-    (void) other;
 }
 
-RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &other)
-{
+RobotomyRequestForm& RobotomyRequestForm::operator=(
+    const RobotomyRequestForm& other) {
     LOG_DEBUG("RobotomyRequestForm Assignment operator called");
-    if (this != &other)
-    {
-        // Copy member variables here
+    if (this != &other) {
+        AForm::operator=(other);
     }
     return *this;
 }
 
-RobotomyRequestForm::~RobotomyRequestForm()
-{
+RobotomyRequestForm::~RobotomyRequestForm() {
     LOG_DEBUG("RobotomyRequestForm Destructor called");
+}
+
+void RobotomyRequestForm::beExecuted(const Bureaucrat& bureaucrat) const {
+    if (bureaucrat.getGrade() > this->getGradeToExec()) {
+        throw GradeTooLowException();
+    }
+    std::cout << "* drilling noise * ";
+
+    std::srand(static_cast<unsigned int>(std::time(NULL)));
+    if (std::rand() % 2 == 0) {
+        std::cout << this->getTarget()
+                  << " has been robotomized!" << std::endl;
+    } else {
+        std::cout << "The robotomy on " << this->getTarget() << " failed!"
+                  << std::endl;
+    }
 }

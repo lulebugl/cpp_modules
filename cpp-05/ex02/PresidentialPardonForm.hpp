@@ -16,7 +16,8 @@
 #include <string>
 
 #include "AForm.hpp"
-#include "Bureaucrat.hpp"
+
+class Bureaucrat;
 
 class PresidentialPardonForm : public AForm {
    public:
@@ -26,8 +27,6 @@ class PresidentialPardonForm : public AForm {
     ~PresidentialPardonForm();
 
     void beExecuted(const Bureaucrat& bureaucrat) const;
-
-   private:
 };
 
 #endif

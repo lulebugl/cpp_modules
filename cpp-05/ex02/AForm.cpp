@@ -50,7 +50,7 @@ AForm& AForm::operator=(const AForm& other) {
 AForm::~AForm() { LOG_DEBUG("Form Destructor called"); }
 
 const std::string& AForm::getName() const { return _name; }
-const std::string& AForm::getTargetName() const { return _target; }
+const std::string& AForm::getTarget() const { return _target; }
 bool               AForm::getSignedStatus() const { return _signed; }
 int                AForm::getGradeToSign() const { return _gradeToSign; }
 int                AForm::getGradeToExec() const { return _gradeToExec; }
@@ -68,7 +68,7 @@ std::ostream& operator<<(std::ostream& out, const AForm& form) {
         << "Signed: " << (form.getSignedStatus() ? "Yes" : "No") << "\n"
         << "Grade to sign: " << form.getGradeToSign() << "\n"
         << "Grade to execute: " << form.getGradeToExec() << "\n"
-        << "Target: " << form.getTargetName() << "\n";
+        << "Target: " << form.getTarget() << "\n";
     return out;
 }
 

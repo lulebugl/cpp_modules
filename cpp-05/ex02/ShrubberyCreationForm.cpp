@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ShrubberyCreationForm.hpp"
-
+#include "Bureaucrat.hpp"
 #include "Logger.hpp"
 
 ShrubberyCreationForm::ShrubberyCreationForm()

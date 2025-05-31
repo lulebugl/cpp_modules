@@ -17,23 +17,71 @@
 #include "Bureaucrat.hpp"
 #include "Logger.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
+// #include <chrono>
+// #include <thread>
 
 void testInvalidForm() {}
 
+void testRobotomyRequestForm() {
+    try {
+        RobotomyRequestForm form("Bender");
+        Bureaucrat          engineer("engineer", 45);
+        Bureaucrat          clerk("clerk", 100);
+        Bureaucrat          manager("manager", 25);
+
+        std::cout << "==== RobotomyRequestForm ====\n";
+        std::cout << "\n" << form;
+
+        std::cout << "\nClerk trying to sign...\n";
+        clerk.signForm(form);
+        std::cout << "Clerk trying to execute...\n";
+        clerk.executeForm(form);
+
+        std::cout << "\nEngineer signing the form...\n";
+        engineer.signForm(form);
+        std::cout << "Engineer executing the form...\n";
+        engineer.executeForm(form);
+
+        // std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::cout << "\nManager trying another execution...\n";
+        manager.executeForm(form);
+
+        std::cout << "\n" << form;
+    } catch (std::exception& e) {
+        std::cerr << "runtime error: RobotomyRequestForm: " << e.what() << "\n";
+    }
+}
+
 void testShrubberyCreationForm() {
-    AForm* test = new ShrubberyCreationForm();
-    AForm* test1 = new ShrubberyCreationForm("28B", "poppy");
+    try {
+        ShrubberyCreationForm form("home");
+        Bureaucrat            gardener("gardener", 138);
+        Bureaucrat            intern("intern", 150);
+        Bureaucrat            supervisor("supervisor", 100);
 
-    std::cout << (*test);
-    std::cout << (*test1);
+        std::cout << "==== ShrubberyCreationForm ====\n";
+        std::cout << "\n" << form;
 
-    delete test;
-    test = test1;
+        std::cout << "\nIntern trying to sign...\n";
+        intern.signForm(form);
+        std::cout << "Intern trying to execute...\n";
+        intern.executeForm(form);
 
-    std::cout << "\n" << *test;
+        std::cout << "\nGardener signing the form...\n";
+        gardener.signForm(form);
+        std::cout << "Gardener trying to execute...\n";
+        gardener.executeForm(form);
 
-    delete test1;
+        std::cout << "\nSupervisor executing the form...\n";
+        supervisor.executeForm(form);
+
+        std::cout << "\n" << form;
+    } catch (std::exception& e) {
+        std::cerr << "runtime error: ShrubberyCreationForm: " << e.what()
+                  << "\n";
+    }
 }
 
 void testPresidentialPardonForm() {
@@ -41,8 +89,8 @@ void testPresidentialPardonForm() {
         PresidentialPardonForm form = PresidentialPardonForm("Admiral zelo");
         Bureaucrat             President = Bureaucrat("president", 1);
         Bureaucrat             randall = Bureaucrat("Randall", 146);
-        Bureaucrat             randall_brother = Bureaucrat("Randall's big brother", 22);
-        
+        Bureaucrat randall_brother = Bureaucrat("Randall's big brother", 22);
+
         std::cout << "==== PresidePresidentialPardonForm ====\n";
         std::cout << "\n" << form;
 
@@ -54,19 +102,25 @@ void testPresidentialPardonForm() {
         randall_brother.signForm(form);
         randall_brother.executeForm(form);
         std::cout << "We don't have the power...\n";
-        std::cout << "Papa * randall get kicked *. Master could you do it please...\n";
+        std::cout << "Papa * randall get kicked *. Master could you do it "
+                     "please...\n";
         President.executeForm(form);
 
         std::cout << "\n";
         std::cout << form;
     } catch (std::exception& e) {
-        std::cerr << "runtime error: PresidentialPardonForm: " << e.what() << "\n";
+        std::cerr << "runtime error: PresidentialPardonForm: " << e.what()
+                  << "\n";
     }
 }
 
 int main() {
     Logger::setLevel(LOG_LEVEL_INFO);
-    // testShrubberyCreationForm();
-    // testPresidentialPardonForm();
+    
+    std::srand(static_cast<unsigned int>(std::time(0)));
+        
+    testShrubberyCreationForm();
+    testRobotomyRequestForm();
+    testPresidentialPardonForm();
     return 0;
 }

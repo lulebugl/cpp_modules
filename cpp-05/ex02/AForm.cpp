@@ -51,7 +51,7 @@ AForm::~AForm() { LOG_DEBUG("Form Destructor called"); }
 
 const std::string& AForm::getName() const { return _name; }
 const std::string& AForm::getTarget() const { return _target; }
-bool               AForm::getSignedStatus() const { return _signed; }
+bool               AForm::isSigned() const { return _signed; }
 int                AForm::getGradeToSign() const { return _gradeToSign; }
 int                AForm::getGradeToExec() const { return _gradeToExec; }
 
@@ -62,10 +62,19 @@ void AForm::beSigned(const Bureaucrat& bureaucrat) {
     _signed = true;
 }
 
+void AForm::execute(const Bureaucrat& executor) const {
+    if (this->isSigned() == false) {
+        throw std::runtime_error(this->getName() + " is not signed");
+    }
+    if (executor.getGrade() > this->getGradeToExec()) {
+        throw GradeTooLowException();
+    }
+    this->beExecuted();
+}
 
 std::ostream& operator<<(std::ostream& out, const AForm& form) {
     out << "form name: " << form.getName() << "\n"
-        << "Signed: " << (form.getSignedStatus() ? "Yes" : "No") << "\n"
+        << "Signed: " << (form.isSigned() ? "Yes" : "No") << "\n"
         << "Grade to sign: " << form.getGradeToSign() << "\n"
         << "Grade to execute: " << form.getGradeToExec() << "\n"
         << "Target: " << form.getTarget() << "\n";

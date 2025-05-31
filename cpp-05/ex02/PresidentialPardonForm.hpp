@@ -26,7 +26,7 @@ class PresidentialPardonForm : public AForm {
     PresidentialPardonForm& operator=(const PresidentialPardonForm& other);
     ~PresidentialPardonForm();
 
-    void beExecuted(const Bureaucrat& bureaucrat) const;
+    void beExecuted() const;
 };
 
 #endif

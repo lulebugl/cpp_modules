@@ -26,13 +26,14 @@ class AForm {
 
     virtual const std::string& getName() const;
     virtual const std::string& getTarget() const;
-    virtual bool               getSignedStatus() const;
+    virtual bool               isSigned() const;
     virtual int                getGradeToSign() const;
     virtual int                getGradeToExec() const;
 
     virtual void beSigned(const Bureaucrat& bureaucrat);
-    virtual void beExecuted(const Bureaucrat& bureaucrat) const = 0;
-    
+    virtual void execute(const Bureaucrat& executor) const;
+    virtual void beExecuted() const = 0;
+
     class GradeTooHighException : public std::exception {
        public:
         virtual const char* what() const throw();

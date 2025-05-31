@@ -13,15 +13,10 @@
 #include "ShrubberyCreationForm.hpp"
 #include "Bureaucrat.hpp"
 #include "Logger.hpp"
+#include <fstream>
 
-ShrubberyCreationForm::ShrubberyCreationForm()
-    : AForm("ShrubberyForm", 145, 137, "") {
-    LOG_DEBUG("Default ShrubberyCreationForm constructor called");
-}
-
-ShrubberyCreationForm::ShrubberyCreationForm(const std::string& name,
-                                             const std::string& target)
-    : AForm(name, 145, 137, target) {
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target)
+    : AForm("ShrubberyForm", 145, 137, target) {
     LOG_DEBUG("Form constructor called");
 }
 
@@ -43,7 +38,48 @@ ShrubberyCreationForm::~ShrubberyCreationForm() {
     LOG_DEBUG("ShrubberyCreationForm Destructor called");
 }
 
-void ShrubberyCreationForm::beExecuted(const Bureaucrat& bureaucrat) const {
-    (void)bureaucrat;
+void ShrubberyCreationForm::beExecuted() const {
+    std::ofstream out;
+    
+    out.open(this->getTarget() + "_shrubbery");
+    if (!out.is_open()) {
+        throw std::runtime_error("Failed to open shrubbery output file");
+    }
+    
+    out << "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⢀⡀⠀⠀⢀⣻⣿⣧⣴⡿⢿⣦⣀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠀⠀⣠⣦⣾⣿⣿⣷⣶⣶⡿⠿⣟⠛⠶⠾⢻⡾⢿⣶⢾⣿⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⢰⣾⣿⡿⠿⠉⠀⠉⠳⠉⠉⠀⠐⠂⢀⠐⠀⠀⠈⠁⠒⠋⡽⣿⡗⠀⠀⠀⠀⠰⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠘⠿⣿⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⡀⠀⡀⠀⣀⠰⣎⣿⣿⣄⡀⠀⠀⠀⠀⠀\n"
+             "⠀⡀⠀⠀⠀⢠⣾⡿⢤⡤⠀⠀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠃⠠⢤⠀⠀⠼⠛⣿⣇⢀⡀⠀⠀⠀\n"
+             "⠀⠇⢀⣀⣶⣾⣿⠅⠈⠉⠁⠤⠀⠠⠀⠀⠀⡀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣷⣦⠀⠀\n"
+             "⠀⠀⠈⢿⣿⣿⡟⠀⠆⠈⠁⣀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⠀⠀⠂⠀⠀⠀⡀⠾⢹⡏⠁⠀⠀\n"
+             "⠀⠀⠀⠀⢀⣿⣿⠇⠀⠐⠂⠐⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡄⣼⣿⡇⠀⠀⠀\n"
+             "⠀⠀⠘⣿⣿⣿⣱⡾⠃⠀⢂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠤⠀⠀⠀⠀⠀⠃⡀⠁⣡⣾⣇⠀⠀⠀\n"
+             "⠀⠀⢸⣿⣿⣿⣉⡡⠶⠁⠼⠁⠀⠠⠄⠀⠀⠀⠀⢀⠀⠀⠀⠀⠄⠁⠄⠁⠄⡀⠀⢨⣹⡿⠿⠀⠀⠀\n"
+             "⠀⠀⠀⠙⠻⣿⣿⣧⣰⣷⣶⣄⠁⠴⠆⢀⡐⠒⠐⠀⠀⠀⠀⠀⠀⡀⠂⠀⠀⡀⠒⣾⡟⠓⠀⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠈⢻⡟⢻⣿⣿⣿⣿⡓⣤⣄⠈⠱⣆⠀⣀⣲⣤⣷⣤⣀⣽⣓⣤⣠⣯⣾⡿⠋⠀⠀⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠀⠁⠀⢸⣿⣿⡿⢷⣶⣾⣿⣶⣿⣶⣿⣿⢾⣿⠿⠋⠉⠙⣿⠿⠃⠀⠀⠀⠀⠐⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠀⢰⠀⠈⠻⠟⠀⠈⠙⠿⢿⣿⡏⠛⣿⣿⢺⣿⠀⠀⠀⠀⠀⠀⡄⠀⢠⠀⠀⢁⠀⠀⠀\n"
+             "⠀⠀⠀⠈⡀⠀⡼⠀⠀⢀⠀⠀⠀⠀⠀⢸⣿⡿⠀⣿⠁⠀⣿⠀⠀⠀⠀⠀⢠⠇⠀⠸⠀⠀⠀⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠁⠀⠇⢀⠀⠘⠀⢀⠀⠀⣾⡗⣿⣿⣹⠀⣦⠰⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
+             "⠀⠀⢀⣰⣆⣰⣷⣾⣷⣶⣆⡀⡇⠀⣿⣿⣼⣿⣿⡇⣽⠀⣿⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
+             "⠀⠀⣾⣿⣿⠿⣛⣹⡿⣿⡿⠃⠁⠀⠉⢽⣿⣿⣭⣹⡇⢰⣿⠘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
+             "⠀⢀⣽⣿⠋⠁⠀⠀⢹⣿⢇⠀⠀⠀⠀⢼⣿⡷⠿⡏⣷⠘⣿⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
+             "⠸⢿⢿⣿⠄⡀⠀⢠⣼⣯⣾⣷⣶⣄⠀⣸⡟⢻⠃⣿⠛⢀⣿⢸⠀⠀⠀⠀⠀⠇⡀⢠⠀⠀⢸⠀⠀⠀\n"
+             "⠀⠀⠈⢉⣿⣿⣼⡿⠋⠉⢹⣿⣿⣟⣛⣿⠇⠈⣿⠻⡇⢸⣿⠈⠀⠀⠀⣠⣶⣾⣿⣶⣦⣰⣆⣀⠀⠀\n"
+             "⠀⠀⠀⠀⠙⠿⠉⠀⠀⠀⠀⠈⠉⠹⣯⣿⣾⣇⣿⡇⣿⢸⣿⢀⠀⠀⠸⢿⣿⠿⠿⢏⣹⠿⢿⣿⣦⡀\n"
+             "⠀⠀⠀⠀⠀⠀⢸⠀⠀⡆⠀⠀⠀⠀⠈⢹⣿⡿⣯⡴⠅⢸⣿⠘⠀⠀⠀⢸⣿⣤⡄⠀⣀⠐⢻⣿⣄⡅\n"
+             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⠀⠀⠀⠀⠀⢻⣿⣧⡋⣷⠂⣽⣿⣀⣀⣶⣴⢿⣿⣿⣆⠀⠈⢳⣾⣿⣿⡇\n"
+             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣟⠢⠷⢉⣿⣛⣻⣿⣾⠿⠉⠉⢿⣿⣶⣼⡟⠁⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡟⣿⣮⣿⣡⣿⣿⡟⠉⠉⠀⠀⠀⠈⠉⠹⠏⠁⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢽⣿⡿⣿⡂⠻⣿⣿⠉⠀⠀⠀⠀⢰⠀⠀⠀⠀⠀⢠⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⡄⠀⠀⠀⢀⣤⣾⣿⣇⠿⣏⡑⣿⣿⣦⠀⠀⠄⠀⠘⡦⠀⢰⠂⠀⠀⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠃⠀⠀⢦⣸⣿⡓⣿⡟⣷⡘⢷⣌⠘⢻⣶⠀⠀⠀⠀⠃⠀⠘⠀⠀⠀⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣈⣤⣄⣸⣿⣏⣿⣿⡿⣯⣷⡈⣎⠳⣶⡹⠾⢟⣤⣠⣄⠀⠀⠀⠀⠀⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠀⠀⢠⣴⡿⠿⢿⣟⠻⣯⣿⣿⣿⣿⣷⣟⣩⣿⡿⢿⣟⣾⣿⣛⣽⡷⠀⠀⠀⠀⠀⠀⠀\n"
+             "⠀⠀⠀⠀⠀⠀⠀⠀⠘⠃⠀⠙⡟⠀⠛⡁⠀⠛⡟⠁⠛⡋⠁⠀⠀⠛⣋⠈⢛⠋⠀⠀⠀⠀⠀⠀⠀⠀\n";
+    
+    std::cout << "ShrubberyCreationForm was executed and "<< this->getTarget() << " has been created.\n";    
+    out.close();
     return;
 }

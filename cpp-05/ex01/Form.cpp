@@ -49,7 +49,7 @@ Form& Form::operator=(const Form& other) {
 Form::~Form() { LOG_DEBUG("Form Destructor called"); }
 
 const std::string& Form::getName() const { return _name; }
-bool               Form::getSignedStatus() const { return _signed; }
+bool               Form::isSigned() const { return _signed; }
 int                Form::getGradeToSign() const { return _gradeToSign; }
 int                Form::getGradeToExec() const { return _gradeToExec; }
 
@@ -62,7 +62,7 @@ void Form::beSigned(const Bureaucrat& bureaucrat) {
 
 std::ostream& operator<<(std::ostream& out, const Form& form) {
     out << "form name: " << form.getName() << "\n"
-        << "signed: " << (form.getSignedStatus() ? "Yes" : "No") << "\n"
+        << "signed: " << (form.isSigned() ? "Yes" : "No") << "\n"
         << "Grade to sign: " << form.getGradeToSign() << "\n"
         << "Grade to execute: " << form.getGradeToExec() << "\n";
     return out;

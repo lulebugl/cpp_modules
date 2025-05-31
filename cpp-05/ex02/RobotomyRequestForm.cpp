@@ -41,13 +41,10 @@ RobotomyRequestForm::~RobotomyRequestForm() {
     LOG_DEBUG("RobotomyRequestForm Destructor called");
 }
 
-void RobotomyRequestForm::beExecuted(const Bureaucrat& bureaucrat) const {
-    if (bureaucrat.getGrade() > this->getGradeToExec()) {
-        throw GradeTooLowException();
-    }
+void RobotomyRequestForm::beExecuted() const {
     std::cout << "* drilling noise * ";
 
-    std::srand(static_cast<unsigned int>(std::time(NULL)));
+    // std::srand(static_cast<unsigned int>(std::time(NULL))); // seeded in main
     if (std::rand() % 2 == 0) {
         std::cout << this->getTarget()
                   << " has been robotomized!" << std::endl;

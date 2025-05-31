@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "PresidentialPardonForm.hpp"
+
 #include "Bureaucrat.hpp"
 #include "Logger.hpp"
 
@@ -38,10 +39,7 @@ PresidentialPardonForm::~PresidentialPardonForm() {
     LOG_DEBUG("PresidentialPardonForm Destructor called");
 }
 
-void PresidentialPardonForm::beExecuted(const Bureaucrat& bureaucrat) const {
-    if (bureaucrat.getGrade() > this->getGradeToExec()) {
-        throw GradeTooLowException();
-    }
+void PresidentialPardonForm::beExecuted() const {
     std::cout << this->getTarget()
               << " has been pardoned by Zaphod Beeblebrox\n";
 }

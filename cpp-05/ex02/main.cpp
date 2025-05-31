@@ -22,8 +22,6 @@
 // #include <chrono>
 // #include <thread>
 
-void testInvalidForm() {}
-
 void testRobotomyRequestForm() {
     try {
         RobotomyRequestForm form("Bender");

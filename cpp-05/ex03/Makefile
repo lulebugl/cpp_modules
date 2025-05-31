@@ -5,15 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: llebugle <llebugle@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/05/30 13:44:43 by llebugle          #+#    #+#              #
-#    Updated: 2025/05/30 13:44:43 by llebugle         ###   ########.fr        #
+#    Created: 2025/05/31 23:00:32 by llebugle          #+#    #+#              #
+#    Updated: 2025/05/31 23:00:32 by llebugle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = forms
+NAME = intern
 
 FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
-SRCS = AForm.cpp Bureaucrat.cpp Logger.cpp main.cpp PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp 
+SRCS = AForm.cpp Bureaucrat.cpp Intern.cpp Logger.cpp PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp main.cpp 
 
 OBJS = $(SRCS:.cpp=.o)
 

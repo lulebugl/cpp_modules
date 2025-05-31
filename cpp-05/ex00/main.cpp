@@ -19,7 +19,7 @@
 void testInvalidConstructor() {
     std::cout << "\n--- testing invalid constructor parameters---\n";
     try {
-        Bureaucrat test = Bureaucrat(NULL, 150);
+        Bureaucrat test = Bureaucrat("test", 150);
     } catch (std::exception& e) {
         std::cerr << "Error : " << e.what() << "\n";
     }

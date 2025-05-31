@@ -61,14 +61,14 @@ void Bureaucrat::decrementGrade() {
 void Bureaucrat::signForm(Form& form) const {
     if (form.isSigned()) {
         std::cout << form.getName() << " is already signed\n";
-        return ;
+        return;
     }
     try {
         form.beSigned(*this);
     } catch (std::exception& e) {
-        std::cout << _name << " couldn't sign " << form.getName()
-                  << " because " << e.what() << std::endl;
-        return ;
+        std::cout << _name << " couldn't sign " << form.getName() << " because "
+                  << e.what() << std::endl;
+        return;
     }
     std::cout << _name << " signed " << form.getName() << "\n";
 }

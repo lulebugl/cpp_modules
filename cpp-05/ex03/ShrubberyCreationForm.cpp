@@ -79,7 +79,6 @@ void ShrubberyCreationForm::beExecuted() const {
              "⠀⠀⠀⠀⠀⠀⠀⢠⣴⡿⠿⢿⣟⠻⣯⣿⣿⣿⣿⣷⣟⣩⣿⡿⢿⣟⣾⣿⣛⣽⡷⠀⠀⠀⠀⠀⠀⠀\n"
              "⠀⠀⠀⠀⠀⠀⠀⠀⠘⠃⠀⠙⡟⠀⠛⡁⠀⠛⡟⠁⠛⡋⠁⠀⠀⠛⣋⠈⢛⠋⠀⠀⠀⠀⠀⠀⠀⠀\n";
     
-    std::cout << this->getTarget() + "_shruberry" << " has been created.\n";    
+    std::cout << this->getTarget() + "_shrubbery" << " has been created.\n";    
     out.close();
-    return;
 }

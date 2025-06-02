@@ -22,12 +22,12 @@ void testInvalidForm() {
     try {
         Form highForm("TooHighGrade", 0, 50);
     } catch (std::exception& e) {
-        std::cout << "Exception: " << e.what() << std::endl;
+        std::cout << "Form Exception: " << e.what() << std::endl;
     }
     try {
         Form lowForm("TooLowGrade", 151, 50);
     } catch (std::exception& e) {
-        std::cout << "Exception: " << e.what() << std::endl;
+        std::cout << "Form Exception: " << e.what() << std::endl;
     }
     std::cout << "\n";
 }

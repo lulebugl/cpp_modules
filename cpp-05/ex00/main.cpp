@@ -6,7 +6,7 @@
 /*   By: llebugle <llebugle@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:21:24 by llebugle          #+#    #+#             */
-/*   Updated: 2025/05/26 15:21:28 by llebugle         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:22:43 by llebugle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int main() {
 
     paul = bill;
     std::cout << "\n"
-              << "paul grade strongly increase up in contact with bill!\n";
+              << "paul grade strongly increase in contact with bill!\n";
     std::cout << paul << "\n";
     std::cout << bill << "\n";
 
-    std::cout << "\nTeaching Paul as increased bill grades to the max!\n";
+    std::cout << "\nTeaching Paul is increasing bill's grades to the max!\n";
     while (true) {
         try {
             bill.incrementGrade();

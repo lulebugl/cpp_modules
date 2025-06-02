@@ -41,7 +41,7 @@ ShrubberyCreationForm::~ShrubberyCreationForm() {
 void ShrubberyCreationForm::beExecuted() const {
     std::ofstream out;
     
-    out.open(this->getTarget() + "_shrubbery");
+    out.open((this->getTarget() + "_shrubbery").c_str());
     if (!out.is_open()) {
         throw std::runtime_error("Failed to open shrubbery output file");
     }

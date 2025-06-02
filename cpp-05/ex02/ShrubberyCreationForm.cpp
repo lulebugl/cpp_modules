@@ -40,8 +40,10 @@ ShrubberyCreationForm::~ShrubberyCreationForm() {
 
 void ShrubberyCreationForm::beExecuted() const {
     std::ofstream out;
+    std::string  filename = this->getTarget() + "_shrubbery";
     
-    out.open(this->getTarget() + "_shrubbery");
+    out.open(filename.c_str());
+    
     if (!out.is_open()) {
         throw std::runtime_error("Failed to open shrubbery output file");
     }
@@ -79,6 +81,6 @@ void ShrubberyCreationForm::beExecuted() const {
              "⠀⠀⠀⠀⠀⠀⠀⢠⣴⡿⠿⢿⣟⠻⣯⣿⣿⣿⣿⣷⣟⣩⣿⡿⢿⣟⣾⣿⣛⣽⡷⠀⠀⠀⠀⠀⠀⠀\n"
              "⠀⠀⠀⠀⠀⠀⠀⠀⠘⠃⠀⠙⡟⠀⠛⡁⠀⠛⡟⠁⠛⡋⠁⠀⠀⠛⣋⠈⢛⠋⠀⠀⠀⠀⠀⠀⠀⠀\n";
     
-    std::cout << this->getTarget() + "_shrubbery" << " has been created.\n";    
+    std::cout << filename << " has been created.\n";    
     out.close();
 }

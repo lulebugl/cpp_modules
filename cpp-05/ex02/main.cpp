@@ -19,6 +19,9 @@
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include <cstdlib>
+#include <ctime>
+
 // #include <chrono>
 // #include <thread>
 

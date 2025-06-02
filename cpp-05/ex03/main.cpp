@@ -17,6 +17,8 @@
 #include "Bureaucrat.hpp"
 #include "Intern.hpp"
 #include "Logger.hpp"
+#include <ctime>
+#include <cstdlib>
 
 void testFormCreation(const std::string& formName, const std::string& target) {
     Intern     intern;

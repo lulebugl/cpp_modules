@@ -28,7 +28,6 @@ ScalarConverter::~ScalarConverter() {}
 
 void ScalarConverter::convert(const std::string& literal) {
     ConversionResult   result;
-    std::istringstream iss(literal);
 
     LiteralType type = determineType(literal);
 

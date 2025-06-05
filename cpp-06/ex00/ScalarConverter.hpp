@@ -33,7 +33,7 @@ class ScalarConverter {
         TYPE_DOUBLE,
         TYPE_SPECIAL
     };
-    
+
     struct ConversionResult {
         char   charValue;
         int    intValue;
@@ -63,7 +63,6 @@ class ScalarConverter {
     static ConversionResult convertFromDouble(const std::string& literal);
     static ConversionResult convertFromSpecial(const std::string& literal);
 
-    // static void printResult(ConversionResult results);
     static void printChar(const ConversionResult& result);
     static void printInt(const ConversionResult& result);
     static void printFloat(const ConversionResult& result);

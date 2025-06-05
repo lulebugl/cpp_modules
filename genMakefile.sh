@@ -37,7 +37,7 @@ CPP_FILES=$(find . -maxdepth 1 -name "*.cpp" | sort | sed 's/^\.\///' | tr '\n' 
 (create_makefile_header; cat << EOL
 NAME = ${PROJECT_NAME}
 
-FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+FLAGS = -Wall -Wextra -Werror -std=c++98
 SRCS = ${CPP_FILES}
 
 OBJS = \$(SRCS:.cpp=.o)

@@ -78,8 +78,7 @@ void identify(Base& p) {
 }
 
 int main() {
-    // seeding time for rand;
-    srand(static_cast<unsigned int>(time(NULL)));
+    srand(static_cast<unsigned int>(time(NULL))); // seeding rand;
 
     Base* test = generate();
     identify(test);

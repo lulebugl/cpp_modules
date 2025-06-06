@@ -42,14 +42,31 @@ void identify(Base* p) {
     B* testB(dynamic_cast<B*>(p));
     C* testC(dynamic_cast<C*>(p));
 
-    std::cout << "identifying...\n";
+    std::cout << "identifying ptr...\n";
     if (testA) {
-        std::cout << "It's a class A\n";
+        std::cout << "It's a class A ptr\n";
     } else if (testB) {
-        std::cout << "It's a class B\n";
+        std::cout << "It's a class B ptr\n";
     } else if (testC) {
-        std::cout << "It's a class C\n";
+        std::cout << "It's a class C ptr\n";
     }
+}
+
+void identify(Base& p) {
+    std::cout << "identifying ref...\n";
+    try {
+        A testA(dynamic_cast<A&>(p));
+        std::cout << "It's a class A ref\n";
+    } catch (std::exception& e) {};
+    try {
+        B testB(dynamic_cast<B&>(p));
+        std::cout << "It's a class B ref\n";
+    } catch (std::exception& e) {};
+    try {
+        C testC(dynamic_cast<C&>(p));
+        std::cout << "It's a class C ref\n";
+    } catch (std::exception& e) {};
+
 }
 
 int main() {
@@ -58,5 +75,6 @@ int main() {
     
     Base* test = generate();
     identify(test);
+    identify(*test);
     return 0;
 }

@@ -49,32 +49,42 @@ void identify(Base* p) {
         std::cout << "It's a class B ptr\n";
     } else if (testC) {
         std::cout << "It's a class C ptr\n";
+    } else {
+        std::cout << "Unknown\n";
+    }
+}
+
+template <typename T>
+bool identifyAs(Base& p) {
+    try {
+        (void)dynamic_cast<T&>(p);
+        return true;
+    } catch (std::bad_cast&) {
+        return false;
     }
 }
 
 void identify(Base& p) {
     std::cout << "identifying ref...\n";
-    try {
-        A testA(dynamic_cast<A&>(p));
+    if (identifyAs<A>(p)) {
         std::cout << "It's a class A ref\n";
-    } catch (std::exception& e) {};
-    try {
-        B testB(dynamic_cast<B&>(p));
+    } else if (identifyAs<B>(p)) {
         std::cout << "It's a class B ref\n";
-    } catch (std::exception& e) {};
-    try {
-        C testC(dynamic_cast<C&>(p));
+    } else if (identifyAs<C>(p)) {
         std::cout << "It's a class C ref\n";
-    } catch (std::exception& e) {};
-
+    } else {
+        std::cout << "Unknown type\n";
+    }
 }
 
 int main() {
     // seeding time for rand;
     srand(static_cast<unsigned int>(time(NULL)));
-    
+
     Base* test = generate();
     identify(test);
     identify(*test);
+
+    delete test;
     return 0;
 }

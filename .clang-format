@@ -78,7 +78,7 @@ AllowShortCaseExpressionOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortCompoundRequirementOnASingleLine: true
 AllowShortEnumsOnASingleLine: true
-AllowShortFunctionsOnASingleLine: All
+AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: true

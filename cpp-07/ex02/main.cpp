@@ -59,7 +59,6 @@ int main() {
     }
     std::cout << " (size: " << other.size() << ")" << std::endl;
 
-
     std::cout << "After assignment: ";
     other = numbers;
     for (unsigned int i = 0; i < other.size(); i++) {

@@ -59,7 +59,7 @@ bool identifyAs(Base& p) {
     try {
         (void)dynamic_cast<T&>(p);
         return true;
-    } catch (std::bad_cast&) {
+    } catch (std::exception&) {
         return false;
     }
 }
@@ -78,7 +78,7 @@ void identify(Base& p) {
 }
 
 int main() {
-    srand(static_cast<unsigned int>(time(NULL))); // seeding rand;
+    srand(static_cast<unsigned int>(time(NULL)));  // seeding rand;
 
     Base* test = generate();
     identify(test);

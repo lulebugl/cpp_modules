@@ -6,7 +6,7 @@
 /*   By: llebugle <llebugle@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 21:07:46 by llebugle          #+#    #+#             */
-/*   Updated: 2025/06/05 21:07:47 by llebugle         ###   ########.fr       */
+/*   Updated: 2025/06/07 14:06:54 by llebugle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int main() {
     std::cout << "deserializing..." << std::endl;
     Data* deserialized = Serializer::deserialize(test);
 
-    std::cout << "new Data ptr: " << deserialized << std::endl;
-    std::cout << "\nOriginal ptr: " << testData << std::endl;
+    std::cout << "\nnew Data ptr: " << deserialized << std::endl;
+    std::cout << "Original ptr: " << testData << std::endl;
     std::cout << "name: " << deserialized->name << std::endl;
     std::cout << "age: " << deserialized->age << std::endl;
 

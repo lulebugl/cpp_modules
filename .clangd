@@ -4,7 +4,6 @@ CompileFlags:
     "-Wall",
     "-Wextra",
     "-Werror",
-    "-pedantic",
     "-I.",
     "-xc++",
     "-isystem",

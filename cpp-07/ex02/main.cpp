@@ -16,6 +16,9 @@
 #include "Array.hpp"
 
 int main() {
+    Array<float> test;
+    (void)test;
+    
     std::cout << "=== Basic Array Test ===\n";
     Array<int> numbers(5);
 
@@ -73,6 +76,6 @@ int main() {
     } catch (const std::exception& e) {
         std::cout << "Exception : " << e.what() << std::endl;
     }
-
+    
     return 0;
 }

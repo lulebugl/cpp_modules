@@ -19,8 +19,8 @@
 template <typename T>
 class Array {
    public:
-    Array() : _size(0), _elements(NULL) {};
-    Array(unsigned int n) : _size(n), _elements(new T[n]()) {};
+    Array() : _size(1), _elements(new T[0]()) {};
+    explicit Array(unsigned int n) : _size(n), _elements(new T[n]()) {};
     ~Array() {
         delete[] _elements;
     };
@@ -44,7 +44,14 @@ class Array {
         return *this;
     }
 
-    T& operator[](size_t index) const {
+    const T& operator[](size_t index) const {
+        if (index >= _size) {
+            throw std::out_of_range("index out of range");
+        }
+        return _elements[index];
+    }
+
+    T& operator[](size_t index) {
         if (index >= _size) {
             throw std::out_of_range("index out of range");
         }

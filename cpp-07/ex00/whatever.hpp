@@ -23,7 +23,7 @@ void swap(T& x, T& y) {
 }
 
 template <typename T>
-const T& min(T& x, T& y) {
+const T& min(const T& x, const T& y) {
     return (x < y) ? x : y;
 }
 

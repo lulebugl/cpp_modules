@@ -77,6 +77,7 @@ void addMultipleNumbers() {
     Span sp = Span(10);
 
     std::vector<int> values;
+    values.push_back(-12);
     values.push_back(1);
     values.push_back(3);
     values.push_back(5);

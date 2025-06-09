@@ -14,6 +14,7 @@
 #define SPAN_HPP
 
 #include <cstddef>
+#include <stdexcept>
 #include <vector>
 
 class Span {
@@ -26,10 +27,10 @@ class Span {
     bool isFull() const {
         return _numbers.size() >= _size;
     }
-    
+
     void addNumber(int& number);
     void addNumber(const int& number);
-    
+
     std::size_t shortestSpan() const;
     std::size_t longestSpan() const;
 
@@ -38,8 +39,7 @@ class Span {
     unsigned int     _size;
     std::vector<int> _numbers;
 
-   // template implementation below
-
+    // template implementation below
    public:
     template <typename Iterator>
     void addNumbers(Iterator begin, Iterator end) {
@@ -47,10 +47,16 @@ class Span {
         if (_numbers.size() + count > _size) {
             throw std::out_of_range("Cannot add this many numbers to the Span");
         }
+        _numbers.insert(_numbers.end(), begin, end);
+    }
 
-        for (Iterator it = begin; it != end; ++it) {
-            _numbers.push_back(*it);
+    template <typename Iterator>
+    void addNumbers(Iterator start, Iterator begin, Iterator end) {
+        size_t count = std::distance(begin, end);
+        if (_numbers.size() + count > _size) {
+            throw std::out_of_range("Cannot add this many numbers to the Span");
         }
+        _numbers.insert(start, begin, end);
     }
 
     template <typename Generator>
@@ -58,7 +64,7 @@ class Span {
         if (isFull()) {
             throw std::out_of_range("Span is full");
         }
-        
+
         size_t remaining = _size - _numbers.size();
 
         for (size_t i = 0; i < remaining; i++) {

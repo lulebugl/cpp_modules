@@ -17,8 +17,6 @@
 
 template <typename T, typename Function>
 void iter(T array[], size_t n, Function iterator) {
-    if (!iterator)
-        return;
     for (size_t i = 0; i < n; i++) {
         iterator(array[i]);
     }

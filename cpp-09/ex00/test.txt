@@ -1,0 +1,77 @@
+2011-01-03 | 3
+2011-01-03 | 2
+2011-01-03 | 1
+2011-01-03 | 1.2
+2011-01-09 | 1
+2012-01-11 | -1
+2001-42-42
+2001-03-02 |
+2012-01-11 | 1
+2012-01-11 | 2147483648
+
+// Format errors
+date | value
+| 45
+2020-05-22 | abc
+2020-06-15 45
+2020/07/10 | 10
+20200810 | 5
+2020.09.12 | 7
+
+// Date validation errors
+0000-01-01 | 10
+9999-99-99 | 20
+2020-00-15 | 3
+2020-13-20 | 4
+2020-05-00 | 7
+2020-05-32 | 8
+2020-02-30 | 9
+2021-02-29 | 10
+
+// Edge cases for leap years
+2020-02-29 | 15  // Valid (leap year)
+2100-02-29 | 15  // Invalid (not a leap year)
+2000-02-29 | 15  // Valid (leap year)
+
+// Numeric value errors
+2022-03-10 | -0.5
+2022-03-11 | -10
+2022-03-14 | 1000.1
+2022-03-15 | 1001
+2022-03-16 | NaN
+2022-03-17 | inf
+
+// Format variations
+2022-03-20|5
+2022-03-21 |5
+2022-03-22| 5
+2022-03-23   |   5
+   2022-03-24 | 5   
+2022-03-25 | 5.0
+2022-03-26 | 5.00000
+2022-03-27 | +5
+2022-03-28 | 005
+
+// Various dates to test exchange rate lookup
+1900-01-01 | 1
+2000-01-01 | 1
+2009-01-03 | 1  // Bitcoin genesis block date
+2010-07-17 | 1  // Very early Bitcoin
+2013-12-05 | 1  // After first big price spike
+2017-12-17 | 1  // All-time high of 2017
+2020-03-12 | 1  // COVID crash
+2021-11-10 | 1  // All-time high of 2021
+2023-01-01 | 1
+2030-01-01 | 1  // Future date
+
+// Empty lines and comments
+
+# This is a comment that should be ignored
+
+2022-04-01 | 10
+2022-04-02 | 20
+
+// Very large and very small numbers
+2022-05-01 | 0.00000001
+2022-05-02 | 0.0000000000001  // May cause precision issues
+2022-05-03 | 999.999

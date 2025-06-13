@@ -23,6 +23,19 @@ class BitcoinExchange {
     BitcoinExchange& operator=(const BitcoinExchange& other);
     ~BitcoinExchange();
 
+    typedef std::map<time_t, double> ExchangeRateMap;
+
+    bool loadDatabase(const std::string& filename);
+    bool loadWallet(const std::string& filename);
+
+    ExchangeRateMap getExchangeRates() const;
+    double          getExchangeRate(time_t timestamp) const;
+
+    static std::string timestampToString(time_t timestamp);
+    
+   private:
+    ExchangeRateMap _exchangeRates;
+
     struct Date {
         int year;
         int month;
@@ -34,25 +47,13 @@ class BitcoinExchange {
         Date(int year, int month, int day)
             : year(year), month(month), day(day) {};
 
-        bool        isValid();
-        std::time_t convertToEpoch() const;
+        bool        isValid() const;
+        time_t      convertToEpoch() const;
         std::string convertToString() const;
     };
 
-    typedef std::map<std::time_t, double> ExchangeRateMap;
-
-    bool loadDatabase(const std::string& filename);
-
-    double getExchangeRate(const std::string Date) const;
-    double getExchangeRate(std::time_t Date) const;
-
-    ExchangeRateMap getExchangeRates() const;
-
-   private:
-    ExchangeRateMap _exchangeRates;
-
-    void processLine(const std::string& line) throw();
     Date parseDate(const std::string& str);
+    void processLine(const std::string& line);
 };
 
 #endif

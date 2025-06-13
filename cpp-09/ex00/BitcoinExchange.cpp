@@ -12,13 +12,13 @@
 
 #include "BitcoinExchange.hpp"
 
+#include <cstdlib>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 
 BitcoinExchange::BitcoinExchange() {}
-
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
     : _exchangeRates(other._exchangeRates) {}
 
@@ -30,6 +30,55 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other) {
 }
 
 BitcoinExchange::~BitcoinExchange() {}
+
+bool BitcoinExchange::loadWallet(const std::string& filename) {
+    std::ifstream infile(filename.c_str());
+
+    if (!infile) {
+        std::cerr << "Error opening file '" << filename
+                  << "': " << std::strerror(errno) << "\n";
+        return false;
+    }
+
+    std::string line;
+    while (std::getline(infile, line)) {
+        if (line.empty()) {
+            continue;
+        }
+
+        size_t sep_pos = line.find(" | ");
+        if (sep_pos == std::string::npos) {
+            std::cerr << "Error: bad input => " << line << "\n";
+            continue;
+        }
+
+        time_t timestamp = 0;
+        double amount = 0;
+
+        try {
+            timestamp = parseDate(line.substr(0, sep_pos)).convertToEpoch();
+            amount = std::stod(line.substr(sep_pos + 3));
+        } catch (std::exception& e) {
+            std::cerr << "Error: bad input => " << line << "\n";
+            continue;
+        }
+
+        if (amount < 0) {
+            std::cerr << "Error: not a positive number.\n";
+            continue;
+        }
+
+        if (amount > 1000) {
+            std::cerr << "Error: too large a number.\n";
+            continue;
+        }
+
+        std::cout << timestampToString(timestamp) << " => " << amount << " = "
+                  << getExchangeRate(timestamp) * amount << "\n";
+    }
+
+    return true;
+}
 
 bool BitcoinExchange::loadDatabase(const std::string& filename) {
     std::ifstream infile(filename.c_str());
@@ -56,7 +105,7 @@ bool BitcoinExchange::loadDatabase(const std::string& filename) {
     return true;
 }
 
-void BitcoinExchange::processLine(const std::string& line) throw() {
+void BitcoinExchange::processLine(const std::string& line) {
     size_t commaPos = line.find_first_of(",");
     if (commaPos == std::string::npos) {
         std::cerr << "Error: Invalid format - missing comma : " << line << "\n";
@@ -74,28 +123,7 @@ void BitcoinExchange::processLine(const std::string& line) throw() {
     _exchangeRates[date.convertToEpoch()] = rate;
 }
 
-BitcoinExchange::ExchangeRateMap BitcoinExchange::getExchangeRates() const {
-    return _exchangeRates;
-}
-const int BitcoinExchange::Date::kDaysPerMonth[] = {0,  31, 28, 31, 30, 31, 30,
-                                                    31, 31, 30, 31, 30, 31};
-
-bool BitcoinExchange::Date::isValid() {
-    if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31) {
-        return false;
-    }
-
-    int maxDays = kDaysPerMonth[month];
-    if (month == 2 &&
-        ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))) {
-        maxDays = 29;
-    }
-
-    return day <= maxDays;
-}
-
-
-BitcoinExchange::Date parseDate(const std::string& str) {
+BitcoinExchange::Date BitcoinExchange::parseDate(const std::string& str) {
     BitcoinExchange::Date date(0, 0, 0);
 
     std::stringstream iss(str);
@@ -113,6 +141,53 @@ BitcoinExchange::Date parseDate(const std::string& str) {
     return date;
 }
 
+BitcoinExchange::ExchangeRateMap BitcoinExchange::getExchangeRates() const {
+    return _exchangeRates;
+}
+
+double BitcoinExchange::getExchangeRate(time_t timestamp) const {
+    if (_exchangeRates.empty()) {
+        return 0;
+    }
+
+    ExchangeRateMap::const_iterator rate =
+        _exchangeRates.lower_bound(timestamp);
+    if (rate != _exchangeRates.begin() && rate->first > timestamp) {
+        --rate;
+    }
+    return rate->second;
+}
+
+std::string BitcoinExchange::timestampToString(time_t timestamp) {
+    std::ostringstream ss;
+    struct tm          timeinfo;
+
+    localtime_r(&timestamp, &timeinfo);
+
+    ss << std::setfill('0') << std::setw(4) << timeinfo.tm_year + 1900 << '-'
+       << std::setw(2) << timeinfo.tm_mon + 1 << '-' << std::setw(2)
+       << timeinfo.tm_mday;
+
+    return ss.str();
+}
+
+const int BitcoinExchange::Date::kDaysPerMonth[] = {0,  31, 28, 31, 30, 31, 30,
+                                                    31, 31, 30, 31, 30, 31};
+
+bool BitcoinExchange::Date::isValid() const {
+    if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31) {
+        return false;
+    }
+
+    int maxDays = kDaysPerMonth[month];
+    if (month == 2 &&
+        ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))) {
+        maxDays = 29;
+    }
+
+    return day <= maxDays;
+}
+
 std::string BitcoinExchange::Date::convertToString() const {
     std::ostringstream ss;
 
@@ -122,7 +197,7 @@ std::string BitcoinExchange::Date::convertToString() const {
     return ss.str();
 }
 
-std::time_t BitcoinExchange::Date::convertToEpoch() const {
+time_t BitcoinExchange::Date::convertToEpoch() const {
     std::tm timeinfo;
 
     timeinfo.tm_sec = 0;

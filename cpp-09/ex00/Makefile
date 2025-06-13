@@ -26,7 +26,7 @@ $(NAME):$(OBJS)
 	c++ $(FLAGS) -c $< -o $@
 
 run: all
-	./$(NAME)
+	./$(NAME) test.txt
 
 clean:
 	rm -f $(OBJS)

@@ -112,15 +112,23 @@ void BitcoinExchange::processLine(const std::string& line) {
         return;
     }
 
-    Date   date = parseDate(line.substr(0, commaPos));
-    double rate = std::stod(line.substr(commaPos + 1));
+    time_t timestamp = 0;
+    double rate = 0;
 
-    if (rate < 0) {
-        std::cerr << "Error: negative rate value not allowed: " << line << "\n";
-        return;
+    try {
+        timestamp = parseDate(line.substr(0, commaPos)).convertToEpoch();
+        rate = std::stod(line.substr(commaPos + 1));
+
+        if (rate < 0) {
+            std::cerr << "Error: negative rate value not allowed: " << line
+                      << "\n";
+            return;
+        }
+    } catch (std::exception& e) {
+        throw std::runtime_error("Error: proccesing line:" + line);
     }
 
-    _exchangeRates[date.convertToEpoch()] = rate;
+    _exchangeRates[timestamp] = rate;
 }
 
 BitcoinExchange::Date BitcoinExchange::parseDate(const std::string& str) {
@@ -199,6 +207,9 @@ std::string BitcoinExchange::Date::convertToString() const {
 
 time_t BitcoinExchange::Date::convertToEpoch() const {
     std::tm timeinfo;
+
+    if (!isValid())
+        return 0;
 
     timeinfo.tm_sec = 0;
     timeinfo.tm_min = 0;

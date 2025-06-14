@@ -51,6 +51,10 @@ void Span::addNumber(const int& number) {
     _numbers.push_back(number);
 }
 
+std::vector<int> Span::getNumbers() const {
+    return _numbers;
+}
+
 std::size_t Span::shortestSpan() const {
     if (_numbers.size() < 2) {
         throw std::logic_error("Cannot find span with fewer than 2 numbers");

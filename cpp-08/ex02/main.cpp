@@ -13,13 +13,19 @@
 #include <iomanip>
 #include <iostream>
 #include <list>
-#include <stack>
+#include <sstream>
 
 #include "MutantStack.hpp"
 
 void print_separator() {
     std::cout << std::setfill('-') << std::setw(25) << "" << std::endl;
     std::cout << std::setfill(' ');
+}
+
+std::string makeColumn(const std::string& prefix, int value) {
+    std::stringstream ss;
+    ss << prefix << value;
+    return ss.str();
 }
 
 int main() {
@@ -38,20 +44,25 @@ int main() {
     mstack.push(17);
     mylist.push_back(17);
 
-    std::cout << std::setw(COL_WIDTH) << "Push 5, 17" << "| "
-              << "Push 5, 17\n";
-    std::cout << std::setw(COL_WIDTH) << "top: " + std::to_string(mstack.top())
-              << "| "
-              << "back: " << mylist.back() << "\n";
+    std::cout << std::left << std::setw(COL_WIDTH) << "push: 5, 17 " << "| "
+              << std::left << std::setw(COL_WIDTH) << "push: 5, 17" << "\n";
+
+    std::cout << std::left << std::setw(COL_WIDTH)
+              << makeColumn("top: ", mstack.top()) << "| "
+              << makeColumn("back: ", mylist.back()) << "\n";
+
+    std::cout << std::left << std::setw(COL_WIDTH)
+              << makeColumn("size: ", mstack.size()) << "| "
+              << makeColumn("size: ", mylist.size()) << "\n";
 
     mstack.pop();
     mylist.pop_back();
 
-    std::cout << std::setw(COL_WIDTH) << "pop()" << "| "
+    std::cout << std::left << std::setw(COL_WIDTH) << "pop()" << "| "
               << "pop_back()\n";
-    std::cout << std::setw(COL_WIDTH)
-              << "size: " + std::to_string(mstack.size()) << "| "
-              << "size: " << mylist.size() << "\n";
+    std::cout << std::left << std::setw(COL_WIDTH)
+              << makeColumn("size: ", mstack.size()) << "| "
+              << makeColumn("size: ", mylist.size()) << "\n";
 
     mstack.push(3);
     mylist.push_back(3);
@@ -72,15 +83,16 @@ int main() {
     std::list<int>::iterator   lit = mylist.begin();
 
     while (mit != mstack.end() || lit != mylist.end()) {
-        std::string leftValue =
-            (mit != mstack.end()) ? std::to_string(*mit++) : "";
-        std::string rightValue =
-            (lit != mylist.end()) ? std::to_string(*lit++) : "";
+        std::stringstream stackValue;
+        if (mit != mstack.end())
+            stackValue << *(mit++);
 
-        std::cout << std::setw(COL_WIDTH) << leftValue << "| " << rightValue
-                  << "\n";
+        std::stringstream listValue;
+        if (lit != mylist.end())
+            listValue << *(lit++);
+        std::cout << std::setw(COL_WIDTH) << std::left << stackValue.str()
+                  << "| " << listValue.str() << "\n";
     }
 
-    std::stack<int> s(mstack);
     return 0;
 }

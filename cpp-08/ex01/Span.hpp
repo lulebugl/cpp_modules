@@ -30,6 +30,7 @@ class Span {
 
     void addNumber(int& number);
     void addNumber(const int& number);
+    std::vector<int> getNumbers() const;
 
     std::size_t shortestSpan() const;
     std::size_t longestSpan() const;

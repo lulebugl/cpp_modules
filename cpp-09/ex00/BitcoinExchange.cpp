@@ -13,6 +13,7 @@
 #include "BitcoinExchange.hpp"
 
 #include <cstdlib>
+#include <cstring>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -57,7 +58,13 @@ bool BitcoinExchange::loadWallet(const std::string& filename) {
 
         try {
             timestamp = parseDate(line.substr(0, sep_pos)).convertToEpoch();
-            amount = std::stod(line.substr(sep_pos + 3));
+
+            std::istringstream iss(line.substr(sep_pos + 3));
+            if (!(iss >> amount)) {
+                std::cerr << "Error: bad input => " << line << "\n";
+                continue;
+            }
+
         } catch (std::exception& e) {
             std::cerr << "Error: bad input => " << line << "\n";
             continue;
@@ -85,7 +92,7 @@ bool BitcoinExchange::loadDatabase(const std::string& filename) {
 
     if (!infile) {
         std::cerr << "Error loading database '" << filename
-                  << "': " << strerror(errno) << "\n";
+                  << "': " << std::strerror(errno) << "\n";
         return false;
     }
 
@@ -117,15 +124,16 @@ void BitcoinExchange::processLine(const std::string& line) {
 
     try {
         timestamp = parseDate(line.substr(0, commaPos)).convertToEpoch();
-        rate = std::stod(line.substr(commaPos + 1));
+        std::istringstream iss(line.substr(commaPos + 1));
+        if (!(iss >> rate)) {
+            throw std::runtime_error("Invalid rate format");
+        }
 
         if (rate < 0) {
-            std::cerr << "Error: negative rate value not allowed: " << line
-                      << "\n";
-            return;
+            throw std::runtime_error("Error: negative rate value not allowed");
         }
     } catch (std::exception& e) {
-        throw std::runtime_error("Error: proccesing line:" + line);
+        throw std::runtime_error("Error: proccesing line");
     }
 
     _exchangeRates[timestamp] = rate;
@@ -160,7 +168,9 @@ double BitcoinExchange::getExchangeRate(time_t timestamp) const {
 
     ExchangeRateMap::const_iterator rate =
         _exchangeRates.lower_bound(timestamp);
-    if (rate != _exchangeRates.begin() && rate->first > timestamp) {
+
+    if ((rate != _exchangeRates.begin() && rate->first > timestamp) ||
+        rate == _exchangeRates.end()) {
         --rate;
     }
     return rate->second;
@@ -206,7 +216,7 @@ std::string BitcoinExchange::Date::convertToString() const {
 }
 
 time_t BitcoinExchange::Date::convertToEpoch() const {
-    std::tm timeinfo;
+    tm timeinfo;
 
     if (!isValid())
         return 0;
@@ -219,5 +229,5 @@ time_t BitcoinExchange::Date::convertToEpoch() const {
     timeinfo.tm_year = year - 1900;
     timeinfo.tm_isdst = -1;
 
-    return std::mktime(&timeinfo);
+    return mktime(&timeinfo);
 }

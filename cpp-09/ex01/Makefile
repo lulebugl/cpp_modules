@@ -26,7 +26,7 @@ $(NAME):$(OBJS)
 	c++ $(FLAGS) -c $< -o $@
 
 run: all
-	./$(NAME)
+	@echo "y" | ./$(NAME)
 
 clean:
 	rm -f $(OBJS)

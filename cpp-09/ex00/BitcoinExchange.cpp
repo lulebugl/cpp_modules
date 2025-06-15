@@ -60,7 +60,8 @@ bool BitcoinExchange::loadWallet(const std::string& filename) {
             timestamp = parseDate(line.substr(0, sep_pos)).convertToEpoch();
 
             std::istringstream iss(line.substr(sep_pos + 3));
-            if (!(iss >> amount)) {
+            if ((!(iss >> amount)) || std::isnan(amount) ||
+                std::isinf(amount)) {
                 std::cerr << "Error: bad input => " << line << "\n";
                 continue;
             }
@@ -97,14 +98,17 @@ bool BitcoinExchange::loadDatabase(const std::string& filename) {
     }
 
     std::string line;
+    std::size_t lineNumber = 0;
     while (std::getline(infile, line)) {
+        ++lineNumber;
         if (line == "date,exchange_rate" || line.empty()) {
             continue;
         }
         try {
             processLine(line);
         } catch (std::exception& e) {
-            std::cerr << "Error: " << e.what() << " in line: " << line << "\n";
+            std::cerr << "[Database Error] : " << e.what() << " in line "
+                      << lineNumber << ": " << line << "\n";
             continue;
         }
     }
@@ -115,8 +119,7 @@ bool BitcoinExchange::loadDatabase(const std::string& filename) {
 void BitcoinExchange::processLine(const std::string& line) {
     size_t commaPos = line.find_first_of(",");
     if (commaPos == std::string::npos) {
-        std::cerr << "Error: Invalid format - missing comma : " << line << "\n";
-        return;
+        throw std::invalid_argument("missing comma");
     }
 
     time_t timestamp = 0;
@@ -130,10 +133,12 @@ void BitcoinExchange::processLine(const std::string& line) {
         }
 
         if (rate < 0) {
-            throw std::runtime_error("Error: negative rate value not allowed");
+            throw std::runtime_error("negative rate value not allowed");
         }
+    } catch (std::invalid_argument& e) {
+        throw std::invalid_argument("invalid date");
     } catch (std::exception& e) {
-        throw std::runtime_error("Error: proccesing line");
+        throw std::runtime_error("proccesing");
     }
 
     _exchangeRates[timestamp] = rate;

@@ -16,8 +16,8 @@
 
 int main(int argc, char** argv) {
     if (argc != 2) {
-        std::cout << "Usage: ./btc input-data\n";
-        return 0;
+        std::cerr << "Error: could not open file.\n";
+        return 1;
     }
 
     BitcoinExchange btc;

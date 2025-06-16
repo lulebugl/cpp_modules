@@ -30,5 +30,10 @@ Diagnostics:
 InlayHints:
   Enabled: false
 
+If:
+  PathMatch: ".*\\.tpp$"
+CompileFlags:
+  Add: ["-xc++"]
+  
 Index:
   StandardLibrary: true

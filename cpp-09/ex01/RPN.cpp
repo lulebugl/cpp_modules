@@ -30,7 +30,7 @@ double RPN::compute(std::string arg) {
         }
 
         if (std::isdigit(arg[i])) {
-            exprs.push(arg[i] - '0');  // char to int
+            exprs.push(arg[i] - '0');
         } else if (isNegativeDigit(arg, i)) {
             exprs.push(-(arg[++i] - '0'));
         } else if (isOperator(arg[i])) {
@@ -60,9 +60,7 @@ void RPN::executeOperation(std::stack<double>& exprs, char token) {
         if (operations[i].op == token) {
             double expr1 = exprs.top();
             exprs.pop();
-            double expr2 = exprs.top();
-            exprs.pop();
-            exprs.push(operations[i].func(expr2, expr1));
+            exprs.top() = operations[i].func(exprs.top(), expr1);
             return;
         };
     }

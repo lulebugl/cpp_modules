@@ -17,49 +17,35 @@
 
 #include "PmergeMe.hpp"
 
-template <typename Container>
-void printContainer(Container& container) {
-    for (typename Container::const_iterator it = container.begin();
-         it != container.end(); ++it) {
-        std::cout << *it << " ";
-    }
-}
-
-template <typename Container>
-Container parseArguments(const std::string& str) {
-    Container int_container;
-
-    std::istringstream iss(str);
-    std::string        token;
-
-    while (iss >> token) {
-        try {
-            int value = std::stoi(token);
-            int_container.push_back(value);
-        } catch (const std::invalid_argument& e) {
-            std::cerr << "Error parsing argument: " << e.what() << std::endl;
-        }
-    }
-
-    return int_container;
-}
-
 // use deque and vector
 int main(int argc, char** argv) {
-    if (argc != 2) {
+    if (argc < 2) {
         std::cout << "Usage: ./PmergeMe 'sequence of positive integers'\n";
         return 0;
     }
 
-    std::string      numbers = argv[1];
-    std::vector<int> vec = parseArguments<std::vector<int> >(numbers);
-    std::deque<int>  deque = parseArguments<std::deque<int> >(numbers);
+    try {
+        std::vector<int> vec;
+        std::deque<int>  deque;
 
-    std::cout << "Before:   ";
-    printContainer(vec);
-    std::cout << "\nAfter:    ";
-    printContainer(vec);
-    std::cout << "\n";
+        double time_vec = 0;
+        double time_deque = 0;
+
+        if (argc == 2) {
+            time_vec = PmergeMe::benchmark(argv[1], vec);
+            time_deque = PmergeMe::benchmark(argv[1], deque);
+        } else {
+            time_vec = PmergeMe::benchmark(argc, argv, vec);
+            time_deque = PmergeMe::benchmark(argc, argv, deque);
+        }
+
+        std::cout << "Time to process a range of " << vec.size()
+                  << " elements with std::vector : " << time_vec << " ms\n";
+        std::cout << "Time to process a range of " << deque.size()
+                  << " elements with std::deque  : " << time_deque << " ms\n";
+    } catch (std::exception& e) {
+        std::cerr << "Error: " << e.what() << "\n";
+    }
 
     return 0;
 }

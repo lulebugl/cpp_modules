@@ -1,17 +1,12 @@
 CompileFlags:
   Add: [
-    "--std=c++98",
+    "-std=c++98",
     "-Wall",
     "-Wextra",
     "-Werror",
     "-I.",
     "-xc++",
     "-isystem",
-    "/usr/include/c++/11",
-    "-isystem",
-    "/usr/include/x86_64-linux-gnu/c++/11",
-    "-isystem",
-    "/usr/include/c++/11/backward",
     "-isystem",
     "/usr/local/include",
     "-isystem",
@@ -19,7 +14,9 @@ CompileFlags:
     "-isystem",
     "/usr/include/x86_64-linux-gnu",
     "-isystem",
-    "/usr/include"
+    "/usr/include",
+    "-isystem",
+    "/usr/include/c++/11"
   ]
   Remove: ["-W*"]
 Diagnostics:
@@ -29,11 +26,6 @@ Diagnostics:
   ]
 InlayHints:
   Enabled: false
-
-If:
-  PathMatch: ".*\\.tpp$"
-CompileFlags:
-  Add: ["-xc++"]
   
 Index:
   StandardLibrary: true

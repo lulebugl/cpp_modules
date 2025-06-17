@@ -14,10 +14,14 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <cmath>
+#include <algorithm>
+#include <cstddef>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 BitcoinExchange::BitcoinExchange() {}
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
@@ -37,7 +41,7 @@ bool BitcoinExchange::loadWallet(const std::string& filename) {
 
     if (!infile) {
         std::cerr << "Error opening file '" << filename
-                  << "': " << std::strerror(errno) << "\n";
+                  << "': " << strerror(errno) << "\n";
         return false;
     }
 
@@ -59,7 +63,7 @@ bool BitcoinExchange::loadWallet(const std::string& filename) {
         try {
             timestamp = parseDate(line.substr(0, sep_pos)).convertToEpoch();
 
-            std::istringstream iss(line.substr(sep_pos + 3));
+            std::stringstream iss(line.substr(sep_pos + 3));
             if ((!(iss >> amount)) || std::isnan(amount) ||
                 std::isinf(amount)) {
                 std::cerr << "Error: bad input => " << line << "\n";

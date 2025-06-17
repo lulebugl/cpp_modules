@@ -31,13 +31,13 @@ int main(int argc, char** argv) {
         double time_vec = 0;
         double time_deque = 0;
 
-        if (argc == 2) {
-            time_vec = PmergeMe::benchmark(argv[1], vec);
-            time_deque = PmergeMe::benchmark(argv[1], deque);
-        } else {
-            time_vec = PmergeMe::benchmark(argc, argv, vec);
-            time_deque = PmergeMe::benchmark(argc, argv, deque);
-        }
+        // if (argc == 2) {
+        //     time_vec = PmergeMe<std::vector<int> >::benchmark(argv[1], vec);
+        //     time_deque = PmergeMe<std::deque<int> >::benchmark(argv[1], deque);
+        // } else {
+            time_vec = PmergeMe<std::vector<int> >::benchmark(argc, argv, vec);
+            time_deque = PmergeMe<std::deque<int> >::benchmark(argc, argv, deque);
+        // }
 
         std::cout << "Time to process a range of " << vec.size()
                   << " elements with std::vector : " << time_vec << " ms\n";

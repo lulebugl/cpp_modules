@@ -31,8 +31,7 @@ class PmergeMe {
             result = createContainer(args);
             return performBenchmark(result, print);
         } catch (const std::exception& e) {
-            std::cerr << "Error: " << e.what() << std::endl;
-            return -1.0;  // Use -1 to indicate error, not 0
+            return -1.0;
         }
     }
 
@@ -42,19 +41,46 @@ class PmergeMe {
             result = createContainer(argc, argv);
             return performBenchmark(result, print);
         } catch (const std::exception& e) {
-            std::cerr << "Error: " << e.what() << std::endl;
-            return -1.0;  // Use -1 to indicate error, not 0
+            return -1.0;
         }
     }
 
+    /****************************************************/
+    /*          TEMPLATE IMPLEMENTATION BELOW           */
+    /************************************************** */
+
+    typedef typename Container::iterator       Iterator;
+    typedef typename Container::const_iterator ConstIterator;
+
+    struct FordJohnsonContext {
+        // Algorithm state
+        bool is_odd;
+        int  odd;
+        int  total_units;
+
+        // temporary containers
+        Container main;
+        Container pending;
+        Container left;
+        FordJohnsonContext() : is_odd(false), odd(0), total_units(0) {};
+    };
+
+   private:
     static double performBenchmark(Container& result, bool print) {
         if (result.empty()) {
-            return 0.0;
+            throw std::invalid_argument("Invalid arguments");
         }
 
         Container expected_result(result);
         std::sort(expected_result.begin(), expected_result.end());
 
+        if (hasDuplicates(result)) {
+
+            // IMPROVE ERROR HANDLING specifically for duplicates
+
+            throw std::invalid_argument("Invalid arguments");
+        }
+        
         if (print) {
             printContainer(result, "Before:   ");
         }
@@ -72,28 +98,8 @@ class PmergeMe {
         return static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
     }
 
-    /****************************************************/
-    /*          TEMPLATE IMPLEMENTATION BELOW           */
-    /************************************************** */
-
-   private:
-    typedef typename Container::iterator Iterator;
-
-    struct FordJohnsonContext {
-        // Algorithm state
-        bool is_odd;
-        int  odd;
-        int  total_units;
-
-        // temporary containers
-        Container main;
-        Container pending;
-        Container left;
-        FordJohnsonContext() : is_odd(false), odd(0), total_units(0) {};
-    };
-
     static void FordJohnsonSort(Container& cont, int order = 1) {
-        if (cont.empty() || order <= 0)
+        if (cont.empty())
             return;
 
         FordJohnsonContext ctx;
@@ -149,7 +155,7 @@ class PmergeMe {
     /*
     ** Ford-Johnson merge insertion with Jacobsthal optimization:
     ** - Calculate batch sizes using diff between consecutive Jacobsthal numbers
-    ** - For each element, determine search boundary using Jacobsthal sequence  
+    ** - For each element, determine search boundary using Jacobsthal sequence
     ** - Perform binary search within boundaries for optimal insertion
     ** - Insert pending elements into main chain in Jacobsthal-optimized order
     ** - Handle odd elements (pair leftover) with simple binary insertion
@@ -180,6 +186,7 @@ class PmergeMe {
                     } else {
                         ctx.main.end();
                     }
+
                     Iterator end = ctx.pending.begin() + batch.size - 1;
                     binaryInsert(ctx.main, *end);
                     ctx.pending.erase(end);
@@ -195,6 +202,7 @@ class PmergeMe {
         if (ctx.is_odd)
             binaryInsert(ctx.main, ctx.odd);
         cont = buildSortedResult(ctx, cont, order);
+        printContainer(cont);
     }
 
     static Container buildSortedResult(FordJohnsonContext& ctx, Container cont,
@@ -227,13 +235,24 @@ class PmergeMe {
         return round((pow(2, number + 1) + pow(-1, number)) / 3);
     }
 
+    static bool hasDuplicates(const Container& cont) {
+        if (cont.empty()) return false;
+        
+        Container temp(cont);
+        std::sort(temp.begin(), temp.end());
+        
+        typename Container::iterator new_end = std::unique(temp.begin(), temp.end());
+        
+        return new_end != temp.end();
+    }
+    
     static void printContainer(const Container& container,
                                const char*      prefix = 0) {
         if (prefix) {
             std::cout << prefix;
         }
-        for (typename Container::const_iterator it = container.begin();
-             it != container.end(); ++it) {
+        for (ConstIterator it = container.begin(); it != container.end();
+             ++it) {
             std::cout << *it << " ";
         }
         std::cout << "\n";
@@ -247,9 +266,9 @@ class PmergeMe {
             int                value = 0;
 
             iss >> value;
-            if (iss.fail() || !iss.eof() || value < 0)
-                throw std::invalid_argument("Failed to parse argument: " +
-                                            static_cast<std::string>(argv[i]));
+            if (iss.fail() || !iss.eof() || value < 0) {
+                throw std::invalid_argument("Invalid arguments");
+            }
             int_container.push_back(value);
         }
 
@@ -267,7 +286,6 @@ class PmergeMe {
                 throw std::invalid_argument("Failed to parse argument");
             int_container.push_back(value);
         }
-
         return int_container;
     }
 

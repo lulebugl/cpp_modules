@@ -12,26 +12,28 @@
 
 NAME = PmergeMe
 
-FLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = PmergeMe.cpp main.cpp 
+FLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
+SRCS = main.cpp 
 
 OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
 
 all: $(NAME)
 
-$(NAME):$(OBJS)
+$(NAME): $(OBJS)
 	c++ $(FLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp
-	c++ $(FLAGS) -c $< -o $@
+	c++ $(FLAGS) -MMD -MP -c $< -o $@
+
+# Include dependency files if they exist
+-include $(DEPS)
 
 run: all
 	./$(NAME) 11 2 17 9 16 8 6 15 10 3 21 1 18 9 14 19 12 5 4 20 13 7
-#./$(NAME) "25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0"
-# ./$(NAME) "3 9 1 0 999 666"
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(DEPS)
 
 fclean: clean
 	rm -f $(NAME)
@@ -39,3 +41,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+

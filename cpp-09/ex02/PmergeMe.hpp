@@ -85,15 +85,15 @@ class PmergeMe {
         if (result.empty())
             return 0;
 
-        std::cout << "Before:   ";
-        printContainer(sorted);
+        // std::cout << "Before:   ";
+        // printContainer(sorted);
         clock_t start = clock();
 
         FordJohnsonSort(result);
 
         clock_t end = clock();
-        std::cout << "After:    ";
-        printContainer(result);
+        // std::cout << "After:    ";
+        // printContainer(result);
         std::cout << ((result == sorted) ? "Sorted" : "Not sorted") << "\n";
 
         return static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
@@ -111,8 +111,6 @@ class PmergeMe {
     }
 
     static void FordJohnsonSort(Container& cont, int order = 1) {
-        // static int order = 1;
-
         if (cont.empty() || order <= 0)
             return;
 
@@ -129,9 +127,7 @@ class PmergeMe {
 
         sortPairs(cont.begin(), end, order);
 
-        // order *= 2;
         FordJohnsonSort(cont, order * 2);
-        // order /= 2;
 
         ctx.main.push_back(*(cont.begin() + order - 1));
         ctx.main.push_back(*(cont.begin() + order * 2 - 1));
@@ -149,12 +145,11 @@ class PmergeMe {
                         cont.end());  // Save the leftover elements that cannot
                                       // form pairs on their own.
 
-        // Perform insertion.
         if (ctx.is_odd || !ctx.pending.empty())
             mergeInsert(ctx, cont, order);
     }
 
-    static void mergeInsert(FordJohnsonContext ctx, Container& cont,
+    static void mergeInsert(FordJohnsonContext& ctx, Container& cont,
                             int order) {
         Iterator end;
 

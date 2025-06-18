@@ -30,7 +30,8 @@ $(NAME): $(OBJS)
 -include $(DEPS)
 
 run: all
-	./$(NAME) 11 2 17 9 16 8 6 15 10 3 21 1 18 9 14 19 12 5 4 20 13 7
+	./$(NAME) `shuf -i 1-100000 -n 30 | tr "\n" " "`
+	./$(NAME) `shuf -i 1-100000 -n 31 | tr "\n" " "`
 
 clean:
 	rm -f $(OBJS) $(DEPS)

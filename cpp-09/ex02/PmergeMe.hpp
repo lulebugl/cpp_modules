@@ -25,20 +25,56 @@
 template <typename Container>
 class PmergeMe {
    public:
-    typedef typename Container::iterator       iterator;
-    typedef typename Container::const_iterator const_iterator;
+   static double benchmark(const std::string& args, Container& result, bool print = false) {
+       try {
+           result = createContainer(args);
+           return performBenchmark(result, print);
+       } catch (const std::exception& e) {
+           std::cerr << "Error: " << e.what() << std::endl;
+           return -1.0;  // Use -1 to indicate error, not 0
+       }
+   }
 
-    // typedef typename Container::value_type     value_type;
-    // typedef typename Container::size_type      size_type;
+   static double benchmark(int argc, char* argv[], Container& result, bool print = false) {
+       try {
+           result = createContainer(argc, argv);
+           return performBenchmark(result, print);
+       } catch (const std::exception& e) {
+           std::cerr << "Error: " << e.what() << std::endl;
+           return -1.0;  // Use -1 to indicate error, not 0
+       }
+   }
+   
+   static double performBenchmark(Container& result, bool print) {
+       if (result.empty()) {
+           return 0.0;
+       }
 
-    // static void FordJohnsonSort(std::vector<int>& vec);
-    // static void FordJohnsonSort(std::deque<int>& vec);
-    // static void sort(std::deque<int>& deque);
-    // static void mergeInsert(std::vector<int>& vec);
+       Container expected_result(result);
+       std::sort(expected_result.begin(), expected_result.end());
 
-    // static long long JacobsthalNumber(size_t number);
+       if (print) {
+           printContainer(result, "Before:   ");
+       }
 
-   private:
+       clock_t start = clock();
+       FordJohnsonSort(result);
+       clock_t end = clock();
+
+       if (print) {
+           printContainer(result, "After:    ");
+       }
+
+       bool is_sorted = (result == expected_result);
+       std::cout << (is_sorted ? "sorted" : "Sorting failed") << std::endl;
+       return static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
+   }
+    
+    /****************************************************/
+    /*          TEMPLATE IMPLEMENTATION BELOW           */
+    /************************************************** */
+
+    private:
     typedef typename Container::iterator Iterator;
 
     struct FordJohnsonContext {
@@ -54,62 +90,6 @@ class PmergeMe {
         FordJohnsonContext() : is_odd(false), odd(0), total_units(0) {};
     };
 
-    /****************************************************/
-    /*          TEMPLATE IMPLEMENTATION BELOW           */
-    /************************************************** */
-
-   public:
-    static double benchmark(const std::string& args, Container& result) {
-        result = createContainer(args);
-
-        if (result.empty())
-            return 0;
-        std::cout << "Before:   ";
-        printContainer(result);
-        clock_t start = clock();
-
-        FordJohnsonSort(result);
-
-        clock_t end = clock();
-        std::cout << "After:    ";
-        printContainer(result);
-        return static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
-    }
-
-    static double benchmark(int argc, char* argv[], Container& result) {
-        result = createContainer(argc, argv);
-
-        Container sorted(result);
-        std::sort(sorted.begin(), sorted.end());
-
-        if (result.empty())
-            return 0;
-
-        // std::cout << "Before:   ";
-        // printContainer(sorted);
-        clock_t start = clock();
-
-        FordJohnsonSort(result);
-
-        clock_t end = clock();
-        // std::cout << "After:    ";
-        // printContainer(result);
-        std::cout << ((result == sorted) ? "Sorted" : "Not sorted") << "\n";
-
-        return static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
-    }
-
-   private:
-    static void sortPairs(Iterator start, Iterator end, int order) {
-        for (Iterator it = start; it < end; it += (order * 2)) {
-            const int last_in_x = *(it + (order - 1));
-            const int last_in_y = *(it + ((order * 2) - 1));
-            if (last_in_x > last_in_y) {
-                std::swap_ranges(it, it + order, it + order);
-            }
-        }
-    }
-
     static void FordJohnsonSort(Container& cont, int order = 1) {
         if (cont.empty() || order <= 0)
             return;
@@ -117,7 +97,6 @@ class PmergeMe {
         FordJohnsonContext ctx;
 
         ctx.total_units = cont.size() / order;
-
         if (ctx.total_units < 2)
             return;
 
@@ -126,7 +105,6 @@ class PmergeMe {
             cont.begin() + ((order * ctx.total_units) - (ctx.is_odd * order));
 
         sortPairs(cont.begin(), end, order);
-
         FordJohnsonSort(cont, order * 2);
 
         ctx.main.push_back(*(cont.begin() + order - 1));
@@ -139,113 +117,123 @@ class PmergeMe {
         }
 
         if (ctx.is_odd)
-            ctx.odd = *(end + order - 1);  // Save the odd pair if any
+            ctx.odd = *(end + order - 1);
 
-        ctx.left.insert(ctx.left.end(), end + (order * ctx.is_odd),
-                        cont.end());  // Save the leftover elements that cannot
-                                      // form pairs on their own.
-
+        ctx.left.insert(ctx.left.end(), end + (order * ctx.is_odd), cont.end());
         if (ctx.is_odd || !ctx.pending.empty())
             mergeInsert(ctx, cont, order);
     }
 
+    static void sortPairs(Iterator start, Iterator end, int order) {
+        for (Iterator it = start; it < end; it += (order * 2)) {
+            const int last_in_x = *(it + (order - 1));
+            const int last_in_y = *(it + ((order * 2) - 1));
+            if (last_in_x > last_in_y) {
+                std::swap_ranges(it, it + order, it + order);
+            }
+        }
+    }
+    
+    struct JcBatchProcessor {
+        size_t jc_index;  // Jacobsthal sequence index
+        size_t processed;
+        size_t size;  // difference between consecutive Jacobsthal numbers
+        size_t batch_position;
+
+        JcBatchProcessor()
+            : jc_index(3), processed(0), size(0), batch_position(0) {}
+    };
+
+    /*
+    ** - Using Jacobsthal number to optimize insertion
+    *  - calcutale nb of elents to insert base on jacobsthal sequence index
+    *  - finding optimal pos (binary search) to insert the batch of element in
+    *pending to main
+    *  - constructing final sorted container (not yet fully understood)
+    */
     static void mergeInsert(FordJohnsonContext& ctx, Container& cont,
                             int order) {
         Iterator end;
 
-        // If 'pend' has only one element, sort using normal binary search.
         if (ctx.pending.size() == 1) {
-            end = std::upper_bound(ctx.main.begin(), ctx.main.end(),
-                                   *ctx.pending.begin());
-            ctx.main.insert(end, *ctx.pending.begin());
+            end = binaryInsert(ctx.main, *ctx.pending.begin());
         } else if (ctx.pending.size() > 1) {
-            // Process 'pend' using the Jacobsthal sequence to determine
-            // insertion
-            // indices.
-            size_t jc = 3;  // Start with the 3rd Jacobsthal number
-            size_t count = 0;
-            size_t idx;
-            size_t decrease;
+            JcBatchProcessor
+                batch;  // Use Jacobsthal number to optimize insertion
 
-            // Sort 'pend' into 'main' using binary search 'upper_bound' with
-            // Jacobsthal as optimization.
             while (!ctx.pending.empty()) {
-                idx = JacobsthalNumber(jc) - JacobsthalNumber(jc - 1);
-                if (idx > ctx.pending.size())
-                    idx = ctx.pending.size();
-
-                decrease = 0;
-                while (idx) {
-                    // Determine the insertion point based on the
-                    // JacobsthalNumber
-                    // index and insert the element.
-                    end = ctx.main.begin();
-                    if (JacobsthalNumber(jc + count) - decrease <=
-                        ctx.main.size())
-                        end = ctx.main.begin() + JacobsthalNumber(jc + count) -
-                              decrease;
-                    else
-                        end = ctx.main.end();
-                    // Binary sort
-                    end = std::upper_bound(ctx.main.begin(), end,
-                                           *(ctx.pending.begin() + idx - 1));
-                    ctx.main.insert(end, *(ctx.pending.begin() + idx - 1));
-                    ctx.pending.erase(ctx.pending.begin() + idx - 1);
-
-                    idx--;
-                    decrease++;
-                    count++;
+                batch.size = JacobsthalNumber(batch.jc_index) -
+                             JacobsthalNumber(batch.jc_index - 1);
+                if (batch.size > ctx.pending.size()) {
+                    batch.size = ctx.pending.size();
                 }
-                jc++;
+
+                batch.batch_position = 0;
+                while (batch.size > 0) {
+                    end = ctx.main.begin();
+                    size_t boundary_index =
+                        JacobsthalNumber(batch.jc_index + batch.processed) -
+                        batch.batch_position;
+
+                    if (boundary_index <= ctx.main.size()) {
+                        end = ctx.main.begin() + boundary_index;
+                    } else {
+                        end = ctx.main.end();
+                    }
+
+                    end = binaryInsert(ctx.main,
+                                       *(ctx.pending.begin() + batch.size - 1));
+                    ctx.pending.erase(ctx.pending.begin() + batch.size - 1);
+
+                    batch.size--;
+                    batch.batch_position++;
+                    batch.processed++;
+                }
+                batch.jc_index++;
             }
         }
 
-        std::vector<int> copy;
-        copy.reserve(cont.size());
+        if (ctx.is_odd)
+            end = binaryInsert(ctx.main, ctx.odd);
 
-        // If there is an odd element, sort it using normal binary search.
-        if (ctx.is_odd) {
-            end = std::upper_bound(ctx.main.begin(), ctx.main.end(), ctx.odd);
-            ctx.main.insert(end, ctx.odd);
-        }
-        // Rebuild 'main' based on the sorted last elements.
-        for (Iterator i = ctx.main.begin(); i != ctx.main.end(); i++) {
-            Iterator it = std::find(cont.begin(), cont.end(), *i);
-            if (it == cont.end()) {
-                std::cerr << "Error: Element not found!" << std::endl;
+        cont = reconstructContainer(ctx, cont, order);
+    }
+
+    static Container reconstructContainer(FordJohnsonContext& ctx,
+                                          Container cont, int order) {
+        Container copy;
+
+        for (Iterator it = ctx.main.begin(); it != ctx.main.end(); it++) {
+            Iterator pos = std::find(cont.begin(), cont.end(), *it);
+            if (pos == cont.end()) {
+                std::cerr << "reconstructContainer: Element not found!\n";
                 continue;
             }
 
-            // Safe bounds checking
-            Iterator start_it = (it - cont.begin() >= order - 1)
-                                    ? it - (order - 1)
+            Iterator start_it = (pos - cont.begin() >= order - 1)
+                                    ? pos - (order - 1)
                                     : cont.begin();
-            Iterator end_it = it + 1;
 
-            copy.insert(copy.end(), start_it, end_it);
+            copy.insert(copy.end(), start_it, pos + 1);
         }
         copy.insert(copy.end(), ctx.left.begin(), ctx.left.end());
-
-        // cont = copy;
-        Iterator                   container_it = cont.begin();
-        std::vector<int>::iterator copy_it = copy.begin();
-        while (copy_it != copy.end()) {
-            *container_it = *copy_it;
-            container_it++;
-            copy_it++;
-        }
+        return copy;
     }
 
-    static void binaryInsert(Container& target, const int& value) {
+    static Iterator binaryInsert(Container& target, const int& value) {
         Iterator pos = std::upper_bound(target.begin(), target.end(), value);
-        target.insert(pos, value);
+        return target.insert(pos, value);
     }
 
     static long long JacobsthalNumber(size_t number) {
         return round((pow(2, number + 1) + pow(-1, number)) / 3);
     }
 
-    static void printContainer(const Container& container) {
+    static void printContainer(const Container& container,
+                               const char*      prefix = 0) {
+        if (prefix) {
+            std::cout << prefix;
+        }
         for (typename Container::const_iterator it = container.begin();
              it != container.end(); ++it) {
             std::cout << *it << " ";
@@ -285,15 +273,15 @@ class PmergeMe {
         return int_container;
     }
 
-    // PmergeMe() {};
-    // PmergeMe(const PmergeMe& other) {
-    //     (void)other;
-    // };
-    // PmergeMe& operator=(const PmergeMe& other) {
-    //     (void)other;
-    //     return *this;
-    // };
-    // ~PmergeMe() {};
+    PmergeMe() {};
+    PmergeMe(const PmergeMe& other) {
+        (void)other;
+    };
+    PmergeMe& operator=(const PmergeMe& other) {
+        (void)other;
+        return *this;
+    };
+    ~PmergeMe() {};
 };
 
 #endif

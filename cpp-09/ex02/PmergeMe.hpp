@@ -25,56 +25,58 @@
 template <typename Container>
 class PmergeMe {
    public:
-   static double benchmark(const std::string& args, Container& result, bool print = false) {
-       try {
-           result = createContainer(args);
-           return performBenchmark(result, print);
-       } catch (const std::exception& e) {
-           std::cerr << "Error: " << e.what() << std::endl;
-           return -1.0;  // Use -1 to indicate error, not 0
-       }
-   }
+    static double benchmark(const std::string& args, Container& result,
+                            bool print = false) {
+        try {
+            result = createContainer(args);
+            return performBenchmark(result, print);
+        } catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            return -1.0;  // Use -1 to indicate error, not 0
+        }
+    }
 
-   static double benchmark(int argc, char* argv[], Container& result, bool print = false) {
-       try {
-           result = createContainer(argc, argv);
-           return performBenchmark(result, print);
-       } catch (const std::exception& e) {
-           std::cerr << "Error: " << e.what() << std::endl;
-           return -1.0;  // Use -1 to indicate error, not 0
-       }
-   }
-   
-   static double performBenchmark(Container& result, bool print) {
-       if (result.empty()) {
-           return 0.0;
-       }
+    static double benchmark(int argc, char* argv[], Container& result,
+                            bool print = false) {
+        try {
+            result = createContainer(argc, argv);
+            return performBenchmark(result, print);
+        } catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            return -1.0;  // Use -1 to indicate error, not 0
+        }
+    }
 
-       Container expected_result(result);
-       std::sort(expected_result.begin(), expected_result.end());
+    static double performBenchmark(Container& result, bool print) {
+        if (result.empty()) {
+            return 0.0;
+        }
 
-       if (print) {
-           printContainer(result, "Before:   ");
-       }
+        Container expected_result(result);
+        std::sort(expected_result.begin(), expected_result.end());
 
-       clock_t start = clock();
-       FordJohnsonSort(result);
-       clock_t end = clock();
+        if (print) {
+            printContainer(result, "Before:   ");
+        }
 
-       if (print) {
-           printContainer(result, "After:    ");
-       }
+        clock_t start = clock();
+        FordJohnsonSort(result);
+        clock_t end = clock();
 
-       bool is_sorted = (result == expected_result);
-       std::cout << (is_sorted ? "sorted" : "Sorting failed") << std::endl;
-       return static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
-   }
-    
+        if (print) {
+            printContainer(result, "After:    ");
+        }
+
+        bool is_sorted = (result == expected_result);
+        std::cout << (is_sorted ? "sorted" : "Sorting failed") << std::endl;
+        return static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
+    }
+
     /****************************************************/
     /*          TEMPLATE IMPLEMENTATION BELOW           */
     /************************************************** */
 
-    private:
+   private:
     typedef typename Container::iterator Iterator;
 
     struct FordJohnsonContext {
@@ -133,7 +135,7 @@ class PmergeMe {
             }
         }
     }
-    
+
     struct JcBatchProcessor {
         size_t jc_index;  // Jacobsthal sequence index
         size_t processed;
@@ -145,21 +147,20 @@ class PmergeMe {
     };
 
     /*
-    ** - Using Jacobsthal number to optimize insertion
-    *  - calcutale nb of elents to insert base on jacobsthal sequence index
-    *  - finding optimal pos (binary search) to insert the batch of element in
-    *pending to main
-    *  - constructing final sorted container (not yet fully understood)
+    ** Ford-Johnson merge insertion with Jacobsthal optimization:
+    ** - Calculate batch sizes using diff between consecutive Jacobsthal numbers
+    ** - For each element, determine search boundary using Jacobsthal sequence  
+    ** - Perform binary search within boundaries for optimal insertion
+    ** - Insert pending elements into main chain in Jacobsthal-optimized order
+    ** - Handle odd elements (pair leftover) with simple binary insertion
+    ** - Reconstruct final sorted container from group representatives
     */
     static void mergeInsert(FordJohnsonContext& ctx, Container& cont,
                             int order) {
-        Iterator end;
-
         if (ctx.pending.size() == 1) {
-            end = binaryInsert(ctx.main, *ctx.pending.begin());
+            binaryInsert(ctx.main, *ctx.pending.begin());
         } else if (ctx.pending.size() > 1) {
-            JcBatchProcessor
-                batch;  // Use Jacobsthal number to optimize insertion
+            JcBatchProcessor batch;
 
             while (!ctx.pending.empty()) {
                 batch.size = JacobsthalNumber(batch.jc_index) -
@@ -170,20 +171,18 @@ class PmergeMe {
 
                 batch.batch_position = 0;
                 while (batch.size > 0) {
-                    end = ctx.main.begin();
                     size_t boundary_index =
                         JacobsthalNumber(batch.jc_index + batch.processed) -
                         batch.batch_position;
 
                     if (boundary_index <= ctx.main.size()) {
-                        end = ctx.main.begin() + boundary_index;
+                        ctx.main.begin() + boundary_index;
                     } else {
-                        end = ctx.main.end();
+                        ctx.main.end();
                     }
-
-                    end = binaryInsert(ctx.main,
-                                       *(ctx.pending.begin() + batch.size - 1));
-                    ctx.pending.erase(ctx.pending.begin() + batch.size - 1);
+                    Iterator end = ctx.pending.begin() + batch.size - 1;
+                    binaryInsert(ctx.main, *end);
+                    ctx.pending.erase(end);
 
                     batch.size--;
                     batch.batch_position++;
@@ -194,19 +193,18 @@ class PmergeMe {
         }
 
         if (ctx.is_odd)
-            end = binaryInsert(ctx.main, ctx.odd);
-
-        cont = reconstructContainer(ctx, cont, order);
+            binaryInsert(ctx.main, ctx.odd);
+        cont = buildSortedResult(ctx, cont, order);
     }
 
-    static Container reconstructContainer(FordJohnsonContext& ctx,
-                                          Container cont, int order) {
+    static Container buildSortedResult(FordJohnsonContext& ctx, Container cont,
+                                       int order) {
         Container copy;
 
         for (Iterator it = ctx.main.begin(); it != ctx.main.end(); it++) {
             Iterator pos = std::find(cont.begin(), cont.end(), *it);
             if (pos == cont.end()) {
-                std::cerr << "reconstructContainer: Element not found!\n";
+                std::cerr << "buildSortedResult: Element not found!\n";
                 continue;
             }
 
@@ -220,9 +218,9 @@ class PmergeMe {
         return copy;
     }
 
-    static Iterator binaryInsert(Container& target, const int& value) {
+    static void binaryInsert(Container& target, const int& value) {
         Iterator pos = std::upper_bound(target.begin(), target.end(), value);
-        return target.insert(pos, value);
+        target.insert(pos, value);
     }
 
     static long long JacobsthalNumber(size_t number) {

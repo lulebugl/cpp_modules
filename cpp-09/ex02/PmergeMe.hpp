@@ -71,16 +71,10 @@ class PmergeMe {
             throw std::invalid_argument("Invalid arguments");
         }
 
-        Container expected_result(result);
-        std::sort(expected_result.begin(), expected_result.end());
-
         if (hasDuplicates(result)) {
-
-            // IMPROVE ERROR HANDLING specifically for duplicates
-
-            throw std::invalid_argument("Invalid arguments");
+            throw std::invalid_argument("Invalid arguments: duplicate numbers");
         }
-        
+
         if (print) {
             printContainer(result, "Before:   ");
         }
@@ -93,8 +87,6 @@ class PmergeMe {
             printContainer(result, "After:    ");
         }
 
-        bool is_sorted = (result == expected_result);
-        std::cout << (is_sorted ? "sorted" : "Sorting failed") << std::endl;
         return static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000.0;
     }
 
@@ -202,7 +194,6 @@ class PmergeMe {
         if (ctx.is_odd)
             binaryInsert(ctx.main, ctx.odd);
         cont = buildSortedResult(ctx, cont, order);
-        printContainer(cont);
     }
 
     static Container buildSortedResult(FordJohnsonContext& ctx, Container cont,
@@ -236,16 +227,18 @@ class PmergeMe {
     }
 
     static bool hasDuplicates(const Container& cont) {
-        if (cont.empty()) return false;
-        
+        if (cont.empty())
+            return false;
+
         Container temp(cont);
         std::sort(temp.begin(), temp.end());
-        
-        typename Container::iterator new_end = std::unique(temp.begin(), temp.end());
-        
+
+        typename Container::iterator new_end =
+            std::unique(temp.begin(), temp.end());
+
         return new_end != temp.end();
     }
-    
+
     static void printContainer(const Container& container,
                                const char*      prefix = 0) {
         if (prefix) {

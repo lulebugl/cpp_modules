@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
 
     std::vector<int> vec;
     std::deque<int>  deque;
-    
+
     double time_vec = 0;
     double time_deque = 0;
 
@@ -36,14 +36,14 @@ int main(int argc, char** argv) {
     } else {
         time_vec =
             PmergeMe<std::vector<int> >::benchmark(argc, argv, vec, true);
-        // time_deque = PmergeMe<std::deque<int> >::benchmark(argc, argv, deque);
+        time_deque = PmergeMe<std::deque<int> >::benchmark(argc, argv, deque);
     }
 
     if (time_vec < 0.0 || time_deque < 0.0) {
         std::cerr << "Error\n";
         return 1;
     }
-    
+
     std::cout << "Time to process a range of " << vec.size()
               << " elements with std::vector : " << time_vec << " ms\n";
     std::cout << "Time to process a range of " << deque.size()

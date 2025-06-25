@@ -169,19 +169,22 @@ class PmergeMe {
 
                 batch.batch_position = 0;
                 while (batch.size > 0) {
-                    size_t boundary_index =
+                    Iterator end;
+                    size_t   boundary_index =
                         JacobsthalNumber(batch.jc_index + batch.processed) -
                         batch.batch_position;
 
                     if (boundary_index <= ctx.main.size()) {
-                        ctx.main.begin() + boundary_index;
+                        end = ctx.main.begin() + boundary_index;
                     } else {
-                        ctx.main.end();
+                        end = ctx.main.end();
                     }
-
-                    Iterator end = ctx.pending.begin() + batch.size - 1;
-                    binaryInsert(ctx.main, *end);
-                    ctx.pending.erase(end);
+                    
+                    int value = *(ctx.pending.begin() + batch.size - 1);
+                    
+                    end = std::upper_bound(ctx.main.begin(), end, value);
+                    ctx.main.insert(end, value);
+                    ctx.pending.erase(ctx.pending.begin() + batch.size - 1);
 
                     batch.size--;
                     batch.batch_position++;

@@ -54,6 +54,7 @@ class BitcoinExchange {
 
     Date parseDate(const std::string& str);
     void processLine(const std::string& line);
+    bool isValidFile(const std::string& filename);
 };
 
 #endif

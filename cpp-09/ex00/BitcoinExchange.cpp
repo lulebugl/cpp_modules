@@ -12,16 +12,17 @@
 
 #include "BitcoinExchange.hpp"
 
+#include <sys/stat.h>
+
+#include <algorithm>
+#include <cmath>
+#include <cstddef>
 #include <cstdlib>
 #include <cstring>
-#include <cmath>
-#include <algorithm>
-#include <cstddef>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <fstream>
 
 BitcoinExchange::BitcoinExchange() {}
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
@@ -36,12 +37,22 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other) {
 
 BitcoinExchange::~BitcoinExchange() {}
 
+bool BitcoinExchange::isValidFile(const std::string& filename) {
+    struct stat file_stat;
+
+    if (stat(filename.c_str(), &file_stat) != 0)
+        return false;
+
+    return S_ISREG(file_stat.st_mode);
+}
+
 bool BitcoinExchange::loadWallet(const std::string& filename) {
     std::ifstream infile(filename.c_str());
 
-    if (!infile) {
-        std::cerr << "Error opening file '" << filename
-                  << "': " << strerror(errno) << "\n";
+    if (!infile || !isValidFile(filename)) {
+        std::cerr << "Error opening '" << filename
+                  << "': " << (errno ? strerror(errno) : "invalid file")
+                  << "\n";
         return false;
     }
 
@@ -94,6 +105,11 @@ bool BitcoinExchange::loadWallet(const std::string& filename) {
 
 bool BitcoinExchange::loadDatabase(const std::string& filename) {
     std::ifstream infile(filename.c_str());
+
+    if (!isValidFile(filename)) {
+        std::cerr << "Error loading database '" << filename << "'\n";
+        return false;
+    }
 
     if (!infile) {
         std::cerr << "Error loading database '" << filename

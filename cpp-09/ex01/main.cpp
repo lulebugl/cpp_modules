@@ -83,7 +83,7 @@ int main(int argc, char** argv) {
 
     try {
         double result = RPN::compute(static_cast<std::string>(argv[1]));
-        std::cout << result << "\n";
+        std::cout << static_cast<long long>(result) << "\n";
     } catch (std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
         return 1;
